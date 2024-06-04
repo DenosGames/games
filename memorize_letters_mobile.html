@@ -377,7 +377,7 @@ function verifyInput() {
 		document.getElementById("verify").disabled = false;
 		document.getElementById("letters").focus();	
 		if (sound) {
-			audio = new Audio("Sounds/Doink.mp3"); 
+			audio = new Audio("Doink.mp3"); 
 			audio.play();
 			}
 		}
@@ -447,7 +447,7 @@ function showThem(restart) {
 
 function ding() {
 	if (sound) {
-		audio = new Audio("Sounds/ding2.mp3"); 
+		audio = new Audio("ding2.mp3"); 
 		audio.play();	
 	}
 }
@@ -455,9 +455,9 @@ function ding() {
 function tada() {
 	if (sound) {
 		if (cinx < 3)
-			audio = new Audio("Sounds/applause.wav");
+			audio = new Audio("applause.wav");
 		else
-			audio = new Audio("Sounds/TaDaNice.mp3"); 
+			audio = new Audio("TaDaNice.mp3"); 
 		audio.play();	
 	}
 }
