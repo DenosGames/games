@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" >
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Memorize Hexadecimal Number Sequence">
+<meta name="author" content="Dennis M">
+<meta name="keywords" content="memorize remember Hexadecimal numbers">
+<title>Memorize Hex</title>
+<style>
+	html {
+		min-height: 100%;
+	}
+    body {
+		text-align: left;
+		font-family	: Georgia, Verdana, Arial, Trebuchet, sans-serif;
+		font-size: 18px;
+		background-color: #8BB381;
+		} 
+	h2, h3 {
+		text-align: left;
+		padding: 0px;
+		margin: 0px;
+		margin-left: 60px;
+		color: #F0F0F0;
+		font-size: 30px;
+		text-shadow: 3px 4px #303010;
+		}
+	p {
+		text-align: left;
+		margin: 2px;
+		}
+	div { 
+		text-align: center;
+		margin: 2px;
+		}
+	.inpt {
+		font-family: Courier, "Courier New", "Lucida Console", Monaco;
+		font-size: 28px;
+		font-weight: normal;
+		border-radius: 5px;
+		margin: 0px;
+		padding: 1px 3px 1px 3px;
+		height: 48px;
+		font-weight: bold;
+		}
+	form {
+		padding: 4px 0px 0px 0px;
+		}
+	#helptext { 
+		background-color: lightcyan;
+		border: solid 1px black;
+		border-radius: 5px;
+		padding: 1px 2px 10px 3px; 
+		font-family: Verdana, Arial, sans-serif;
+		font-size: 17px;  
+		display: inline;
+		position: absolute; 
+		text-align: left;
+		margin: 0px;
+		line-height: 1.3;
+		top: 100px;
+		left: 30px;
+		width: 655px;
+		}
+	#keypad {
+		text-align: left;
+		margin-left: 60px;
+		padding: 6px 0px 2px 1px;
+	}
+	.numkey {
+		font-family: Verdana, Arial, san-serif;
+		font-size: 36px;
+		padding: 2px;
+		padding-left: 0px;
+		margin:  1px 10px 14px 1px;
+		width: 60px;
+		height: 54px;
+		color: white;
+		background-color: #777;
+		border-radius: 6px;
+	}
+	.numkey:hover{
+		color: blue;
+		}
+	.bigkey {
+		font-family: Verdana, Arial, san-serif;
+		font-size: 36px;
+		padding: 2px;
+		padding-left: 0px;
+		margin:  1px 10px 14px 1px;
+		width: 136px;
+		height: 54px;
+		color: white;
+		background-color: #777;
+		border-radius: 6px;
+	}
+	.bigkey:hover{
+		color: blue;
+		}	
+	#verify {
+		text-align: center;
+		margin-top: 25px;
+		margin-left: 60px;
+	}
+	.prompt {
+		text-align: left;
+		color: black;
+		font-size: 24px;
+		font-family: Arial, Verdana, sans-serif;
+		padding: 0px;
+		margin: 0px 0px 0px 65px;
+		}
+	#numbers {
+		text-align: left;
+		color: navy;
+		font-size: 32px;
+		font-family: Arial, Verdana, sans-serif;
+		padding: 3px;
+		margin: 6px 0px 6px 60px;
+		border-radius: 5px;
+		}
+	#details {
+		color: yellow;
+		font-size: 24px;
+		font-family: Arial, Verdana, sans-serif;
+		text-align: left;
+		width: 99%;
+		border: none;
+		margin-left: 60px;
+		font-weight: bold;
+		}
+	#score {
+		color: navy;
+		font-size: 24px;
+		font-family: Arial, Verdana, sans-serif;
+		text-align: left;
+		width: 99%;
+		border: none;
+		margin-left: 60px;
+		margin-top: 10px;
+		}
+	.copyright {
+		color: #707070;
+		position: fixed;
+		bottom: 1%;
+		left: 100px;
+		font-size: 14px;
+	}
+	.copyright:hover {
+		color: white;
+		font-weight: bold;
+	}
+	#ltr, #count {
+		text-align: left;
+		color: blue;
+		text-shadow: 3px 3px #9090A0;
+		font-size: 42px;
+		font-family:  monospace, Courier, Arial, Verdana, sans-serif;
+		padding: 0px;
+		margin: 0px 0px 0px 8px;
+		font-weight: bold;
+	}
+	#count {
+		font-size: 36px;
+		font-family:  monospace, Courier, Arial, Verdana, sans-serif;
+		opacity: 0.7;
+		color: navy;
+		}
+	.pass {
+		font-size: 18px;
+		}
+</style> 
+<script>
+<!-- HIDE FROM INCOMPATIBLE BROWSERS 
+var numbers = [];  // 
+var audio = "";
+var sound = true;
+var fade = true;
+var msg = "";
+var compliments = ["Good job","Awesome","Amazing","Terrific","Exceptional","Genius","You Rock"];
+var cinx = 0;
+var last = 27;
+var showCount = 4;
+var best = 0;
+var score = 0;
+var milli = 250;
+var op = 1;
+var fadeStarted = false;
+var help = true;
+var eStr = "";
+
+function doPW() {
+	let str = document.getElementById("pw").value;
+	eStr = btoa(str);
+	if (eStr == "RGVubzku") {
+		doHelp(); // closes help box
+		initialize(0);
+	}
+	else {
+		//document.getElementById("pw").value = "";
+		document.getElementById("details").innerHTML = "Invalid Password. Please re-enter.";
+		document.getElementById("pw").focus();
+	}
+}
+
+function initialize(src) {
+	if (src == 0) { // onload
+		let device = navigator.platform;
+		displayDetails("Device is " + device + ". Enter first letter and Verify");
+		//  Add event listener to all for iphone, ipad
+		//  https://web.dev/articles/add-touch-to-your-site
+		if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
+			document.body.addEventListener('touchstart', function() {}, false);
+		}
+	}
+	else
+	if (src == 1) {  // Restart
+		displayDetails("Starting new game.");
+		document.getElementById("helptext").style.visibility = "hidden";
+		help = false;
+	}
+	cinx = 0;
+	score = 0;
+	showCount = 4;
+    letters = [];
+	document.getElementById("numbers").value = " ";
+	document.getElementById("ltr").innerHTML = "_";
+	document.getElementById("count").innerHTML = "0";
+	//document.getElementById("verify").disabled = true;
+	document.getElementById("show").disabled = true;
+	//document.getElementById("hideKeys").checked = false;
+	showScore();
+	if (eStr == "RGVubzku")
+		setTimeout (getNext, 1500);
+}
+
+
+function buildMessage(str) {
+	msg = msg + str;
+}
+
+function displayDetails(str) {
+	// show the string passed on the details line
+	document.getElementById("details").style.opacity = 1;
+	document.getElementById("details").innerHTML = str;
+}
+
+function getRandomNumber() {
+	// return a random number 0-15 that was not used last time
+	var n = 0;
+	do  {
+		n = Math.floor(Math.random() * 16) ; // rand nbr 0 to 15
+		}
+		while (n == last); // if same as last, try again
+	last = n;
+	return n;
+}
+
+function getNext() {
+	// Get another random number and add it to the numbers array
+	var n = getRandomNumber();
+	if (n < 10)
+		n += 48; // yields Ascii character 0 (48) to 9
+	else
+		n += 55 // (n already 10 or more) so n + 55 gives Ascii char. A (65) to F
+	var ch = String.fromCharCode(n);
+	document.getElementById("ltr").style.opacity = 1; // make new number visible
+	document.getElementById("ltr").innerHTML = ch.toUpperCase(); // + " (" + n + ")";
+	op = 1;
+	fadeStarted = false;
+	numbers.push(ch);
+	document.getElementById("count").innerHTML = numbers.length;
+	document.getElementById("verify").disabled = false;
+	clearNumbers(); 
+	milli += 50;
+	document.getElementById("numbers").focus();
+}
+
+function fadeOutNext() {
+	// Fades out the Next Number by modifying the opacity attribute
+	op -= 0.03;
+	document.getElementById("ltr").style.opacity = op; 
+	if (op > 0)  // fade via recursive call until done
+	    var t1 = setTimeout(fadeOutNext, 40);
+}
+
+function fadeOutDetails() {
+	// Fades out the details line by modifying the opacity attribute
+	op -= 0.02;
+	document.getElementById("details").style.opacity = op; 
+	if (op > 0)  // fade via recursive call until done
+	    var t2 = setTimeout(fadeOutDetails, 30 * (score+1) ); //longer if more numbers
+}
+
+function clearNumbers() {
+	document.getElementById("numbers").value = "";
+}
+
+function updateString(nbr) {
+	// Backspace is W, Clear is R, else Update the string of hex digits in textbox
+	if (nbr == "W") {  // this means backWards or backspace
+		if (document.getElementById("numbers").value == "") {
+			//alert("Cannot Backspace any more");
+			return;
+			}
+		var st = document.getElementById("numbers").value.slice(0, 	-1);
+		document.getElementById("numbers").value = st;
+	}
+	else
+	if (nbr == "R") {  // user pressed cleaR button
+		document.getElementById("numbers").value = "";
+		document.getElementById("numbers").innerHTML = "";
+		document.getElementById("numbers").focus();
+	}
+	else 
+	if (nbr == ",") { // user pressed comma
+		document.getElementById("numbers").value += ",";
+		document.getElementById("numbers").focus();
+		doFade();
+	}
+	else {
+		document.getElementById("numbers").value += nbr.toString();
+		document.getElementById("numbers").focus();
+		doFade();
+	}
+}
+
+function verifyInput() {
+	// See if user enter the numbers in the correct order
+	var error = false;
+	didShow = false;
+	msg = "";
+	var i = 0;
+	var str = document.getElementById("numbers").value;
+	str = str.toUpperCase();
+	document.getElementById("numbers").value = str;
+	str.trim();
+	str = str.split(' ').join(''); // remove spaces
+	str = str.split(',').join(''); // remove commas
+	if (str.length != numbers.length)
+		error = true;
+	var len = numbers.length;
+	// compare string to saved array
+	for (i = 0; i < len; i++) {
+		if (numbers[i] != str.charAt(i).toUpperCase() ) {
+			error = true;
+			break;
+		}
+	}
+	document.getElementById("show").disabled = false;
+	if (error) {
+		msg = "Numbers not correctly entered, first error occurred at position " 
+			+ (i+1).toString();
+		document.getElementById("verify").disabled = false;
+		document.getElementById("numbers").focus();	
+		audio = new Audio("Doink.mp3"); 
+		if (sound)
+			audio.play();
+		}
+	else { // correct!
+		score++;
+		if (score > best) 
+			best = score;
+		if (score > 2) { 
+			if ( (score > 9) && (score & 10) == 5) {
+				tada();
+			}
+			else {
+				ding();
+			}
+		}
+		showScore();
+		switch (len) {
+			case (1): msg = "Correct, get next number."; break;
+			case (2): msg = "Both are correct: " + numbers; break;
+			default: msg = "All " + len + " numbers are correct. ";
+		}
+		var nbr = numbers[0];
+		for (var i = 1; i < len; i++) {
+			nbr += numbers[i];
+			if  (i % 3 == 2  && i != len-1)
+				nbr += ",";
+			}
+		document.getElementById("numbers").value = nbr; //numbers; 
+		document.getElementById("verify").disabled = true;
+		if (len > 7 && len % 2 == 0) {
+			addCompliment();
+			}
+		}
+	displayDetails(msg);
+	if (error == false) {
+		document.getElementById("ltr").style.opacity = 0;
+		var timer = setTimeout("getNext()", milli); 
+		}
+}
+
+function showScore() {
+	document.getElementById("score").innerHTML = "Score = " + score +
+			", Best score = " + best;
+}
+
+function addCompliment() {
+	// cycle thru the compliments
+	buildMessage (compliments[cinx] + "!");
+	cinx = (++cinx % compliments.length);
+}
+
+function showThem(restart) {
+	// show the numbers up to 4 times (like a hint or help)
+	ding();
+	if (showCount <= 0) {
+		document.getElementById("details").innerHTML = "You have used all your Show helps.";
+		return;
+	}
+	op = 1;
+	document.getElementById("details").style.opacity = 1; // make details visible
+	showCount--;
+	document.getElementById("show").title = "Click this to show the numbers (" +
+		showCount + ")";
+	msg = "";
+	buildMessage("Correct = ");
+	for (var i = 0; i < numbers.length; i++) {
+		buildMessage(numbers[i]);
+		if (i % 3 == 2 )
+			buildMessage(",");
+	}
+	if ( msg.charAt(msg.length-1) != ",")  // does not end with comma
+		buildMessage(".");
+	if (!restart)
+		buildMessage(" You have " + showCount + " Shows left.");
+	else
+		buildMessage(" Starting new game");
+	displayDetails(msg);
+	fadeOutDetails();
+	document.getElementById("numbers").focus();	
+}
+
+function ding() {
+	if (sound) {
+		audio = new Audio("ding2.mp3"); 
+		audio.play();	
+	}
+}
+
+function tada() {
+	if (sound) {
+		if (cinx < 3)
+			audio = new Audio("applause.wav");
+		else
+			audio = new Audio("TaDaNice.mp3"); 
+		audio.play();	
+	}
+}
+
+function doSound() {
+	// Toggle the sound setting, change button to show On or Off
+	if (sound) {
+		sound = false;
+		//if (!audio.ended) 
+		//	audio.pause();  // stop current sound
+		document.getElementById("sound").innerHTML = "Sound Off";
+	}
+	else {
+		sound = true;
+		document.getElementById("sound").innerHTML = "Sound On&nbsp;";
+		}
+}
+
+function toggleFade() {
+	// Toggle the fade setting, change button to show On or Off
+	if (fade) {
+		fade = false;
+		document.getElementById("fade").innerHTML = "Fade Off";
+	}
+	else {
+		fade = true;
+		document.getElementById("fade").innerHTML = "Fade On";
+		}
+}
+
+function doFade() {
+	// start fading number if it hasn't started and past 1st number
+	if (fadeStarted == false) {
+		fadeStarted = true;
+		if (fade) {  //Fade button says On
+			if (numbers.length > 1)  // past the first number
+				fadeOutNext(); // Fade out the Next Number
+		}
+	}
+}
+
+function doHelp() {
+	// Show or hide help, button is a Toggle
+	if (help) {  // Help is visible, hide it
+		help = false; // toggle boolean
+		document.getElementById("helptext").style.visibility = "hidden";
+		document.getElementById("numbers").focus();
+	} 
+	else // False, Help is hidden, show it
+	if (!help)
+	{
+		help = true;
+		document.getElementById("helptext").style.visibility = "visible";
+		document.getElementById("numbers").focus();
+	}
+	else
+		alert("Help not true or false?");
+}
+
+function doFocus() {
+	document.getElementById("verify").disabled = true;
+	document.getElementById("show").disabled = true;
+	document.getElementById("restart").disabled = true;
+	document.getElementById("pw").focus();
+}
+
+function showPW() {
+	document.getElementById("pw").type = "text";
+	setTimeout (hidePW, 2500);
+}
+
+function hidePW() {
+	document.getElementById("pw").type = "password";
+}
+
+function clearPW() {
+	document.getElementById("pw").value = "";
+	document.getElementById("pw").focus();
+}
+
+// STOP HIDING FROM INCOMPATIBLE BROWSERS -->
+</script>
+
+</head>
+<body onload="doFocus()">
+<noscript>Your browser does not support JavaScript</noscript>
+<h2>Memorize Hexadecimal Sequence</h2>
+
+<div id="helptext">
+	A new random hexadecimal digit (0-F) will be shown after 'Next Hex Digit'.<br>
+    You must enter all the digits in the same order that they were shown.<br>
+	You may use the keypad displayed or the keyboard on your device.<br>
+	You may enter lowercase, spaces and commas from your keypad.<br>
+	Then click the Verify button. If wrong, enter them again in the correct order.<br>
+	You can click the Show button to see the correct sequence.<br>
+	The 'Cl' key will Clear all characters in the text box.<br>
+	The ',' key enters an optional Comma for readability.<br>
+	The hexadecimal digits are: 0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F.<br>
+	<br>
+	Enter Password: 
+	<input class="pass" id="pw" type="password" size="10" value="" 
+		onpaste="return false;" oncopy="return false"
+		title="Enter the password" > 
+	&nbsp;
+	<button class="pass" type="button" onclick="doPW();" 
+		title="See if the password is correct.">Validate PW</button>
+	&nbsp;
+	<button class="pass" type="button" onclick="showPW();" 
+		title="Show the password for a short time.">Show</button>
+		&nbsp;
+	<button class="pass" type="button" onclick="clearPW();" 
+		title="Clear the password.">Clear</button>	
+</div>
+
+<form name="digits" id="digits" action="/" >
+	<span class="prompt">Next Hex Digit: </span>
+	<span id="ltr">_</span>
+	<span class="prompt">Count: </span>
+	<span id="count">&nbsp;</span>
+	
+	<div id="keypad">
+		<!-- Row 1 -->	 
+		<input class = "numkey" type="button"  value=" A "
+			title="Hex digit A" onclick="updateString('A')"> 
+		<input class = "numkey" type="button"  value=" B "
+			title="Hex digit B" onclick="updateString('B')">
+		<input class = "numkey" type="button"  value=" C "
+			title="Hex digit C" onclick="updateString('C')">
+		<input class = "numkey" type="button"  value=" D "
+			title="Hex digit D" onclick="updateString('D')">
+		
+		
+		<!-- Row 2 -->	 
+		<br>
+		<input class = "numkey" type="button"  value=" 7 "
+		title="Seven" onclick="updateString('7')">
+		<input class = "numkey" type="button" value=" 8 "
+			title="Eight" onclick="updateString('8')">
+		<input class = "numkey" type="button"  value=" 9 "
+			title="Nine" onclick="updateString('9')">
+		<input class = "numkey" type="button"  value=" E "
+			title="Hex digit E" onclick="updateString('E')">
+		<br>
+		<input class = "numkey" type="button"  value=" 4 "
+			title="Four" onclick="updateString('4')"> 
+		<input class = "numkey" type="button"  value=" 5 "
+			title="Five" onclick="updateString('5')">
+		<input class = "numkey" type="button"  value=" 6 "
+			title="Six" onclick="updateString('6')">
+		<input class = "numkey" type="button"  value=" F "
+			title="Hex digit F" onclick="updateString('F')">
+		<!-- Row 3 -->	 
+		<br>
+		<input class = "numkey" type="button"  value=" 1 "
+			title="One" onclick="updateString('1')">
+		<input class = "numkey" type="button"  value=" 2 "
+			title="Two" onclick="updateString('2')">
+		<input class = "numkey" type="button"  value=" 3 "
+			title="Three" onclick="updateString('3')">
+		<input class = "numkey" type="button"  value=" , "
+			title="optional Comma (for readability)" onclick="updateString(',')">
+		<br>	
+		<input class = "numkey" type="button"  value=" 0 "
+			title="Zero" onclick="updateString('0')">
+		<input class = "bigkey" type="button"  value="&larr;"
+			title="Backspace" onclick="updateString('W')" > 
+		<input class = "numkey" type="button"  value="Cl"
+			title="Clear all digits" onclick="updateString('R')" > 
+	</div>
+	<input  id="numbers" type="text" size="28" value="" 
+		title="Enter all the hex numbers in the correct order"  
+		onkeypress="if(event.keyCode==13) return false;" onpaste="return false" 
+		oncopy="return false" autocomplete="off" onkeydown="doFade();">
+	<br>	
+	<button class="inpt" id="verify" type="button" onclick="verifyInput();" 
+	   	title="See if you entered the hex numbers correctly.">Verify</button>	  
+	&nbsp; &nbsp; &nbsp;
+	<button class="inpt" id="show" type="button" onclick="showThem(false);" 
+		title="If you are having trouble, click this to show the numbers.">Show</button>
+	&nbsp; &nbsp; &nbsp;
+	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
+			title="Reset everything and start over">ReStart</button> 
+</form>
+
+<br>
+<div id="details" onpaste="return false;" oncopy="return false">&nbsp;</div>
+
+<div id="score">&nbsp;</div>
+<br>
+
+<div class="copyright" id="copy">	
+Copyright &copy; 2024 Dennis Martin 
+</div>
+</body>
+</html>
