@@ -17,14 +17,15 @@
 		font-size: 18px;
 		background-color: #8FB686;
 		} 
-	h2, h3 {
+	#heading {
 		font-family: Georgia, Arial, Trebuchet, sans-serif;
 		margin: 0px;
 		text-align: left;
-		margin-left: 210px;
-		padding: 3px;
+		margin-left: 200px;
+		margin-top: 12px;
+		padding: 0px;
 		color: #F0F0F0;
-		font-size: 34px;
+		font-size: 28px;
 		text-shadow: 3px 4px #303010;
 		}
 	div { 
@@ -36,7 +37,7 @@
 		font-size: 28px;
 		font-weight: normal;
 		border-radius: 5px;
-		margin-left: 30px;
+		margin-left: 40px;
 		padding: 1px 3px 1px 3px;
 		height: 40px;
 		border: solid 1px #ffffcc;
@@ -48,7 +49,7 @@
 	#begin {
 		text-align: center;
 		margin-top: 30px;
-		margin-left: 50px;
+		margin-left: 20px;
 	}
 	.prompt {
 		text-align: left;
@@ -56,7 +57,7 @@
 		font-size: 24px;
 		font-family: Verdana, sans-serif;
 		padding: 0px;
-		margin: 3px 0px 4px 50px;
+		margin: 3px 0px 4px 20px;
 		}
 	.prompt2 {
 		text-align: left;
@@ -69,12 +70,12 @@
 	#details {
 		color: yellow;
 		font-size: 24px;
-		font-family: Verdana, sans-serif;
+		font-family: Georgia, Verdana, sans-serif;
 		font-weight: bold;
 		text-align: left;
 		width: 99%;
 		border: none;
-		margin-left: 50px;
+		margin-left: 20px;
 		margin-bottom: 6px;
 		margin-top: 12px;
 		}
@@ -85,13 +86,13 @@
 		text-align: left;
 		width: 99%;
 		border: none;
-		margin-left: 50px;
+		margin: 3px 0px 0px 20px;
 		}
 	.copyright {
 		color: #305050;
 		position: fixed;
 		bottom: 1%;
-		left: 250px;	
+		left: 200px;
 		font-size: 14px;
 	}
 	.copyright:hover {
@@ -112,7 +113,7 @@
 		padding: 0px;
 		width: 650px;
 		border: 2px solid black;
-		margin-left: 50px;
+		margin-left: 20px;
 		background-color: #5a2d0c;
 		color: silver;
 		}
@@ -128,21 +129,24 @@
 		width: 12.5%;
 		padding: 2px;
 		position: relative;
-		border-bottom-right-radius: 8px;
-		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 6px;
+		border-bottom-left-radius: 6px;
 		z-index: 1;
 	}
+	#n3, #n7 {
+		border-left: 3px solid black;
+		}
 	#n05, #n15, #n35, #n45, #n55 {
 		color: #eee;
 		background-color: black;
 		border-left: 1px solid black;
 		border-top: 1px solid black;
 		border-bottom: 2px solid black;
-		height: 145px;
+		height: 125px;
 		text-align: center;
 		vertical-align: top;
 		width: 32px;
-		top: 75px;
+		top: 35px;
 		margin-bottom: 50px;
 		position: absolute;
 		padding: 2px;
@@ -151,38 +155,38 @@
 		z-index: 2;
 	}
 	#n05 {
-		left: 124px; 
+		left: 93px; 
 		}
 	#n15 {
-		left: 205px;
+		left: 175px;
 		}
 	#n35 {			/* F# */
-		left: 365px;
+		left: 333px;
 		}
 	#n45 {
-		left: 446px;
+		left: 416px;
 		}
 	#n55 {
-		left: 527px;
+		left: 497px;
 		}
 	#helptext { 
 		font-family: Arial, Tahoma, sans-serif; 
-		font-size: 18px;  
+		font-size: 17px;  
 		color: black; 
 		background-color: lightcyan;
 		border: 2px outset #707070;
 		border-radius: 6px;
-		padding: 4px 4px 45px 4px; 
+		padding: 4px 4px 55px 4px; 
 		display:inline; 
 		z-index: 5;
 		visibility: visible;
-		opacity: 0.93;
+		opacity: 0.9;
 		position: absolute; 
 		text-align: left;
 		margin: 1px;
 		line-height: 1.35;
-		left: 50px;
-		top: 74px;
+		left: 20px;
+		top: 30px;
 		width: 650px;
 		}
 	#close {
@@ -643,7 +647,7 @@ function clearPW() {
 </head>
 <body onload="doFocus();" >
 <noscript>Your browser does not support JavaScript</noscript>
-<h2>Memorize Notes</h2>
+
 <div id="helptext">
 	An increasing sequence of notes/keys will be played.<br>
 	&nbsp; &nbsp;<u>You must replay them  by clicking/touching the keys in the same order.</u><br>
@@ -651,7 +655,7 @@ function clearPW() {
 	Click Begin to start the sequence with the first key/note.<br>
 	Click Show to see the answer sequence (up to 3 times).<br>
 	Click Restart to start over with a new sequence. <br>
-	Click Cancel to delete your click sequence and re-enter the keys.<br>
+	Click Cancel to delete your click sequence and re-enter the key sequence.<br>
 	<br>
 	Enter Password: 
 	<input class="pass" id="pw" type="password" size="10" value="" 
@@ -711,6 +715,8 @@ function clearPW() {
 <span class="prompt2">Mistakes: </span>
 <span id="mistakes" title="The number of mistake rounds (including multiple attempts at a given round).">
 &nbsp;</span>
+
+<div id="heading">Memorize Notes</div>
 
 <div class="copyright" id="copy">	
 Copyright &copy; 2024 Dennis Martin
