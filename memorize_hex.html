@@ -40,7 +40,7 @@
 		font-weight: normal;
 		border-radius: 5px;
 		margin: 0px;
-		padding: 1px 3px 1px 3px;
+		padding: 0px 3px 1px 3px;
 		height: 48px;
 		font-weight: bold;
 		}
@@ -51,8 +51,8 @@
 		background-color: lightcyan;
 		border: solid 1px black;
 		border-radius: 5px;
-		padding: 1px 2px 40px 3px; 
-		font-family: Verdana, Arial, sans-serif;
+		padding: 1px 2px 25px 3px; 
+		font-family: Tahoma, Arial, sans-serif;
 		font-size: 18px;  
 		display: inline;
 		position: absolute; 
@@ -60,8 +60,8 @@
 		margin: 0px;
 		line-height: 1.3;
 		top: 70px;
-		left: 20px;
-		width: 695px;
+		left: 67px;
+		width: 537px;
 		}
 	#keypad {
 		text-align: left;
@@ -117,7 +117,7 @@
 		font-size: 32px;
 		font-family: Arial, Verdana, sans-serif;
 		padding: 3px;
-		margin: 2px 0px 6px 60px;
+		margin: 2px 0px 0px 60px;
 		border-radius: 5px;
 		}
 	#details {
@@ -511,8 +511,8 @@ function doHelp() {
 function doFocus() {
 	// init a few things and put focus on password
 	if (device == "iPhone" || device == "Android") { // mobile device
-		document.getElementById("helptext").style.fontSize = "14px"; // smaller
-		document.getElementById("helptext").style.width = "625px"; 
+		document.getElementById("helptext").style.fontSize = "15px"; // smaller
+		document.getElementById("helptext").style.width = "500px"; 
 		//document.getElementById("heading").style.display = "none";
 		document.getElementById("helptext").style.top = "70px";
 	}
@@ -546,10 +546,11 @@ function clearPW() {
 <div id="helptext">
 	<strong> &nbsp; Memorize Hexadecimal Sequence</strong><br>
 	A new random hexadecimal digit (0-F) will be shown after 'Next'.<br>
-    You must enter all the digits in the same order that they were shown.<br>
+    You must enter all the digits in the same order they were shown.<br>
 	You may use the keypad displayed or the keyboard on your device.<br>
 	You may enter lowercase, spaces and commas from your keypad.<br>
-	Then click the Verify button. If wrong, enter them again in the correct order.<br>
+	Then click the Verify button.<br>
+	If wrong, enter them again in the correct order.<br>
 	You can click the Show button to see the correct sequence.<br>
 	The 'Cl' key will Clear all characters in the text box.<br>
 	The ',' key enters an optional Comma for readability.<br>
