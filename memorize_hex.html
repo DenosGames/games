@@ -17,7 +17,7 @@
 		font-size: 18px;
 		background-color: #8BB381;
 		} 
-	h2, h3 {
+	#heading {
 		text-align: left;
 		padding: 0px;
 		margin: 0px;
@@ -53,7 +53,7 @@
 		border-radius: 5px;
 		padding: 1px 2px 10px 3px; 
 		font-family: Verdana, Arial, sans-serif;
-		font-size: 17px;  
+		font-size: 18px;  
 		display: inline;
 		position: absolute; 
 		text-align: left;
@@ -509,6 +509,13 @@ function doHelp() {
 }
 
 function doFocus() {
+	let device = navigator.platform;
+	if (device == "iPhone" || device == "Android") { // mobile device
+		document.getElementById("helptext").style.fontSize = "16px"; // smaller
+		document.getElementById("helptext").style.width = "625px"; 
+		document.getElementById("heading").style.display = "none";
+		document.getElementById("helptext").style.top = "70px";
+	}
 	document.getElementById("verify").disabled = true;
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
@@ -535,9 +542,10 @@ function clearPW() {
 </head>
 <body onload="doFocus()">
 <noscript>Your browser does not support JavaScript</noscript>
-<h2>Memorize Hexadecimal Sequence</h2>
+<div id="heading">Memorize Hexadecimal Sequence</div>
 
 <div id="helptext">
+	<strong> &nbsp; Memorize Hexadecimal Sequence</strong><br>
 	A new random hexadecimal digit (0-F) will be shown after 'Next Hex Digit'.<br>
     You must enter all the digits in the same order that they were shown.<br>
 	You may use the keypad displayed or the keyboard on your device.<br>

@@ -48,8 +48,8 @@
 		}
 	#begin {
 		text-align: center;
-		margin-top: 30px;
-		margin-left: 20px;
+		margin-top: 20px;
+		margin-left: 10px;
 	}
 	.prompt {
 		text-align: left;
@@ -57,7 +57,7 @@
 		font-size: 24px;
 		font-family: Verdana, sans-serif;
 		padding: 0px;
-		margin: 3px 0px 4px 20px;
+		margin: 3px 0px 4px 10px;
 		}
 	.prompt2 {
 		text-align: left;
@@ -75,9 +75,9 @@
 		text-align: left;
 		width: 99%;
 		border: none;
-		margin-left: 20px;
+		margin-left: 10px;
 		margin-bottom: 6px;
-		margin-top: 12px;
+		margin-top: 10px;
 		}
 	#score {
 		color: #00004d;;
@@ -86,7 +86,7 @@
 		text-align: left;
 		width: 99%;
 		border: none;
-		margin: 3px 0px 0px 20px;
+		margin: 3px 0px 0px 10px;
 		}
 	.copyright {
 		color: #305050;
@@ -111,9 +111,9 @@
 	}
 	#piano {
 		padding: 0px;
-		width: 650px;
+		width: 640px;
 		border: 2px solid black;
-		margin-left: 20px;
+		margin-left: 10px;
 		background-color: #5a2d0c;
 		color: silver;
 		}
@@ -156,26 +156,26 @@
 		z-index: 2;
 	}
 	#n05 {
-		left: 93px; 
+		left: 79px; 
 		}
 	#n15 {
-		left: 175px;
+		left: 163px;
 		}
 	#n35 {			/* F# */
-		left: 334px;
+		left: 319px;
 		}
 	#n45 {
-		left: 416px;
+		left: 401px;
 		}
 	#n55 {
-		left: 497px;
+		left: 480px;
 		}
 	sub {
 		font-size: 12px;
 		}
 	#helptext { 
 		font-family: Arial, Tahoma, sans-serif; 
-		font-size: 19px;  
+		font-size: 18px;  
 		color: black; 
 		background-color: lightcyan;
 		border: 2px outset #707070;
@@ -266,11 +266,7 @@ function initialize(src) {
 	document.getElementById("show").disabled = true;
 	document.getElementById("cancel").disabled = false;
 	document.getElementById("restart").disabled = true;
-	let device = navigator.platform;
-	if (device == "iPhone" || device == "Android") { // mobile device
-		document.getElementById("helptext").style.fontSize = "16px"; // smaller
-		document.getElementById("helptext").style.width = "665px"; 
-		}
+	
 	// user interaction now required in Chrome to start autoplay
 	//displayDetails("Click the Blue Help box to close it");
 	// only declare one audiocontext or Edge will max out at 6
@@ -629,6 +625,11 @@ function doReplay(rnd) {
 }
 
 function doFocus() {
+	let device = navigator.platform;
+	if (device == "iPhone" || device == "Android") { // mobile device
+		document.getElementById("helptext").style.fontSize = "16px"; // smaller
+		document.getElementById("helptext").style.width = "555px"; 
+	}
 	document.getElementById("begin").disabled = true;
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
