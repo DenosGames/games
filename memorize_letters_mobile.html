@@ -222,6 +222,7 @@ var help = true;
 var eStr = "";
 
 function doPW() {
+		document.getElementById("hideKeys").disabled = true;
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
 	if (eStr == "RGVubzku") {
@@ -260,6 +261,7 @@ function initialize(src) {
 	document.getElementById("count").innerHTML = "0";
 	//document.getElementById("verify").disabled = true;
 	document.getElementById("show").disabled = true;
+	document.getElementById("hideKeys").disabled = false;
 	document.getElementById("hideKeys").checked = false;
 	showScore();
 	if (eStr == "RGVubzku")
@@ -652,7 +654,7 @@ function clearPW() {
 		title="Show the letter sequence (up to 4 times).">Show</button>	
 	&nbsp; &nbsp;
 	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
-			title="Reset everything and start over">New</button> 
+			title="Start a new game / sequence">New</button> 
 </form>
 
 <div id="details" onpaste="return false;" oncopy="return false">&nbsp;</div>
