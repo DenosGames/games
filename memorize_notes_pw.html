@@ -233,6 +233,7 @@ var mistakes = 0;
 var helptext = true;
 var timer1 = "";
 var eStr = "";
+var device = navigator.platform;
 
 function doPW() {
 	let str = document.getElementById("pw").value;
@@ -278,7 +279,7 @@ function initialize(src) {
 		helptext = false;
 	}
 	else {
-		displayDetails("Click Begin to start the sequence of notes.");
+		displayDetails("Device is " + device + ". Starting new note sequence.");
 	}
 	playScale();
 	enablePlay();
@@ -625,10 +626,15 @@ function doReplay(rnd) {
 }
 
 function doFocus() {
-	let device = navigator.platform;
+	// init a few things
 	if (device == "iPhone" || device == "Android") { // mobile device
-		document.getElementById("helptext").style.fontSize = "16px"; // smaller
-		document.getElementById("helptext").style.width = "555px"; 
+		document.getElementById("helptext").style.fontSize = "15px"; // smaller
+		document.getElementById("helptext").style.width = "560px"; 
+		document.getElementById("n05").style.top = "38px";
+		document.getElementById("n15").style.top = "38px";
+		document.getElementById("n35").style.top = "38px";
+		document.getElementById("n45").style.top = "38px";
+		document.getElementById("n55").style.top = "38px";
 	}
 	document.getElementById("begin").disabled = true;
 	document.getElementById("show").disabled = true;
