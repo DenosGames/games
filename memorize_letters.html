@@ -221,6 +221,7 @@ var help = true;
 var eStr = "";
 
 function doPW() {
+	document.getElementById("hideKeys").disabled = true;
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
 	if (eStr == "RGVubzku") {
@@ -260,6 +261,7 @@ function initialize(src) {
 	//document.getElementById("verify").disabled = true;
 	document.getElementById("show").disabled = true;
 	document.getElementById("hideKeys").checked = false;
+	document.getElementById("hideKeys").disabled = false;
 	showScore();
 	if (eStr == "RGVubzku")
 		setTimeout (getNext, 1500);
