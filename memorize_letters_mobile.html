@@ -36,11 +36,11 @@
 		}
 	.inpt {
 		font-family: Courier, "Courier New", "Lucida Console", Monaco;
-		font-size: 22px;
+		font-size: 24px;
 		font-weight: normal;
 		border-radius: 6px;
-		margin: 0px;
-		padding: 0px 2px 0px 2px;
+		margin: 0px 0px 0px 25px;
+		padding: 0px 4px 0px 4px;
 		font-weight: bold;
 		height: 40px;
 		}
@@ -59,7 +59,7 @@
 		text-align: left;
 		margin: 0px;
 		line-height: 1.3;
-		top: 85px;
+		top: 53px;
 		left: 20px;
 		overflow: auto;
 		}
@@ -130,7 +130,7 @@
 	#prompt, #prompt2 {
 		text-align: left;
 		color: black;
-		font-size: 24px;
+		font-size: 22px;
 		font-family: Arial, Verdana, sans-serif;
 		padding: 0px;
 		margin: 0px 0px 0px 30px;
@@ -568,9 +568,9 @@ function clearPW() {
 </head>
 <body onload="doFocus();">
 <noscript>Your browser does not support JavaScript</noscript>
-<h2>Memorize Letter Sequence</h2>
 
 <div id="helptext">
+	<strong> &nbsp; Memorize Letters Mobile</strong><br>
 	A new random letter will be shown after 'Next Letter', adding to a sequence.<br>
     You must enter all the letters in the same order that they were shown.<br>
 	You may use the keypad displayed or the keyboard on your device.<br>
@@ -654,7 +654,7 @@ function clearPW() {
 		title="Show the letter sequence (up to 4 times).">Show</button>	
 	&nbsp; &nbsp;
 	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
-			title="Start a new game / sequence">New</button> 
+			title="Start a new sequence">New Seq.</button> 
 </form>
 
 <div id="details" onpaste="return false;" oncopy="return false">&nbsp;</div>
