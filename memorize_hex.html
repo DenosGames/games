@@ -189,6 +189,7 @@ var op = 1;
 var fadeStarted = false;
 var help = true;
 var eStr = "";
+var device = navigator.platform;
 
 function doPW() {
 	let str = document.getElementById("pw").value;
@@ -206,7 +207,6 @@ function doPW() {
 
 function initialize(src) {
 	if (src == 0) { // onload
-		let device = navigator.platform;
 		displayDetails("Device is " + device + ". Enter first letter and Verify");
 		//  Add event listener to all for iphone, ipad
 		//  https://web.dev/articles/add-touch-to-your-site
@@ -509,7 +509,7 @@ function doHelp() {
 }
 
 function doFocus() {
-	let device = navigator.platform;
+	// init a few things and put focus on password
 	if (device == "iPhone" || device == "Android") { // mobile device
 		document.getElementById("helptext").style.fontSize = "16px"; // smaller
 		document.getElementById("helptext").style.width = "625px"; 
