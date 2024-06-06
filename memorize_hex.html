@@ -51,7 +51,7 @@
 		background-color: lightcyan;
 		border: solid 1px black;
 		border-radius: 5px;
-		padding: 1px 2px 10px 3px; 
+		padding: 1px 2px 40px 3px; 
 		font-family: Verdana, Arial, sans-serif;
 		font-size: 18px;  
 		display: inline;
@@ -59,9 +59,9 @@
 		text-align: left;
 		margin: 0px;
 		line-height: 1.3;
-		top: 97px;
+		top: 70px;
 		left: 20px;
-		width: 655px;
+		width: 695px;
 		}
 	#keypad {
 		text-align: left;
@@ -511,9 +511,9 @@ function doHelp() {
 function doFocus() {
 	// init a few things and put focus on password
 	if (device == "iPhone" || device == "Android") { // mobile device
-		document.getElementById("helptext").style.fontSize = "16px"; // smaller
+		document.getElementById("helptext").style.fontSize = "15px"; // smaller
 		document.getElementById("helptext").style.width = "625px"; 
-		document.getElementById("heading").style.display = "none";
+		//document.getElementById("heading").style.display = "none";
 		document.getElementById("helptext").style.top = "70px";
 	}
 	document.getElementById("verify").disabled = true;
@@ -542,11 +542,10 @@ function clearPW() {
 </head>
 <body onload="doFocus()">
 <noscript>Your browser does not support JavaScript</noscript>
-<div id="heading">Memorize Hexadecimal Sequence</div>
 
 <div id="helptext">
 	<strong> &nbsp; Memorize Hexadecimal Sequence</strong><br>
-	A new random hexadecimal digit (0-F) will be shown after 'Next Hex Digit'.<br>
+	A new random hexadecimal digit (0-F) will be shown after 'Next'.<br>
     You must enter all the digits in the same order that they were shown.<br>
 	You may use the keypad displayed or the keyboard on your device.<br>
 	You may enter lowercase, spaces and commas from your keypad.<br>
