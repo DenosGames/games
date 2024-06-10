@@ -121,7 +121,7 @@
 	#n0, #n1, #n2, #n3, #n4, #n5, #n6, #n7, #n8, #n9,
 	#n10, #n11, #n12 
 		{
-		color: #666;
+		color: black;
 		background-color: white;
 		border-left: 1px solid black;
 		border-top: 1px solid black;
@@ -137,7 +137,7 @@
 		z-index: 1;
 	}
 	#n1, #n3, #n6, #n8, #n10 {
-		color: #eee;
+		color: white;
 		background-color: black;
 		border-left: 1px solid black;
 		border-top: 1px solid black;
@@ -155,19 +155,19 @@
 		z-index: 2;
 	}
 	#n1 {
-		left: 113px; 
+		left: 103px; 
 		}
 	#n3 {
-		left: 192px;
+		left: 182px;
 		}
 	#n6 {			/* F# */
-		left: 350px;
+		left: 340px;
 		}
 	#n8 {
-		left: 430px;
+		left: 420px;
 		}
 	#n10 {
-		left: 509px;
+		left: 499px;
 		}
 	sub {
 		font-size: 12px;
@@ -357,14 +357,14 @@ function showPrevious(rnd) {
 }
 
 function darkenKey(n) {
-	// make the key a little darker if white, else a little lighter if black key
+	// make the key a darker if white, else lighter if black key
 	let id = "n" + n;
 	if (blackKeys.indexOf(n) >= 0 ) {  // found n, so is a black key
-		document.getElementById(id).style.backgroundColor = "#666"; // little gray
+		document.getElementById(id).style.backgroundColor = "#AAA"; // gray
 		document.getElementById(id).style.color = "white";
 	}
 	else { // it's a white key
-		document.getElementById(id).style.backgroundColor = "#CCC";
+		document.getElementById(id).style.backgroundColor = "#AAA";
 		document.getElementById(id).style.color = "black";
 	}
 }
@@ -374,7 +374,7 @@ function lightenKey(n) {
 	let id = "n" + n;
 	if (blackKeys.indexOf(n) >= 0 ) {  // found n, so is a black key
 		document.getElementById(id).style.backgroundColor = "black";
-		document.getElementById(id).style.color = "#eee";
+		document.getElementById(id).style.color = "white";
 		
 	}
 	else {  // white key
