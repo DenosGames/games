@@ -1,0 +1,742 @@
+<!DOCTYPE html> 
+<!-- Jerry's NATO program converted to webpage -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FACT</title>
+<style>
+	body {
+		background-color: #80A080;
+		font-family: Verdana, Arial, san-serif;
+		font-size: 22px;
+		} 
+	h2 {
+		font-family: Georgia, serif;
+		font-size: 32px;
+		padding: 0px;
+		margin: 0px 400px -12px 0px;
+		text-align: center;
+		color: white;
+		text-shadow: 3px 4px #444;
+		}
+	div { text-align: center;
+		font-size: 18px;
+		}
+	.inpt {
+		font-family: Verdana, Arial, sans-serif;
+		font-size: 24px;
+		color: blue;
+		text-align: left;
+		margin: 0px;
+		cursor: pointer;
+		}
+	input {
+		cursor: pointer;
+		}
+	#msg {
+		font-size: 24px;
+		color: yellow;
+		padding: 5px 0px 5px 0px;
+		text-align: left;
+		margin: 2px 0px 1px 70px;
+		font-family: Verdana, Georgia, "Times New Roman", "Courier New", serif;
+		}
+	.copyright {
+		color: #606060;
+		position: fixed;
+		bottom: 8px;
+		right: 20px;
+		font-size: 12px;
+	}
+	.copyright:hover {
+		color: #dee;
+		font-weight: bold;
+	}
+	#nbr {
+		position: fixed;
+		font-size: 12px;
+		color: #333;
+		bottom: 1px;
+		right: 1px;
+		}
+	#symbols {
+		position: fixed;
+		left: 30px;
+		top: 95px;
+		margin-left: 40px;
+	}
+	#a0, #a1, #a2, #a3, #a4, #a5, #a6, #a7, #a8, #a9, #a10,
+	#a11, #a12, #a13, #a14, #a15, #a16, #a17, #a18, #a19, #a20,
+	#a21, #a22, #a23, #a24, #a25, #a26, #a27, #a28, #a29, #a30,
+	#a31, #a32, #a33, #a34, #a35, #a36, #a37, #a38, #a39, #a40,
+	#a41, #a42, #a43, #a44, #a45, #a46, #a47, #a48, #a49, #a50,
+	#a51, #a52, #a53, #a54, #a55, #a56, #a57, #a58, #a59, #a60,
+	#a61, #a62, #a63, #a64, #a65, #a66, #a67, #a68, #a69, #a70,
+	#a71, #a72, #a73, #a74, #a75, #a76, #a77, #a78, #a79, #a80,
+	#a81, #a82, #a83, #a84, #a85, #a86, #a87, #a88, #a89, #a90,
+	#a91, #a92, #a93, #a94, #a95, #a96, #a97, #a98, #a99, #a100,
+	#a101, #a102, #a103, #a104, #a105, #a106, #a107, #a108, #a109, #a110,
+	#a111, #a112, #a113, #a114, #a115, #a116, #a117, #a118, #a119, #a120,
+	#a121, #a122, #a123, #a124, #a125
+		{
+		text-align: center;
+		position: absolute;
+		padding: 0px;
+		width: 50px;
+		height: 50px;
+		line-height: 50px;
+		border-radius: 2px;
+		color: black; 
+		border: solid 1px #404040;	
+		font-size: 26px;
+		font-family: Georgia, "Times New Roman", "Courier New", serif;
+		cursor: pointer;
+		}
+	#helptext { 
+		font-family: Arial, Tahoma, sans-serif; 
+		font-size: 20px;  
+		color: #000040; 
+		background-color: lightblue;
+		border: gray inset 2px; 
+		padding: 2px 0px 6px 10px;
+		display: inline; 
+		z-index: 5;
+		opacity: 0.96;
+		position: absolute; 
+		visibility: hidden; 
+		top: 145px;
+		left: 70px;
+		width: 890px;
+		border-radius: 6px;
+		}
+	#ch {
+		position: fixed;
+		left: 73px;
+		top: 75px;
+		font-size: 24px;
+		text-align: center;
+	}
+	#desc {
+		display: inline-block;
+		font-size: 22px;
+		width: 410px;
+		text-align: left;	
+		font-family: Verdana, Arial, san-serif;
+		}
+	#char {
+		font-size: 32px;
+		text-align: center;
+		font-family: Georgia, "Times New Roman", "Courier New", serif;
+		width: 45px;
+		}
+	.prompt {
+		font-size: 22px;
+		font-family: Arial, Tahoma, san-serif;
+		color: navy;
+		text-align: left;
+		margin:  0px;	
+		}
+	#fontname {
+		font-size: 22px;
+		font-family: Arial, san-serif;
+		cursor: pointer;
+	}
+	select,option {
+		-webkit-appearance:button !important;
+        -moz-appearance:button !important;
+        appearance:button !important;
+		cursor: pointer;
+	}
+	#thetext {
+		font-size: 28px;
+		font-family: Georgia, "Times New Roman", "Courier New", serif;
+		position: absolute; 
+		visibility: visible;
+		top: 510px;
+		left: 70px;
+		width: 895px;
+		height: 120px;
+		padding: 0px 0px 0px 6px;
+		margin: 0px;
+		cursor: pointer;
+	}
+	#radios {
+		float: right;
+		font-size: 19px;
+		font-family: Arial, Tahoma, san-serif;
+		color: navy;
+		margin: 0px;
+		}
+	#copy {
+		position: absolute;
+		top: 650px;
+		left: 70px;
+	}
+	#clear {
+		position: absolute;
+		top: 650px;
+		left: 270px;
+		}
+</style> 
+
+<script>
+const BARHEIGHT = 50; 
+const BARWIDTH = 50; 
+const MAXROWS = 7; 
+const COLUMNS = 18; 
+const MAXCHARS = MAXROWS * COLUMNS;
+const BACKCOLOR = "white";
+var myChars = [];
+var myDesc = [];
+var charType = [];  // 0 = symbol, 1 = letter
+var myFont = "Georgia";
+var timer = "";
+var myText = ""; // what user typed into textarea incl symbols
+var loremIpsum = 
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
+nisi ut aliquip ex ea commodo consequat. \
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \
+Excepteur sint occaecat cupidatat non proident, \
+sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+function initialize() {
+	// reset variables, draw the grid, init arrays
+	layoutGrid();
+	// blank fill Descriptions
+	for (let i = 0; i < MAXCHARS; i++) {
+		myChars[i] = " ";
+		myDesc[i] = " "; 
+		charType[i] = 0; // symbol, 
+	}
+	myChars[0] = "°";  	myDesc[0] = "Degrees";
+	myChars[1] = "¢";  	myDesc[1] = "Cents";
+	myChars[2] = "∞";	myDesc[2] = "Infinity";
+	myChars[3] = "★";	myDesc[3] = "Star";
+	myChars[4] = "≤";	myDesc[4] = "Less than or equal to";
+	myChars[5] = "≥";	myDesc[5] = "Greater than or equal to";
+	myChars[6] = "↑"; 	myDesc[6] = "Up Arrow";
+	myChars[7] = "↓";	myDesc[7] = "Down Arrow";
+	myChars[8] = "←";	myDesc[8] = "left Arrow";
+	myChars[9] = "→";	myDesc[9] = "right Arrow";
+	myChars[10] = "↔";	myDesc[10] = "Left and right Arrow";
+	myChars[11] = "•";	myDesc[11] = "Bullet";
+	myChars[12] = "ñ";	myDesc[12] = "n with tilde";
+	myChars[13] = "¿";	myDesc[13] = "Inverted Question Mark";
+	myChars[14] = "¡";	myDesc[14] = "Inverted Exclamation point";
+	myChars[15] = "é";	myDesc[15] = "Latin small letter e with Acute"; 	
+	myChars[16] = "è";	myDesc[16] = "Latin small letter e with Grave";		
+	myChars[17] = "á";	myDesc[17] = "Latin small letter a with Acute";		
+	myChars[18] = "à";	myDesc[18] = "Latin small letter a with Grave";		
+	myChars[19] = "ß";	myDesc[19] = "Latin small letter Sharp S";			
+	myChars[20] = "ä";	myDesc[20] = "Latin small letter a with Diaeresis";	
+	myChars[21] = "ö";	myDesc[21] = "Latin small letter o with Diaeresis";	
+	myChars[22] = "æ";	myDesc[22] = "Latin small letter Ae";				
+	myChars[23] = "«";	myDesc[23] = "Much less than";
+	myChars[24] = "»";	myDesc[24] = "Much greater than";
+	myChars[25] = "✓";	myDesc[25] = "Check Mark";
+	myChars[26] = "©";	myDesc[26] = "Copyright";
+	myChars[27] = "®";	myDesc[27] = "Registered";
+	myChars[28] = "™";	myDesc[28] = "Trademark";
+	myChars[29] = "✕";	myDesc[29] = "Multiplication";
+	myChars[30] = "÷";	myDesc[30] = "Division";
+	myChars[31] = "∑";	myDesc[31] = "Summation (Math)";
+	myChars[32] = "∫";	myDesc[32] = "Integral (Math)";
+	myChars[33] = "≡";	myDesc[33] = "Identical";
+	myChars[34] = "≠";	myDesc[34] = "Not Equal"; 
+	myChars[35] = "≈";	myDesc[35] = "Approximately equal to";
+	myChars[36] = "∏";	myDesc[36] = "N-Ary product";
+	myChars[37] = "‖";	myDesc[37] = "Double vertical lines";
+	myChars[38] = "∴";	myDesc[38] = "Therefore (Math)";
+	myChars[39] = "√";	myDesc[39] = "Square Root";
+	myChars[40] = "∛";  myDesc[40] = "Cube Root";
+	myChars[41] = "α";	myDesc[41] = "Greek letter alpha";
+	myChars[42] = "β";	myDesc[42] = "Greek letter beta";
+	myChars[43] = "γ";	myDesc[43] = "Greek letter gamma";	
+	myChars[44] = "δ";	myDesc[44] = "Greek letter delta";
+	myChars[45] = "ε";	myDesc[45] = "Greek letter epsilon";
+	myChars[46] = "ζ";	myDesc[46] = "Greek letter zeta";
+	myChars[47] = "η";	myDesc[47] = "Greek letter eta";
+	myChars[48] = "θ";	myDesc[48] = "Greek letter theta";
+	myChars[49] = "ι";	myDesc[49] = "Greek letter iota";
+	myChars[50] = "κ";	myDesc[50] = "Greek letter appa";
+	myChars[51] = "λ";	myDesc[51] = "Greek letter lambda";
+	myChars[52] = "μ";	myDesc[52] = "Greek letter mu";
+	myChars[53] = "ν";	myDesc[53] = "Greek letter nu";
+	myChars[54] = "ξ";	myDesc[54] = "Greek letter xi";
+	myChars[55] = "ο";	myDesc[55] = "Greek letter omicron";
+	myChars[56] = "π";	myDesc[56] = "Greek letter pi";
+	myChars[57] = "ρ";	myDesc[57] = "Greek letter rho";
+	myChars[58] = "σ";	myDesc[58] = "Greek letter sigma";
+	myChars[59] = "τ";	myDesc[59] = "Greek letter tau";
+	myChars[60] = "υ";	myDesc[60] = "Greek letter upsilon";
+	myChars[61] = "φ";	myDesc[61] = "Greek letter phi";
+	myChars[62] = "χ";	myDesc[62] = "Greek letter chi";
+	myChars[63] = "ψ";	myDesc[63] = "Greek letter psi";
+	myChars[64] = "ω";	myDesc[64] = "Greek letter omega";
+	myChars[65] = "⅛";	myDesc[65] = "One Eighth";
+	myChars[66] = "¼";	myDesc[66] = "One fourth";
+	myChars[67] = "⅜";	myDesc[67] = "Three Eighths";
+	myChars[68] = "½";	myDesc[68] = "One half";
+	myChars[69] = "⅝";	myDesc[69] = "Five Eighths";
+	myChars[70] = "¾";	myDesc[70] = "Three fourths";
+	myChars[71] = "⅞";	myDesc[71] = "Seven Eighths";
+	myChars[72] = "☹";	myDesc[72] = "Sad Face";
+	myChars[73] = "☺";	myDesc[73] = "Happy Face";
+	myChars[74] = "☻";	myDesc[74] = "Black Happy Face";
+	myChars[75] = "♥";	myDesc[75] = "Hearts";
+	myChars[76] = "♠";	myDesc[76] = "Spades";
+	myChars[77] = "♣";	myDesc[77] = "Clubs";
+	myChars[78] = "♦";	myDesc[78] = "Diamonds";
+	myChars[79] = "♚";	myDesc[79] = "King (Chess)";
+	myChars[80] = "♛";	myDesc[80] = "Queen (Chess)";
+	myChars[81] = "♜";	myDesc[81] = "Rook (Chess)";
+	myChars[82] = "♝";	myDesc[82] = "Bishop (Chess)";
+	myChars[83] = "♞";	myDesc[83] = "Knight (Chess)";
+	myChars[84] = "♟";	myDesc[84] = "Pawn (Chess)";
+	myChars[85] = "µ";	myDesc[85] = "Micro";
+	myChars[86] = "Δ";	myDesc[86] = "Delta";
+	myChars[87] = "►";  myDesc[87] = "Right Block Arrow";
+	myChars[88] = "◄";  myDesc[88] = "Left Block Arrow";
+	myChars[89] = "☼";	myDesc[89] = "White Sun with Rays";
+	myChars[90] = "˅";	myDesc[90] = "Or";
+	myChars[91] = "˄";	myDesc[91] = "And";
+	myChars[92] = "¬";  myDesc[92] = "Not";
+	myChars[93] = "∩";  myDesc[93] = "Intersection";
+	myChars[94] = "∪";  myDesc[94] = "Union";
+	myChars[95] = "¹";	myDesc[95] = "Superscript One";
+	myChars[96] = "²";	myDesc[96] = "Superscript 2";
+	myChars[97] = "³";	myDesc[97] = "Superscript 3";
+	myChars[98] = "⁴";  myDesc[98] = "Superscript 4";
+	myChars[99] = "⁵";  myDesc[99] = "Superscript 5";
+	myChars[100] = "ˣ";  myDesc[100] = "Superscript x";
+	myChars[101] = "ⁿ";	myDesc[101] = "Superscript n";
+	myChars[102] = "⁽"; myDesc[102] = "Superscript Left Parenthesis";
+	myChars[103] = "⁾";	myDesc[103] = "Superscript Right Parenthesis";
+	myChars[104] = "⁺"; 	myDesc[104] = "Superscript Plus";
+	myChars[105] = "⁻"; 	myDesc[105] = "Superscript Minus";
+	myChars[106] = "⅓"; myDesc[106] = "One Third";
+	myChars[107] = "⅔"; myDesc[107] = "Two Thirds";
+	myChars[108] = "§";	myDesc[108] = "Section";
+	myChars[109] = "¶";	myDesc[109] = "Pilcrow (Paragraph)";
+	myChars[110] = "†";	myDesc[110] = "Dagger";
+	myChars[111] = "☐"; myDesc[111] = "White Square";
+	myChars[112] = "☒";	myDesc[112] = "Ballot Box with X";
+	myChars[113] = "♮"; myDesc[113] = "Natural (Music)";
+	myChars[114] = "♭";	myDesc[114] = "Flat  (Music)";
+	myChars[115] = "♯"; myDesc[115] = "Sharp  (Music)";
+	myChars[116] = "♪"; myDesc[116] = "Eighth note";
+	myChars[117] = "♫"; myDesc[117] = "Beamed Eighth Notes";
+	myChars[118] = "Ω";	myDesc[118] = "Ohms";
+	myChars[119] = "£"; myDesc[119] = "Pound";
+	myChars[120] = "€"; myDesc[120] = "Euro";
+	myChars[121] = "±"; myDesc[121] = "Plus Minus";
+	// Put symbols into the grid cells
+	for (let i = 0; i < myChars.length; i++) {
+		id = "a" + (i).toString();
+		document.getElementById(id).innerHTML = myChars[i];
+		if (myDesc[i] != " ")
+			document.getElementById(id).title = myDesc[i]; 
+		else
+			document.getElementById(id).title = "Available";
+	}
+	// Set the type of character to letter for the letters
+	for (let j = 41; j <= 64; j++) {
+		charType[j] = 1;  // Greek letters
+	}
+	for (let k = 15; k <= 22; k++) {
+		charType[k] = 1;  // Latin letters
+	}
+	document.getElementById("alphabet").checked = true;
+	showAlphaNumeric();
+	document.getElementById("fontname").selectedIndex = "0"; // because Firefox saves last one
+	document.getElementById("char").value = "";
+	document.getElementById("desc").innerHTML = "";
+	showTip('helptext');
+	t = setTimeout("hideTip('helptext')", 15000);
+}	
+
+function showLoremIpsum() {
+	document.getElementById("thetext").value = "";
+	document.getElementById("thetext").value = loremIpsum; // + " (" + myFont + ")";
+}
+
+function showAlphaNumeric() {
+	// Show textarea characters in same font as symbol
+	document.getElementById("thetext").value = "";
+	for (i = 65; i < 91; i++) { // A-Z
+		document.getElementById("thetext").value += String.fromCharCode(i) + " ";
+	}
+	document.getElementById("thetext").value += "\n"; // newline
+	for (i = 97; i < 123; i++) { // a-z
+		document.getElementById("thetext").value += String.fromCharCode(i) + " ";
+	}
+	document.getElementById("thetext").value += "\n"; // newline
+	for (i = 48; i < 58; i++) { // 0-9
+		document.getElementById("thetext").value += String.fromCharCode(i) + " ";
+	}
+	document.getElementById("thetext").value += ". (" + myFont + ")";
+}
+
+function layoutGrid() {
+	// generate the grid cells
+	let i = 0;
+	let cinx = 0;
+	let id, elem = "";
+	// build grid
+	let top = 55;
+	// loop from 0 to MAX creating cells
+	for (i = 0; i < MAXCHARS; i++) {
+		top = BARHEIGHT + Math.floor(i / COLUMNS) * BARHEIGHT;
+		id = "a" + (i).toString();
+		elem = document.getElementById(id);
+		elem.style.left = (i % COLUMNS) * BARWIDTH + "px"; // new row
+		elem.style.top = top + "px";	// set top position
+		// now give the square a color
+		elem.style.backgroundColor = BACKCOLOR;
+		elem.innerHTML = "";
+		elem.style.border = "solid 2px #404040";	
+	} // end for
+}
+
+function doClick(num) {
+	// Process click on grid cell 'num'
+	if (myChars[num] == " ") {
+		return;
+		}
+	copyToClipboard(num);
+	let str = "";
+	if (charType[num] == 0) // symbol
+		str += "The ";
+	str += myDesc[num] + " [" + myChars[num] + "]";
+	if (charType[num] == 0)
+		str += " symbol";
+	str += " was copied to the Windows clipboard.";
+	showMessage(str);
+	if (document.getElementById("yours").checked) {
+		document.getElementById("thetext").value += myChars[num];
+		myText += myChars[num];
+	}
+}
+
+function copyToClipboard(num) {
+	// Copy the clicked symbol to Windows clipboard 
+	// First put the text into a small textbox
+	document.getElementById("char").value = myChars[num];
+	document.getElementById("desc").innerHTML = myDesc[num]; // Description
+	let copyText = document.getElementById("char");
+	// Select the input text field
+	copyText.select();
+	copyText.setSelectionRange(0, 99999); // For mobile devices
+	 // Copy the text area to clipboard
+	navigator.clipboard.writeText(copyText.value);
+	copyText.blur();
+}
+
+function copyTextArea() {
+	// Copy the text area to Windows clipboard
+	// First save the textarea to a global
+	myText = document.getElementById("thetext").value;
+	if (myText == "") {
+		showMessage("Nothing to copy/save. Click Your own Text, " +
+		"then click some symbols and/or enter text");
+		return;
+	}
+	let copyText = document.getElementById("thetext");
+	// Select the text area
+	copyText.select();
+	copyText.setSelectionRange(0, 99999); // For mobile devices
+	 // Copy the text area to clipboard
+	navigator.clipboard.writeText(copyText.value);
+	showMessage("Textarea copied to clipboard.");
+	copyText.blur();
+}
+
+function clearText() {
+	// Clear text area and global if 3rd radio button checked
+	if (document.getElementById("yours").checked) {
+		document.getElementById("thetext").value = "";
+		myText = "";
+	}
+}
+
+function showMessage(msg) {
+	// Place the string parameter in the msg element
+	document.getElementById("msg").innerHTML = msg;
+}
+
+function showTip(id) { 
+	// show the tooltip for the id
+	if (document.getElementById(id))
+		document.getElementById(id).style.visibility = "visible";
+}
+
+function hideTip(id) { 
+	// Hide the element
+	if (document.getElementById(id))
+		document.getElementById(id).style.visibility = "hidden";
+		clearTimeout(timer);
+}
+
+function doHover(num) {
+	// When mouse hovers over cell, put symbol in textbox and descr. next to it
+	document.getElementById("char").value = myChars[num];  
+	document.getElementById("desc").innerHTML = myDesc[num]; 
+	document.getElementById("nbr").innerHTML = num.toString(); // in corner
+	if (myChars[num] != " ") {  // if non blank change background color
+		let id = "a" + num.toString();
+		document.getElementById(id).style.backgroundColor = "aliceblue";
+	}
+}
+
+function doMouseOut(num) {
+	// When mouse moves out of cell, change background color to original
+	let id = "a" + num.toString();
+	document.getElementById(id).style.backgroundColor = BACKCOLOR;
+}
+
+function doClearBox() {
+	// Clear textbox and desc. when mouse moves out of grid
+	document.getElementById("char").value = "";
+	document.getElementById("desc").innerHTML = "";
+	document.getElementById("nbr").innerHTML = "";
+}
+
+function changeFont(val) {
+	// Drop down changed, so change the font of every cell in grid
+	let id = "";
+	for (let i = 0; i < MAXCHARS; i++) {
+		id = "a" + i;
+		document.getElementById(id).style.fontFamily = val;
+	} // for
+	document.getElementById("char").style.fontFamily = val; // input box also
+	//Now do the textarea
+	document.getElementById("thetext").style.fontFamily = val;
+	myFont = val;
+	doRadio();
+}
+
+function doRadio(r) {
+	// See which button was checked and change textarea
+	if (document.getElementById("alphabet").checked)
+		showAlphaNumeric();
+	else
+	if (document.getElementById("loremipsum").checked)
+		showLoremIpsum();
+	else
+		document.getElementById("thetext").value = myText;
+	document.getElementById("thetext").focus();
+}
+
+function saveMyText() {
+	// Saves user entered text
+	if (myText != "")
+		document.getElementById("thetext").value = myText;
+	else
+		myText = document.getElementById("thetext").value;
+	}
+</script>
+
+</head>
+<body onload="initialize();">
+<h2>Font And Character Test / Copy</h2>
+
+<span id="helptext" onclick="hideTip('helptext')">
+This program copies special symbols to the Windows clipboard.<br>
+Move your mouse over a symbol to see its name and description.<br>
+If this is the symbol you want, just click it and it will be copied to the Windows clipboard.<br>
+The default font used for the symbols is "Georgia". Change it via the dropdown.<br>
+The text area shows alphanumeric text, pseudo Latin text, 
+or your own text including symbols that you clicked.
+Click Copy Text to copy your text to the clipboard and save it.<br>
+Click Clear Text to erase the saved text in the textarea.<br>
+→ Click anywhere in this box to close the Help or wait 15 seconds.<br>
+&nbsp;
+</span>
+
+<div id='msg'> </div>
+<form id="ch">
+    <input class="inpt" type="text" id="char" size="1" maxlength="1"
+		title="The character to be copied">
+	<span id="desc"> </span>
+	<span class="prompt">Font: 
+		<select  id="fontname" title="Font" onchange="changeFont(this.value)"> 
+			<option value="Georgia" selected="selected">Georgia</option>
+			<option value="Times New Roman">Times New Roman</option>
+			<option value="Courier New">Courier New</option>
+			<option value="Calibri">Calibri</option>
+			<option value="Arial">Arial</option>
+			<option value="Verdana">Verdana</option>
+			<option value="Tahoma">Tahoma</option>
+			<option value="Trebuchet MS">Trebuchet MS</option>
+			<option value="Garamond">Garamond</option>
+			<option value="Brush Script MT, cursive">Brush Script MT</option>
+			<option value="Impact">Impact</option>
+			<option value="Consolas">Consolas</option>
+			<option value="Helvetica">Helvetica</option>
+			</select>
+	</span>
+	<span id="radios">
+		<input type="radio" id="alphabet" name="showtext" 
+			onchange="doRadio(0);" checked>
+		<label for="alphabet" >AlphaNumeric</label>
+		<br>
+		&nbsp; 
+		<input type="radio" id="loremipsum" name="showtext" onchange="doRadio(1);">
+		&nbsp;<label for="loremipsum" >Lorem Ipsum.&nbsp;</label>
+		<br>
+		&nbsp; 
+		<input type="radio" id="yours" name="showtext" onchange="doRadio(2);">
+		&nbsp;
+		<label for="yours" >Your own text&nbsp;</label>
+	</span>
+</form>
+
+<!-- generate the spans with generate.html file. Then copy/paste it here -->
+<div id="symbols" onmouseout="doClearBox();">
+<span id='a0' onclick='doClick(0);' onmouseover='doHover(0);' onmouseout='doMouseOut(0);'> </span>
+<span id='a1' onclick='doClick(1);' onmouseover='doHover(1);' onmouseout='doMouseOut(1);'> </span>
+<span id='a2' onclick='doClick(2);' onmouseover='doHover(2);' onmouseout='doMouseOut(2);'> </span>
+<span id='a3' onclick='doClick(3);' onmouseover='doHover(3);' onmouseout='doMouseOut(3);'> </span>
+<span id='a4' onclick='doClick(4);' onmouseover='doHover(4);' onmouseout='doMouseOut(4);'> </span>
+<span id='a5' onclick='doClick(5);' onmouseover='doHover(5);' onmouseout='doMouseOut(5);'> </span>
+<span id='a6' onclick='doClick(6);' onmouseover='doHover(6);' onmouseout='doMouseOut(6);'> </span>
+<span id='a7' onclick='doClick(7);' onmouseover='doHover(7);' onmouseout='doMouseOut(7);'> </span>
+<span id='a8' onclick='doClick(8);' onmouseover='doHover(8);' onmouseout='doMouseOut(8);'> </span>
+<span id='a9' onclick='doClick(9);' onmouseover='doHover(9);' onmouseout='doMouseOut(9);'> </span>
+<span id='a10' onclick='doClick(10);' onmouseover='doHover(10);' onmouseout='doMouseOut(10);'> </span>
+<span id='a11' onclick='doClick(11);' onmouseover='doHover(11);' onmouseout='doMouseOut(11);'> </span>
+<span id='a12' onclick='doClick(12);' onmouseover='doHover(12);' onmouseout='doMouseOut(12);'> </span>
+<span id='a13' onclick='doClick(13);' onmouseover='doHover(13);' onmouseout='doMouseOut(13);'> </span>
+<span id='a14' onclick='doClick(14);' onmouseover='doHover(14);' onmouseout='doMouseOut(14);'> </span>
+<span id='a15' onclick='doClick(15);' onmouseover='doHover(15);' onmouseout='doMouseOut(15);'> </span>
+<span id='a16' onclick='doClick(16);' onmouseover='doHover(16);' onmouseout='doMouseOut(16);'> </span>
+<span id='a17' onclick='doClick(17);' onmouseover='doHover(17);' onmouseout='doMouseOut(17);'> </span>
+<span id='a18' onclick='doClick(18);' onmouseover='doHover(18);' onmouseout='doMouseOut(18);'> </span>
+<span id='a19' onclick='doClick(19);' onmouseover='doHover(19);' onmouseout='doMouseOut(19);'> </span>
+<span id='a20' onclick='doClick(20);' onmouseover='doHover(20);' onmouseout='doMouseOut(20);'> </span>
+<span id='a21' onclick='doClick(21);' onmouseover='doHover(21);' onmouseout='doMouseOut(21);'> </span>
+<span id='a22' onclick='doClick(22);' onmouseover='doHover(22);' onmouseout='doMouseOut(22);'> </span>
+<span id='a23' onclick='doClick(23);' onmouseover='doHover(23);' onmouseout='doMouseOut(23);'> </span>
+<span id='a24' onclick='doClick(24);' onmouseover='doHover(24);' onmouseout='doMouseOut(24);'> </span>
+<span id='a25' onclick='doClick(25);' onmouseover='doHover(25);' onmouseout='doMouseOut(25);'> </span>
+<span id='a26' onclick='doClick(26);' onmouseover='doHover(26);' onmouseout='doMouseOut(26);'> </span>
+<span id='a27' onclick='doClick(27);' onmouseover='doHover(27);' onmouseout='doMouseOut(27);'> </span>
+<span id='a28' onclick='doClick(28);' onmouseover='doHover(28);' onmouseout='doMouseOut(28);'> </span>
+<span id='a29' onclick='doClick(29);' onmouseover='doHover(29);' onmouseout='doMouseOut(29);'> </span>
+<span id='a30' onclick='doClick(30);' onmouseover='doHover(30);' onmouseout='doMouseOut(30);'> </span>
+<span id='a31' onclick='doClick(31);' onmouseover='doHover(31);' onmouseout='doMouseOut(31);'> </span>
+<span id='a32' onclick='doClick(32);' onmouseover='doHover(32);' onmouseout='doMouseOut(32);'> </span>
+<span id='a33' onclick='doClick(33);' onmouseover='doHover(33);' onmouseout='doMouseOut(33);'> </span>
+<span id='a34' onclick='doClick(34);' onmouseover='doHover(34);' onmouseout='doMouseOut(34);'> </span>
+<span id='a35' onclick='doClick(35);' onmouseover='doHover(35);' onmouseout='doMouseOut(35);'> </span>
+<span id='a36' onclick='doClick(36);' onmouseover='doHover(36);' onmouseout='doMouseOut(36);'> </span>
+<span id='a37' onclick='doClick(37);' onmouseover='doHover(37);' onmouseout='doMouseOut(37);'> </span>
+<span id='a38' onclick='doClick(38);' onmouseover='doHover(38);' onmouseout='doMouseOut(38);'> </span>
+<span id='a39' onclick='doClick(39);' onmouseover='doHover(39);' onmouseout='doMouseOut(39);'> </span>
+<span id='a40' onclick='doClick(40);' onmouseover='doHover(40);' onmouseout='doMouseOut(40);'> </span>
+<span id='a41' onclick='doClick(41);' onmouseover='doHover(41);' onmouseout='doMouseOut(41);'> </span>
+<span id='a42' onclick='doClick(42);' onmouseover='doHover(42);' onmouseout='doMouseOut(42);'> </span>
+<span id='a43' onclick='doClick(43);' onmouseover='doHover(43);' onmouseout='doMouseOut(43);'> </span>
+<span id='a44' onclick='doClick(44);' onmouseover='doHover(44);' onmouseout='doMouseOut(44);'> </span>
+<span id='a45' onclick='doClick(45);' onmouseover='doHover(45);' onmouseout='doMouseOut(45);'> </span>
+<span id='a46' onclick='doClick(46);' onmouseover='doHover(46);' onmouseout='doMouseOut(46);'> </span>
+<span id='a47' onclick='doClick(47);' onmouseover='doHover(47);' onmouseout='doMouseOut(47);'> </span>
+<span id='a48' onclick='doClick(48);' onmouseover='doHover(48);' onmouseout='doMouseOut(48);'> </span>
+<span id='a49' onclick='doClick(49);' onmouseover='doHover(49);' onmouseout='doMouseOut(49);'> </span>
+<span id='a50' onclick='doClick(50);' onmouseover='doHover(50);' onmouseout='doMouseOut(50);'> </span>
+<span id='a51' onclick='doClick(51);' onmouseover='doHover(51);' onmouseout='doMouseOut(51);'> </span>
+<span id='a52' onclick='doClick(52);' onmouseover='doHover(52);' onmouseout='doMouseOut(52);'> </span>
+<span id='a53' onclick='doClick(53);' onmouseover='doHover(53);' onmouseout='doMouseOut(53);'> </span>
+<span id='a54' onclick='doClick(54);' onmouseover='doHover(54);' onmouseout='doMouseOut(54);'> </span>
+<span id='a55' onclick='doClick(55);' onmouseover='doHover(55);' onmouseout='doMouseOut(55);'> </span>
+<span id='a56' onclick='doClick(56);' onmouseover='doHover(56);' onmouseout='doMouseOut(56);'> </span>
+<span id='a57' onclick='doClick(57);' onmouseover='doHover(57);' onmouseout='doMouseOut(57);'> </span>
+<span id='a58' onclick='doClick(58);' onmouseover='doHover(58);' onmouseout='doMouseOut(58);'> </span>
+<span id='a59' onclick='doClick(59);' onmouseover='doHover(59);' onmouseout='doMouseOut(59);'> </span>
+<span id='a60' onclick='doClick(60);' onmouseover='doHover(60);' onmouseout='doMouseOut(60);'> </span>
+<span id='a61' onclick='doClick(61);' onmouseover='doHover(61);' onmouseout='doMouseOut(61);'> </span>
+<span id='a62' onclick='doClick(62);' onmouseover='doHover(62);' onmouseout='doMouseOut(62);'> </span>
+<span id='a63' onclick='doClick(63);' onmouseover='doHover(63);' onmouseout='doMouseOut(63);'> </span>
+<span id='a64' onclick='doClick(64);' onmouseover='doHover(64);' onmouseout='doMouseOut(64);'> </span>
+<span id='a65' onclick='doClick(65);' onmouseover='doHover(65);' onmouseout='doMouseOut(65);'> </span>
+<span id='a66' onclick='doClick(66);' onmouseover='doHover(66);' onmouseout='doMouseOut(66);'> </span>
+<span id='a67' onclick='doClick(67);' onmouseover='doHover(67);' onmouseout='doMouseOut(67);'> </span>
+<span id='a68' onclick='doClick(68);' onmouseover='doHover(68);' onmouseout='doMouseOut(68);'> </span>
+<span id='a69' onclick='doClick(69);' onmouseover='doHover(69);' onmouseout='doMouseOut(69);'> </span>
+<span id='a70' onclick='doClick(70);' onmouseover='doHover(70);' onmouseout='doMouseOut(70);'> </span>
+<span id='a71' onclick='doClick(71);' onmouseover='doHover(71);' onmouseout='doMouseOut(71);'> </span>
+<span id='a72' onclick='doClick(72);' onmouseover='doHover(72);' onmouseout='doMouseOut(72);'> </span>
+<span id='a73' onclick='doClick(73);' onmouseover='doHover(73);' onmouseout='doMouseOut(73);'> </span>
+<span id='a74' onclick='doClick(74);' onmouseover='doHover(74);' onmouseout='doMouseOut(74);'> </span>
+<span id='a75' onclick='doClick(75);' onmouseover='doHover(75);' onmouseout='doMouseOut(75);'> </span>
+<span id='a76' onclick='doClick(76);' onmouseover='doHover(76);' onmouseout='doMouseOut(76);'> </span>
+<span id='a77' onclick='doClick(77);' onmouseover='doHover(77);' onmouseout='doMouseOut(77);'> </span>
+<span id='a78' onclick='doClick(78);' onmouseover='doHover(78);' onmouseout='doMouseOut(78);'> </span>
+<span id='a79' onclick='doClick(79);' onmouseover='doHover(79);' onmouseout='doMouseOut(79);'> </span>
+<span id='a80' onclick='doClick(80);' onmouseover='doHover(80);' onmouseout='doMouseOut(80);'> </span>
+<span id='a81' onclick='doClick(81);' onmouseover='doHover(81);' onmouseout='doMouseOut(81);'> </span>
+<span id='a82' onclick='doClick(82);' onmouseover='doHover(82);' onmouseout='doMouseOut(82);'> </span>
+<span id='a83' onclick='doClick(83);' onmouseover='doHover(83);' onmouseout='doMouseOut(83);'> </span>
+<span id='a84' onclick='doClick(84);' onmouseover='doHover(84);' onmouseout='doMouseOut(84);'> </span>
+<span id='a85' onclick='doClick(85);' onmouseover='doHover(85);' onmouseout='doMouseOut(85);'> </span>
+<span id='a86' onclick='doClick(86);' onmouseover='doHover(86);' onmouseout='doMouseOut(86);'> </span>
+<span id='a87' onclick='doClick(87);' onmouseover='doHover(87);' onmouseout='doMouseOut(87);'> </span>
+<span id='a88' onclick='doClick(88);' onmouseover='doHover(88);' onmouseout='doMouseOut(88);'> </span>
+<span id='a89' onclick='doClick(89);' onmouseover='doHover(89);' onmouseout='doMouseOut(89);'> </span>
+<span id='a90' onclick='doClick(90);' onmouseover='doHover(90);' onmouseout='doMouseOut(90);'> </span>
+<span id='a91' onclick='doClick(91);' onmouseover='doHover(91);' onmouseout='doMouseOut(91);'> </span>
+<span id='a92' onclick='doClick(92);' onmouseover='doHover(92);' onmouseout='doMouseOut(92);'> </span>
+<span id='a93' onclick='doClick(93);' onmouseover='doHover(93);' onmouseout='doMouseOut(93);'> </span>
+<span id='a94' onclick='doClick(94);' onmouseover='doHover(94);' onmouseout='doMouseOut(94);'> </span>
+<span id='a95' onclick='doClick(95);' onmouseover='doHover(95);' onmouseout='doMouseOut(95);'> </span>
+<span id='a96' onclick='doClick(96);' onmouseover='doHover(96);' onmouseout='doMouseOut(96);'> </span>
+<span id='a97' onclick='doClick(97);' onmouseover='doHover(97);' onmouseout='doMouseOut(97);'> </span>
+<span id='a98' onclick='doClick(98);' onmouseover='doHover(98);' onmouseout='doMouseOut(98);'> </span>
+<span id='a99' onclick='doClick(99);' onmouseover='doHover(99);' onmouseout='doMouseOut(99);'> </span>
+<span id='a100' onclick='doClick(100);' onmouseover='doHover(100);' onmouseout='doMouseOut(100);'> </span>
+<span id='a101' onclick='doClick(101);' onmouseover='doHover(101);' onmouseout='doMouseOut(101);'> </span>
+<span id='a102' onclick='doClick(102);' onmouseover='doHover(102);' onmouseout='doMouseOut(102);'> </span>
+<span id='a103' onclick='doClick(103);' onmouseover='doHover(103);' onmouseout='doMouseOut(103);'> </span>
+<span id='a104' onclick='doClick(104);' onmouseover='doHover(104);' onmouseout='doMouseOut(104);'> </span>
+<span id='a105' onclick='doClick(105);' onmouseover='doHover(105);' onmouseout='doMouseOut(105);'> </span>
+<span id='a106' onclick='doClick(106);' onmouseover='doHover(106);' onmouseout='doMouseOut(106);'> </span>
+<span id='a107' onclick='doClick(107);' onmouseover='doHover(107);' onmouseout='doMouseOut(107);'> </span>
+<span id='a108' onclick='doClick(108);' onmouseover='doHover(108);' onmouseout='doMouseOut(108);'> </span>
+<span id='a109' onclick='doClick(109);' onmouseover='doHover(109);' onmouseout='doMouseOut(109);'> </span>
+<span id='a110' onclick='doClick(110);' onmouseover='doHover(110);' onmouseout='doMouseOut(110);'> </span>
+<span id='a111' onclick='doClick(111);' onmouseover='doHover(111);' onmouseout='doMouseOut(111);'> </span>
+<span id='a112' onclick='doClick(112);' onmouseover='doHover(112);' onmouseout='doMouseOut(112);'> </span>
+<span id='a113' onclick='doClick(113);' onmouseover='doHover(113);' onmouseout='doMouseOut(113);'> </span>
+<span id='a114' onclick='doClick(114);' onmouseover='doHover(114);' onmouseout='doMouseOut(114);'> </span>
+<span id='a115' onclick='doClick(115);' onmouseover='doHover(115);' onmouseout='doMouseOut(115);'> </span>
+<span id='a116' onclick='doClick(116);' onmouseover='doHover(116);' onmouseout='doMouseOut(116);'> </span>
+<span id='a117' onclick='doClick(117);' onmouseover='doHover(117);' onmouseout='doMouseOut(117);'> </span>
+<span id='a118' onclick='doClick(118);' onmouseover='doHover(118);' onmouseout='doMouseOut(118);'> </span>
+<span id='a119' onclick='doClick(119);' onmouseover='doHover(119);' onmouseout='doMouseOut(119);'> </span>
+<span id='a120' onclick='doClick(120);' onmouseover='doHover(120);' onmouseout='doMouseOut(120);'> </span>
+<span id='a121' onclick='doClick(121);' onmouseover='doHover(121);' onmouseout='doMouseOut(121);'> </span>
+<span id='a122' onclick='doClick(122);' onmouseover='doHover(122);' onmouseout='doMouseOut(122);'> </span>
+<span id='a123' onclick='doClick(123);' onmouseover='doHover(123);' onmouseout='doMouseOut(123);'> </span>
+<span id='a124' onclick='doClick(124);' onmouseover='doHover(124);' onmouseout='doMouseOut(124);'> </span>
+<span id='a125' onclick='doClick(125);' onmouseover='doHover(125);' onmouseout='doMouseOut(125);'> </span>
+</div>
+<br>
+<textarea id="thetext" rows="3" cols="48" spellcheck="false" onchange="saveMyText()"></textarea>
+
+<button class="inpt" id="copy" value="Copy Textarea" 
+	title="Copy your text including symbols to the clipboard and save text" 
+	onclick="copyTextArea()">Copy Text</button>
+&nbsp;
+<button class="inpt" id="clear" value="Clear Text" 
+	title="Clear the text area and saved text"	onclick="clearText()">Clear Text</button>
+	
+<div class="copyright">	
+Copyright &copy; 2024 Dennis Martin<br>
+Concept Jerry Beckwith
+</div>
+<div id="nbr"></div>
+</body>
+</html>
