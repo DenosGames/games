@@ -13,20 +13,19 @@
 	}
     body {
 		text-align: left;
-		font-family: Georgia, Tahoma, Arial, sans-serif;
-		font-size: 18px;
+		font-family: Tahoma, Arial, Trebuchet, sans-serif;
+		font-size: 20px;
 		background-color: #8FB686;
 		} 
 	#heading {
-		font-family: Verdana, Arial, Trebuchet, sans-serif;
-		font-weight: bold;
+		font-family: Georgia, Arial, Trebuchet, sans-serif;
 		margin: 0px;
 		text-align: left;
-		margin-left: 200px;
+		margin-left: 150px;
 		margin-top: 12px;
 		padding: 0px;
 		color: #F0F0F0;
-		font-size: 28px;
+		font-size: 24px;
 		text-shadow: 3px 4px #303010;
 		}
 	div { 
@@ -35,12 +34,12 @@
 		}
 	.inpt {
 		font-family: Verdana, Courier, "Courier New", "Lucida Console", Monaco;
-		font-size: 28px;
+		font-size: 24px;
 		font-weight: normal;
 		border-radius: 5px;
-		margin-left: 45px;
+		margin-left: 30px;
 		padding: 1px 3px 1px 3px;
-		height: 40px;
+		height: 35px;
 		border: solid 1px #ffffcc;
 		background-color: #eeeef9;
 		}
@@ -50,12 +49,12 @@
 	#begin {
 		text-align: center;
 		margin-top: 20px;
-		margin-left: 15px;
+		margin-left: 10px;
 	}
 	.prompt {
 		text-align: left;
 		color: #00004d;;
-		font-size: 24px;
+		font-size: 20px;
 		font-family: Verdana, sans-serif;
 		padding: 0px;
 		margin: 3px 0px 4px 10px;
@@ -63,26 +62,26 @@
 	.prompt2 {
 		text-align: left;
 		color: #00004d;;
-		font-size: 24px;
+		font-size: 20px;
 		font-family: Verdana, sans-serif;
 		padding: 0px 0px 0px 4px;
 		margin: 3px 0px 4px 8px;
 		}
 	#details {
 		color: yellow;
-		font-size: 24px;
+		font-size: 20px;
 		font-family: Georgia, Verdana, sans-serif;
 		font-weight: bold;
 		text-align: left;
 		width: 99%;
 		border: none;
 		margin-left: 10px;
-		margin-bottom: 6px;
+		margin-bottom: 4px;
 		margin-top: 10px;
 		}
 	#score {
 		color: #00004d;;
-		font-size: 24px;
+		font-size: 20px;
 		font-family: Verdana, sans-serif;
 		text-align: left;
 		width: 99%;
@@ -104,7 +103,7 @@
 	#count, #mistakes {
 		text-align: left;
 		color: #00004d;;
-		font-size: 24px;
+		font-size: 20px;
 		font-family: Verdana, monospace, Courier, sans-serif;
 		padding: 1px;
 		margin: 0px;
@@ -112,7 +111,7 @@
 	}
 	#piano {
 		padding: 0px;
-		width: 640px;
+		width: 500px;
 		border: 2px solid black;
 		margin-left: 10px;
 		background-color: #5a2d0c;
@@ -125,11 +124,11 @@
 		border-left: 1px solid black;
 		border-top: 1px solid black;
 		border-bottom: 2px solid black;
-		height: 200px;
+		height: 180px;
 		text-align: center;
 		vertical-align: bottom;
 		width: 12.5%;
-		padding: 2px;
+		padding: 1px;
 		position: relative;
 		border-bottom-right-radius: 7px;
 		border-bottom-left-radius: 7px;
@@ -144,11 +143,11 @@
 		border-left: 1px solid black;
 		border-top: 1px solid black;
 		border-bottom: 2px solid black;
-		height: 125px;
+		height: 110px;
 		text-align: center;
 		vertical-align: top;
-		width: 32px;
-		top: 33px;
+		width: 30px;
+		top: 13px;
 		margin-bottom: 50px;
 		position: absolute;
 		padding: 2px;
@@ -157,32 +156,32 @@
 		z-index: 2;
 	}
 	#n05 {
-		left: 79px; 
+		left: 64px; 
 		}
 	#n15 {
-		left: 163px;
+		left: 129px;
 		}
 	#n35 {			/* F# */
-		left: 319px;
+		left: 251px;
 		}
 	#n45 {
-		left: 401px;
+		left: 313px;
 		}
 	#n55 {
-		left: 480px;
+		left: 376px;
 		}
 	sub {
 		font-size: 12px;
 		}
 	#helptext { 
-		font-family: Arial, Tahoma, sans-serif; 
-		font-size: 18px;  
+		font-family: Tahoma, Arial, sans-serif; 
+		font-size: 13px;  
 		color: black; 
 		background-color: lightcyan;
 		border: 2px outset #707070;
 		border-radius: 6px;
-		padding: 4px 4px 25px 4px; 
-		display: inline; 
+		padding: 4px 4px 37px 4px; 
+		display:inline; 
 		z-index: 5;
 		visibility: visible;
 		opacity: 0.95;
@@ -191,18 +190,8 @@
 		margin: 1px;
 		line-height: 1.35;
 		left: 16px;
-		top: 28px;
-		width: 635px;
-		}
-	#close {
-		background-color: red;
-		color: black;
-		float: right;
-		font-size: 20px;
-		}
-	#close:hover {
-		color: white;
-		background-color: red;
+		top: 10px;
+		width: 570px;
 		}
 	.pass {
 		font-size: 18px;
@@ -590,11 +579,23 @@ function cancelClicks() {
 }
 
 function doHelp() {
-	// hide help
+	// Show or hide help, button is a Toggle
 	if (round == 0)
 		context = new AudioContext();
-	document.getElementById("helptext").style.visibility = "hidden";
-	document.getElementById("begin").focus();
+	if (helptext) {  // Help is visible, hide it
+		helptext = false; // toggle boolean
+		document.getElementById("helptext").style.visibility = "hidden";
+		document.getElementById("begin").focus();
+	} 
+	else // False, Help is hidden, show it
+	if (!helptext)
+	{
+		helptext = true;
+		document.getElementById("helptext").style.visibility = "visible";
+		document.getElementById("begin").focus();
+	}
+	else
+		alert("Help not true or false?");
 }
 
 function doReplay(rnd) {
@@ -615,7 +616,7 @@ function doReplay(rnd) {
 
 function doFocus() {
 	// init a few things
-	if (device == "iPhone" || device == "Android") { // mobile device
+	/*if (device == "iPhone" || device == "Android") { // mobile device
 		document.getElementById("helptext").style.fontSize = "15px"; // smaller
 		document.getElementById("helptext").style.width = "568px"; 
 		document.getElementById("n05").style.top = "38px";
@@ -623,7 +624,7 @@ function doFocus() {
 		document.getElementById("n35").style.top = "38px";
 		document.getElementById("n45").style.top = "38px";
 		document.getElementById("n55").style.top = "38px";
-	}
+	} */
 	document.getElementById("begin").disabled = true;
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
@@ -653,9 +654,10 @@ function clearPW() {
 <noscript>Your browser does not support JavaScript</noscript>
 
 <div id="helptext">
+	<strong> &nbsp; Memorize Notes</strong><br>
 	An increasing sequence of notes/keys will be played.<br>
 	&nbsp; &nbsp;<u>You must replay them  by clicking/touching the keys in the same order.</u><br>
-	&nbsp; &nbsp;If you enter them incorrectly, re-click the keys until you get the order correct.<br>
+	&nbsp; &nbsp;If you enter them incorrectly, re-click the keys until you get the order right.<br>
 	Click Begin to start the sequence with the first key/note.<br>
 	Click Show to see the answer sequence (up to 3 times).<br>
 	Click Restart to start over with a new sequence. <br>
@@ -675,7 +677,7 @@ function clearPW() {
 	<button class="pass" type="button" onclick="clearPW();" 
 		title="Clear the password.">Clear</button>	
  </div>
-<br>
+
 <table class="keys" id="piano" >
   <tr>
 	<td id="n0" onclick="doClick(0);" >C</td>
@@ -720,8 +722,6 @@ function clearPW() {
 <span class="prompt2">Mistakes: </span>
 <span id="mistakes" title="The number of mistake rounds (including multiple attempts at a given round).">
 &nbsp;</span>
-
-<div id="heading">Memorize Notes</div>
 
 <div class="copyright" id="copy">	
 Copyright &copy; 2024 Dennis Martin
