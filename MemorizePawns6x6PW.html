@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="author" content="Dennis Martin">
+<meta name="keywords" content="Memorize pawn pattern spatial recognition memory remember">
+<title>Memorize Pawns 6x6</title>
+<style>
+	html {
+		min-height: 100%;
+	}
+    body {
+		text-align: left;
+		font-family:  Arial, Trebuchet, sans-serif;
+		font-size: 18px;
+		background-color: silver; /*darkseagreen;*/
+		} 
+	h2, h3 {
+		font-family:  Verdana, Arial, sans-serif;
+		margin: 0px;
+		text-align: left;
+		margin-left: 98px;
+		margin-bottom: 4px;
+		padding: 0px;
+		font-size: 24px;
+		}
+	p {
+		text-align: left;
+		margin: 2px;
+		}
+	div { 
+		text-align: center;
+		margin: 1px;
+		}
+	.inpt {
+		font-family:  Verdana, "Courier New", "Lucida Console";
+		font-size: 24px;
+		font-weight: normal;
+		border-radius: 5px;
+		margin: 12px 145px 0px 2px;
+		padding: 2px 3px 2px 3px;
+		height: 40px;
+		border: solid 1px #ffffcc;
+		}
+	form {
+		padding: 5px 0px 0px 0px;
+		}
+	.pass {
+		font-size: 18px;
+		}
+	#begin {
+		text-align: center;
+		margin-top: 30px;
+		margin-left: 30px;
+	}
+	#details,
+	#details2 {
+		color: black;
+		font-size: 24px;
+		font-family: Verdana, sans-serif;
+		text-align: left;
+		border: none;
+		margin-left: 30px;
+		margin-bottom: 6px;
+		margin-top: 6px;
+		}
+	#score {
+		color: #00004d;;
+		font-size: 24px;
+		font-family: Verdana, sans-serif;
+		text-align: left;
+		border: none;
+		margin-left: 30px;
+		}
+	.copyright {
+		color: #303030;
+		position: fixed;
+		bottom: 1px;
+		left: 180px;
+		font-size: 12px;
+	}
+	.copyright:hover {
+		font-size: 14px;
+		font-weight: bold;
+	}
+	#square {
+		padding: 0px;
+		margin: 0px;
+		margin-left: 30px;
+		border: solid 3px MediumSeaGreen;
+		border-collapse: collapse;
+		}
+	td {
+		height: 70px;
+		width: 70px;
+		border: none;
+		}
+	#letters {
+		text-align: center;
+		font-size: 20px;
+		margin-left: 30px;
+		border: none;
+		width: 420px;
+		color: black;
+		}
+	#letters td {
+		height: 30px;
+		}
+	ul {
+		list-style-type: none;
+		margin-top: 27px;
+		font-size: 20px;
+		float: left;
+	}
+	li {
+		padding: 0px 15px 46px 0px;
+		}
+	#digits {
+		margin-left: 30px;
+	}
+	#n0, #n1, #n2, #n3, #n4, #n5,
+	#n6, #n7, #n8, #n9,	#n10, #n11, 
+	#n12, #n13, #n14, #n15, #n16, #n17, 
+	#n18, #n19, #n20, #n21, #n22, #n23,
+	#n24, #n25, #n26, #n27, #n28, #n29,
+	#n30, #n31, #n32, #n33, #n34, #n35 
+		{
+		background-color: white;
+		font-size: 52px;
+		font-weight: bold;
+		padding: 0px;
+		text-align: center;
+		vertical-align: middle;
+		pointer-events: none;
+		border: none;
+		transition: background-color 400ms linear; 
+		text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 #000, 1px 1px 0 black;
+	}
+	#helptext { 
+		font-family: Arial, Tahoma, sans-serif; 
+		font-size: 18px;  
+		color: navy; 
+		background-color: lightcyan;
+		border: 2px outset #707070;
+		border-radius: 6px;
+		padding: 2px 4px 2px 4px;  
+		display:inline; 
+		z-index: 5;
+		visibility: visible;
+		opacity: 0.9;
+		position: absolute; 
+		text-align: left;
+		margin: 1px;
+		line-height: 1.3;
+		left: 20px;
+		top: 40px;
+	}
+</style> 
+<script>
+<!-- HIDE FROM INCOMPATIBLE BROWSERS 
+var squares = [];  // the randomly-picked colored squares
+var answer = [];   // holds the pattern
+var audio = "";
+var msg = "";
+var score = 0;
+var milli = 2000;
+var helpVisible = false;
+var starting = false;
+var MAX = 36;   // 4x4 
+var pawns = 4;  // start with 3 pawns
+var count = 0;
+var colorIndex = 0;
+var colorNames = ["Green", "Blue", "Red", "Violet", "Brown"];
+var actualColors = ["MediumSeagreen", "RoyalBlue", "Red", "Violet", "Peru"];
+const NEXTLEVEL = 12;
+var help = true;
+var darkSquares = [1,3,5,6,8,10,13,15,17,18,20,22,25,27,29,30,32,34];
+
+function doPW() {
+	let str = document.getElementById("pw").value;
+	eStr = btoa(str);
+	document.getElementById("details").innerHTML = eStr;
+	if (eStr == "TWFnbnVzNQ==") {
+		score = sessionStorage.getItem("score");
+		score = score * 1.0;
+		colorIndex = sessionStorage.getItem("color");
+		document.getElementById("theColor").selectedIndex = colorIndex; 
+		doHelp(); // closes help box
+		newPattern();
+	}
+	else {
+		//document.getElementById("pw").value = "";
+		document.getElementById("details").innerHTML = "Invalid Password. Please re-enter.";
+		document.getElementById("pw").focus();
+	}
+}
+
+function newPattern() {
+	// Start a new pattern
+	if (pawns > NEXTLEVEL) {
+		goToNextLevel();
+	}
+	disableClicks();
+	showScore();
+	count = 0;
+	squares = [];  // the squares in the generated pattern
+	answer = [];
+	colorGrid();
+	clearAllSquares();
+	driver();
+}
+
+function colorGrid() {
+	// alternate white and green cell colors like a chessboard
+	let id = "n";
+	for (let i = 0; i < MAX; i++) {
+		id = "n" + i;
+		//document.getElementById(id).innerHTML = "&nbsp;";
+		if (darkSquares.indexOf(i) >= 0) {
+			document.getElementById(id).style.backgroundColor = actualColors[colorIndex];
+			}
+		else 
+			{
+			document.getElementById(id).style.backgroundColor = "floralwhite";
+			}
+	}
+}
+	
+function goToNextLevel() {
+	// go to the 8x8 version passing score and color
+	sessionStorage.setItem("score", score);
+	sessionStorage.setItem("color", colorIndex);
+	window.location.href = "MemorizePawns8x8PW.html";
+}
+
+function buildMessage(str) {
+	msg = msg + str;
+}
+
+function displayDetails(str, str2) {
+	// show the string passed on the details line
+	document.getElementById("details").innerHTML = str;
+	if (str2 != "") {
+		document.getElementById("details2").innerHTML = str2;
+	}
+	else
+		document.getElementById("details2").innerHTML = "&nbsp;";
+}
+
+function clearAllSquares() {
+	// clear all squares (no pawns showing)
+	for (let i = 0; i < MAX; i++) {
+		clearSquare(i);
+	}
+	displayDetails("Click all " + pawns + " squares that had pawns.", "");
+}
+
+function enableClicks() {
+	// Allow squares to be clicked
+	let id ;
+	for (let i = 0; i < MAX; i++) {
+		id = "n" + i;
+		document.getElementById(id).style.pointerEvents = "auto";
+	}
+}
+
+function disableClicks() {
+	// Disallow clicking of the squares
+	let id ;
+	for (let i = 0; i < MAX; i++) {
+		id = "n" + i;
+		document.getElementById(id).style.pointerEvents = "none";
+	}
+}
+
+function getRandomNumber(n) {
+	// return a new random number 0-n
+	n = Math.floor(Math.random() * n); 
+	return n;
+	}
+
+function generatePattern() {
+	// Generate and save random squares that make the pattern
+	for (let i = 0; i < pawns; i++) {
+		let n = getRandomNumber(MAX);
+		if (squares.indexOf(n) > -1)  // found n in array squares
+			i--;  // keep loop index from increasing so try again
+		else
+			squares.push(n); // add n to array
+	}
+}
+
+function showPawns() {
+	// Show the pattern by showing the pawns
+	for (let i = 0; i < squares.length; i++) {
+		showPawn(squares[i]);
+	}
+	displayDetails("Remember pawns.", "");
+}
+
+function clearSquare(n) {
+	// Clear the square to blank (no pawn)
+	let id = "n" + n;
+	document.getElementById(id).innerHTML = "&nbsp;";
+}
+
+function showPawn(n) {
+	// Show the pawn icon on square n
+	let id = "n" + n;
+	document.getElementById(id).style.color = "black";
+	document.getElementById(id).innerHTML = "&#9823"; // black pawn icon
+}
+
+function errorSquare(n) {
+	// Show an X in the incorrectly clicked square
+	let id = "n" + n;
+	if (colorIndex == 2 && darkSquares.indexOf(n) >= 0 ) // red squares
+		document.getElementById(id).style.color = "yellow";
+	else
+		document.getElementById(id).style.color = "red";
+	document.getElementById(id).innerHTML = "&#10005;";  // X icon
+}
+
+function showScore() {
+	document.getElementById("score").innerHTML = "Score: &nbsp;" + score;
+}
+
+function delayedDriver() {
+	// give user some time to memorize pawns 
+	clearAllSquares(0); 
+	enableClicks(); 
+	document.getElementById("restart").disabled = false;
+}
+
+function driver() {
+	// Main driver 
+	disableClicks(); 
+	document.getElementById("restart").disabled = true;
+	generatePattern(pawns); 
+	showPawns();
+	milli += 200;
+	setTimeout( function() {delayedDriver() },milli); 
+}
+
+function doClick(n) {
+	// User clicked key n, see if correct
+	let msg2 = "";
+	if (squares.indexOf(n) >= 0) { // clicked square is in answer array, correct
+		// see if already clicked this good answer square
+		if (answer.indexOf(n) > -1) { // already clicked this square
+			lightenSquare(n);
+			displayDetails("You already clicked this answer tile.", "");
+			return;
+		}
+		answer.push(n); 
+		count++;
+		score+= 100;
+		showPawn(n);
+		if (answer.length == squares.length) { // matched correct nbr
+			disableClicks();
+			ding();
+			let id = "n" + n;
+			//document.getElementById(id).innerHTML = "&#x2713;";  // check mark char
+			//showPawn(n);
+			pawns++;
+			msg = "Good job, You found them all. Bonus 100.";
+			if (pawns > NEXTLEVEL)
+				msg2 = "Click 'New Pattern' to go to the next level";
+			else
+				msg2 = "Click 'New Pattern' to do " + pawns + " pawns";
+			score += 100;
+		}
+		else
+			msg = "Clicked " + count + " correctly out of " + squares.length;
+	}
+	else // user clicked square not in pattern, Error
+	{	
+		disableClicks();
+		msg = "Error, now showing correct pawns."
+		msg2 = "Click 'New Pattern' to try " + pawns + " pawns again.";
+		errorSquare(n);
+		audio = new Audio("Sounds/Doink.mp3"); 
+		audio.play();
+		showPawns(n);
+		score -= (100 * count);
+		score = Math.max(score, 0);
+	}
+	displayDetails(msg, msg2);
+	showScore();
+}
+
+function ding() {
+	audio = new Audio("Sounds/ding2.mp3"); 
+	audio.play();	
+}
+
+function doHelp() {
+	// Show or hide help, button is a Toggle
+	if (help) {  // Help is visible, hide it
+		help = false; // toggle boolean
+		document.getElementById("helptext").style.visibility = "hidden";
+		document.getElementById("restart").disabled = false;
+	} 
+	else // False, Help is hidden, show it
+	{
+		help = true;
+		document.getElementById("helptext").style.visibility = "visible";
+		document.getElementById("restart").disabled = true;
+	}
+}
+
+function changeColor(inx) {
+	// Drop down changed, so change the non-white color
+	if (inx < MAX)
+		colorIndex = inx;
+	document.getElementById("theColor").selectedIndex = colorIndex; 
+	document.getElementById("square").style.borderColor = actualColors[colorIndex];  
+	colorGrid();
+	if (inx < MAX)
+		displayDetails("New dark square color will be " + colorNames[inx] + ".", "");
+}
+
+function doFocus() {
+	// focus on pw field
+	document.getElementById("restart").disabled = true;
+	document.getElementById("pw").focus();
+}
+
+function showPW() {
+	document.getElementById("pw").type = "text";
+	setTimeout (hidePW, 2500);
+}
+
+function hidePW() {
+	document.getElementById("pw").type = "password";
+}
+
+// STOP HIDING FROM INCOMPATIBLE BROWSERS -->
+</script>
+
+</head>
+<body onload="doFocus(); changeColor(99);">
+
+<h2>Memorize Pawns 6x6</h2>
+
+<span id="helptext">
+	Welcome to Memorize Pawns, an exercise in spatial recognition.<br>
+	A chessboard with random chess pawns will be shown.<br>
+	The chess pawns will be hidden after a brief amount of time. <br>
+	&nbsp; &nbsp; <strong>You then must click all the squares that had pawns.</strong>.<br>
+	If correct, a new pattern with one more pawn will be shown.<br>
+	If you click a wrong square, the correct squares will be shown and<br>
+	a new pattern with the same number of pawns will be shown.<br>
+	<br>
+	Click New Pattern to generate a new pattern. <br>
+	Click the dropdown box to change the non-white square color.<br>
+	<br>
+	Enter Password: 
+	<input class="pass" id="pw" type="password" size="10" value="" 
+		 onpaste="return false;" oncopy="return false"
+		title="Enter the password" > 
+	&nbsp;
+	<button class="pass" type="button" onclick="doPW();" 
+		title="Check the password.">Validate PW</button>
+		&nbsp;
+	<button class="pass" type="button" onclick="showPW();" 
+		title="Show the password for a short time.">Show</button>	
+</span>
+
+<ul id="numbers">
+	<li>6</li>
+	<li>5</li>
+	<li>4</li>
+	<li>3</li>
+	<li>2</li>
+	<li>1</li>
+</ul>
+
+<table id="square">
+  <tr>
+	<td class="key" id="n0" onclick="doClick(0);" > </td>
+ 	<td class="key" id="n1" onclick="doClick(1);" > </td>
+	<td class="key" id="n2" onclick="doClick(2);" > </td>
+	<td class="key" id="n3" onclick="doClick(3);" > </td>
+	<td class="key" id="n4" onclick="doClick(4);" > </td>
+ 	<td class="key" id="n5" onclick="doClick(5);" > </td>
+  </tr>
+  <tr >
+	<td class="key" id="n6" onclick="doClick(6);" > </td>
+	<td class="key" id="n7" onclick="doClick(7);" > </td>
+	<td class="key" id="n8" onclick="doClick(8);" > </td>
+	<td class="key" id="n9" onclick="doClick(9);" > </td>
+	<td class="key" id="n10" onclick="doClick(10);" > </td>
+ 	<td class="key" id="n11" onclick="doClick(11);" > </td>  
+  </tr>
+  <tr>
+	<td class="key" id="n12" onclick="doClick(12);" > </td>
+	<td class="key" id="n13" onclick="doClick(13);" > </td>
+	<td class="key" id="n14" onclick="doClick(14);" > </td>
+ 	<td class="key" id="n15" onclick="doClick(15);" > </td>
+	<td class="key" id="n16" onclick="doClick(16);" > </td>
+	<td class="key" id="n17" onclick="doClick(17);" > </td>
+  </tr>
+  <tr>
+	<td class="key" id="n18" onclick="doClick(18);" > </td>
+	<td class="key" id="n19" onclick="doClick(19);" > </td>
+ 	<td class="key" id="n20" onclick="doClick(20);" > </td>
+ 	<td class="key" id="n21" onclick="doClick(21);" > </td>
+	<td class="key" id="n22" onclick="doClick(22);" > </td>
+	<td class="key" id="n23" onclick="doClick(23);" > </td>
+  </tr>
+  <tr>
+	<td class="key" id="n24" onclick="doClick(24);" > </td>
+	<td class="key" id="n25" onclick="doClick(25);" > </td>
+	<td class="key" id="n26" onclick="doClick(26);" > </td>
+	<td class="key" id="n27" onclick="doClick(27);" > </td>
+	<td class="key" id="n28" onclick="doClick(28);" > </td>
+	<td class="key" id="n29" onclick="doClick(29);" > </td>
+  </tr>
+   <tr>
+	<td class="key" id="n30" onclick="doClick(30);" > </td>
+ 	<td class="key" id="n31" onclick="doClick(31);" > </td>
+	<td class="key" id="n32" onclick="doClick(32);" > </td>
+	<td class="key" id="n33" onclick="doClick(33);" > </td>
+	<td class="key" id="n34" onclick="doClick(34);" > </td>
+ 	<td class="key" id="n35" onclick="doClick(35);" > </td>
+  </tr>
+</table>
+
+<table id="letters">
+  <tr>
+	<td>a</td>
+ 	<td>b</td>
+	<td>c</td>
+	<td>d</td>
+	<td>e</td>
+	<td>f</td>
+  </tr>
+</table>
+ 
+<form name="digits" id="digits" action="/" >
+	<button class="inpt" id="restart" type="button" onclick="newPattern();"
+		title="Reset everything and start a new sequence of pawns">New Pattern</button> 
+	&nbsp;
+	<select id="theColor" class="inpt" 
+		title="Background color of the non-white squares (like a vinyl chessboard)" 
+			onchange="changeColor(this.selectedIndex)"> 
+		<option value="Green" selected="selected">Green</option>
+		<option value="Blue">Blue</option>
+		<option value="Red">Red</option>
+		<option value="Violet">Violet</option>
+		<option value="Brown">Brown</option>
+	</select> 
+</form>
+<div id="details">&nbsp;</div>
+<div id="details2">&nbsp;</div>
+<div id="score">&nbsp;</div>
+
+<div class="copyright" id="copy">	
+Copyright &copy; 2024 Dennis Martin
+</div>
+
+</body>
+</html>
