@@ -283,7 +283,7 @@ function getRandomNumber() {
 	do  {
 		n = Math.floor(Math.random() * (theLetters.length) ); // rand nbr 0 to end
 		}
-	while (n == last); // if same as last, try again
+	while (n == last || theLetters[n] == theLetters[last] ); // if same as last, try again
 	if (last == 70 && n == 85) { // F was last, this is U 
 		// Keep it G rated, get a new random nbr representing A - T
 		n = Math.floor(Math.random() * 19); // A thru T
