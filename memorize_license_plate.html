@@ -95,16 +95,6 @@
 	#prompt2 { 
 		margin-left: 150px;
 	}
-	#plate {
-		text-align: center;
-		color: navy;
-		background-color: white;
-		font-size: 36px;
-		font-family: Tahoma, Arial, Verdana, sans-serif;
-		padding: 0px 4px 0px 4px;
-		margin: 0px 0px 0px 50px;
-		border-radius: 5px;
-		}
 	#top {
 		text-align: center;
 		color: red;
@@ -117,12 +107,11 @@
 		border-radius: 8px 8px 0px 0px;
 		border: none;
 		width: 354px;
-		z-index: 2;
 	}
 	#hole1 {
 		color: DarkSeaGreen;
 		font-size: 22px;
-		font-family: Tahoma, sans-serif;
+		font-family: Arial, Tahoma, sans-serif;
 		font-style: normal;
 		padding-left: 6px;
 		margin-top: -2px; 
@@ -132,7 +121,7 @@
 		text-align: left;
 		color: navy;
 		font-size: 18px;
-		font-family:  Tahoma, Arial, sans-serif;
+		font-family: Arial, Tahoma, sans-serif;
 		font-weight: bold;
 		font-style: normal;
 		padding: 0px 1px 0px 1px;
@@ -144,7 +133,7 @@
 	#hole2 {
 		color: DarkSeaGreen;
 		font-size: 22px;
-		font-family: Tahoma, sans-serif;
+		font-family: Arial, Tahoma, sans-serif;
 		font-style: normal;
 		padding-right: 6px;
 		margin-top: -2px; 
@@ -154,7 +143,7 @@
 		text-align: right;
 		color: black;
 		font-size: 20px;
-		font-family: Tahoma, Arial, sans-serif;
+		font-family: Arial, Tahoma, sans-serif;
 		font-style: normal;
 		font-weight: normal;
 		padding: 0px 2px 4px 2px;
@@ -166,8 +155,8 @@
 	#license {
 		text-align: center;
 		color: navy;
-		font-size: 80px;
-		font-family:  Tahoma, sans-serif;
+		font-size: 82px;
+		font-family: Tahoma, Arial, sans-serif;
 		padding: 10px 1px 10px 1px;
 		margin: 0px 0px 0px 50px;
 		border-radius: 0px 0px 8px 8px;
@@ -176,10 +165,9 @@
 		width: 360px;
 		height: 90px;
 		caret-color: grey;
-		text-shadow: 3px 3px #e0e0e0;
+		text-shadow: 2px 2px #e0e0e0;
 		font-stretch: semi-condensed;
 		}
-	
 	#details {
 		color: yellow;
 		font-size: 22px;
@@ -552,7 +540,6 @@ function clearPW() {
 	<div id="top"><span id="month"></span> <span id="hole1">•</span>
 	California <span id="year"></span> 	<span id="hole2">•</span>
 	</div>
-	
 	<input id="license" type="text" size="7" value="" maxlength="7"
 		title="A California license number in the form: 1ABC234"  
 		onkeypress="if(event.keyCode==13) return false;" 
