@@ -38,8 +38,8 @@
 		font-size: 24px;
 		font-weight: normal;
 		border-radius: 6px;
-		margin: 0px 0px 0px 10px;
-		padding: -5px 3px -5px 3px;
+		margin: 0px 0px 0px 30px;
+		padding: 0px 1px 0px 1px;
 		font-weight: bold;
 		height: 40px;
 		}
@@ -61,13 +61,28 @@
 		margin: 0px;
 		line-height: 1.3;
 		top: 70px;
-		left: 20px;
+		left: 10px;
 		overflow: auto;
 		}
 	#verify {
 		text-align: center;
 		margin-top: 22px;
-		margin-left: 80px;
+		margin-left: 10px;
+	}
+	#restart {
+		text-align: center;
+		margin-top: 12px;
+		margin-left: 10px;
+	}
+	#start {
+		text-align: center;
+		margin-top: 12px;
+		margin-left:50px;
+	}
+	#show {
+		text-align: center;
+		margin-top: 12px;
+		margin-left: 50px;
 	}
 	#prompt {
 		text-align: left;
@@ -75,7 +90,7 @@
 		font-size: 22px;
 		font-family: Arial, Verdana, sans-serif;
 		padding: 0px;
-		margin: 10px 0px 0px 80px;
+		margin: 10px 0px 0px 50px;
 		}
 	#prompt2 { 
 		margin-left: 150px;
@@ -87,22 +102,31 @@
 		font-size: 36px;
 		font-family: Tahoma, Arial, Verdana, sans-serif;
 		padding: 0px 4px 0px 4px;
-		margin: 0px 0px 0px 80px;
+		margin: 0px 0px 0px 50px;
 		border-radius: 5px;
 		}
 	#top {
 		text-align: center;
 		color: red;
 		background-color: white;
-		font-size: 28px;
-		font-family: "Brush Script MT", "Comic Sans MS", cursive;
+		font-size: 32px;
+		font-family: "Brush Script MT", "Lucida Handwriting", cursive;
 		font-style: italic;
-		padding: 0px 4px 0px 4px;
-		margin: 0px 0px 0px 80px;
+		padding: 2px 4px 2px 4px;
+		margin: 0px 0px 0px 50px;
 		border-radius: 8px 8px 0px 0px;
 		border: none;
-		width: 334px;
+		width: 354px;
 		z-index: 2;
+	}
+	#hole1 {
+		color: DarkSeaGreen;
+		font-size: 22px;
+		font-family: Tahoma, sans-serif;
+		font-style: normal;
+		padding-left: 6px;
+		margin-top: -2px; 
+		float: left;
 	}
 	#month {
 		text-align: left;
@@ -112,10 +136,19 @@
 		font-weight: bold;
 		font-style: normal;
 		padding: 0px 1px 0px 1px;
-		margin: 0px;
+		margin-top: 5px;
 		border: solid 1px blue;
 		text-transform: uppercase;
 		float: left;
+	}
+	#hole2 {
+		color: DarkSeaGreen;
+		font-size: 22px;
+		font-family: Tahoma, sans-serif;
+		font-style: normal;
+		padding-right: 6px;
+		margin-top: -2px; 
+		float: right;
 	}
 	#year {
 		text-align: right;
@@ -125,7 +158,7 @@
 		font-style: normal;
 		font-weight: normal;
 		padding: 0px 2px 4px 2px;
-		margin: 0px;
+		margin-top: 5px;
 		border: none;
 		text-transform: uppercase;
 		float: right;
@@ -135,24 +168,25 @@
 		color: navy;
 		font-size: 80px;
 		font-family:  Tahoma, sans-serif;
-		padding: 0px 1px 0px 1px;
-		margin: 0px 0px 0px 80px;
+		padding: 10px 1px 10px 1px;
+		margin: 0px 0px 0px 50px;
 		border-radius: 0px 0px 8px 8px;
 		border: none;
 		text-transform: uppercase;
-		width: 340px;
+		width: 360px;
 		height: 90px;
-		cursor: auto;
 		caret-color: grey;
 		text-shadow: 3px 3px #e0e0e0;
+		font-stretch: semi-condensed;
 		}
+	
 	#details {
 		color: yellow;
 		font-size: 22px;
 		font-family: Arial, Verdana, sans-serif;
 		text-align: left;
 		border: none;
-		margin: 15px 0px 8px 80px;
+		margin: 15px 0px 8px 50px;
 		font-weight: bold;
 		}
 	#score {
@@ -162,14 +196,14 @@
 		text-align: left;
 		width: 99%;
 		border: none;
-		margin-left: 80px;
+		margin-left: 50px;
 		margin-top: 6px;
 		}
 	.copyright {
 		color: #707070;
 		position: fixed;
 		bottom: 1%;
-		left: 160px;
+		left: 120px;
 		font-size: 14px;
 	}
 	.copyright:hover {
@@ -184,11 +218,8 @@ var audio = "";
 var sound = true;
 var fade = true;
 var msg = "";
-var compliments = ["Good job","Awesome","Amazing","Terrific","Exceptional","Genius","You Rock"];
-var cinx = 0;
 var lastNbr = 99;
 var last = 99;
-var showCount = 4;
 var best = 0;
 var score = 0;
 var attempts = 0;
@@ -232,8 +263,6 @@ function initialize(src) {
 		document.getElementById("helptext").style.visibility = "hidden";
 		help = false;
 	}
-	cinx = 0;
-	showCount = 4;
 	const dateObj = new Date();
 	let month = dateObj.getUTCMonth() + 1; 
 	document.getElementById("month").innerHTML = months[month];
@@ -250,6 +279,7 @@ function initialize(src) {
 	document.getElementById("license").value = "";
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
+	document.getElementById("start").disabled = false;
 	if (eStr == "Q2FyczU1")
 		genNextPlate();
 }
@@ -328,69 +358,34 @@ function genNextPlate() {
 	document.getElementById("verify").disabled = true;
 	//clearLetters(); 
 	milli += 50;
-	displayDetails("Memorize the license plate.");
+	displayDetails("Memorize the license and click Got It.");
 	document.getElementById("license").focus();
-	setTimeout(clearLicense, 5000); // 5 seconds to memorize
 }
 
 function clearLicense() {
 	// clear the license plate value so user can enter it
+	license = document.getElementById("license").value.toUpperCase();
 	document.getElementById("license").value = "";
-	displayDetails("Wait just a bit");
+	displayDetails("Enter the license plate and click Verify.");	
+	document.getElementById("start").disabled = true;
 	document.getElementById("verify").disabled = false;
-	document.getElementById("license").disabled = true;
-	setTimeout(allowInput, 3500);
-	
-}
-
-function allowInput() {
-	// Allow user input after waiting a bit
 	document.getElementById("license").disabled = false;
 	document.getElementById("restart").disabled = true;
-	displayDetails("Enter the license plate just shown.");
 	document.getElementById("license").focus();	
-}
-
-function doFade() {
-	// start fading letter if it hasn't started and past 1st letter
-	if (fadeStarted == false) {
-		fadeStarted = true;
-		if (fade) {  //Fade button says On
-			if (license.length > 1)  // past the first letter
-				fadeOutNext(); // Fade out the Next Letter
-		}
-	}
-}
-
-function fadeOutNext() {
-	// Fades out the plate by modifying the opacity attribute
-	let t1 = "";
-	op -= 0.05;
-	//document.getElementById("plate").style.opacity = op; 
-	if (op > 0)  // fade via recursive call until done
-	    t1 = setTimeout(fadeOutNext, 100); 
 }
 
 function fadeOutDetails() {
 	// Fades out the details line by modifying the opacity attribute
 	let t2 = "";
-	op -= 0.05;
+	op -= 0.04;
 	document.getElementById("details").style.opacity = op; 
 	if (op > 0)  // fade via recursive call until done
-	    t2 = setTimeout(fadeOutDetails, 240); 
-}
-
-function startVerify() {
-	// clear the license and make user wait a bit
-	document.getElementById("license").value = "";
-	displayDetails("Enter the license plate that was just shown.");
-	t2 = setTimeout(verifyInput, 3000 );
+	    t2 = setTimeout(fadeOutDetails, 200); 
 }
 
 function verifyInput() {
 	// See if user entered the right license in order
 	let error = false;
-	msg = "";
 	let i = 0;
 	let str = document.getElementById("license").value;
 	str = str.toUpperCase();
@@ -409,8 +404,8 @@ function verifyInput() {
 	document.getElementById("show").disabled = false;
 	attempts++;
 	if (error) {
-		msg = "Incorrect License #, first error occurred at position " 
-			+ (i+1).toString();
+		displayDetails("Incorrect, first error occurred at position " 
+			+ (i+1).toString() );
 		document.getElementById("verify").disabled = false;
 		document.getElementById("license").focus();	
 		if (sound) {
@@ -421,19 +416,14 @@ function verifyInput() {
 	else { // correct!
 		score++;
 		showScore();
-		msg = "Congrats, all " + len + " characters are correct!";
+		displayDetails("Congrats, all " + len + " characters are correct!");
 		document.getElementById("verify").disabled = true;
-		if (len > 7 && len % 2 == 0) {
-			addCompliment();
-			}
 		document.getElementById("restart").disabled = false;
 		}
-	displayDetails(msg);
 	if (error == false) {
 		//document.getElementById("plate").style.opacity = 0;
 		//let timer = setTimeout(genNextPlate, 1000); 
-		}
-	
+	}
 }
 
 function showScore() {
@@ -442,21 +432,10 @@ function showScore() {
 		", Attempts: " + attempts + ", Rate: " + percent.toFixed(1) + "%";
 }
 
-function addCompliment() {
-	// cycle thru the compliments
-	buildMessage (compliments[cinx] + "!");
-	cinx = (++cinx % compliments.length);
-}
-
 function showThem(restart) {
-	// show the license up to 4 times (like a hint or help)
-	if (showCount <= 0) {
-		document.getElementById("restart").disabled = false;
-		return;
-	}
+	// show the license 
 	op = 1;
 	document.getElementById("details").style.opacity = 1; // make new letter visible
-	showCount--;
 	document.getElementById("show").title = "Click this to show the license.";
 	msg = "";
 	buildMessage("Correct = " + license + ". ");
@@ -468,16 +447,6 @@ function showThem(restart) {
 function ding() {
 	if (sound) {
 		audio = new Audio("ding2.mp3"); 
-		audio.play();	
-	}
-}
-
-function tada() {
-	if (sound) {
-		if (cinx < 3)
-			audio = new Audio("applause.wav");
-		else
-			audio = new Audio("TaDaNice.mp3"); 
 		audio.play();	
 	}
 }
@@ -555,9 +524,12 @@ function clearPW() {
 <h3>(California)</h3>
 <div id="helptext">
 	<strong> &nbsp; Memorize License Plate</strong><br>
-	A random California license plate will be shown for 3 seconds.<br>
-    After a brief pause, you must enter the plate just shown.<br>
+	A random California license plate will be shown.<br>
+	Memorize the plate number.<br>
+	You may backspace and enter your own number.<br>
+    Then click 'Got Ot'.<br>
 	You may enter lowercase letters as input is uppercased.<br>
+	After you have memorized the number, click 'Verify'.<br>
 	Click the Show button to see the correct license characters.<br>
 	After getting it correct, click New Plate to generate a new plate.<br>
 	<br>
@@ -575,20 +547,26 @@ function clearPW() {
 	<button class="pass" type="button" onclick="clearPW();" 
 		title="Clear the password.">Clear</button>	
 </div>
-
+<br>
 <form action="/" >
-	<br>
-	<div id="top"><span id="month"></span>California<span id="year"></span></div>
+	<div id="top"><span id="month"></span> <span id="hole1">•</span>
+	California <span id="year"></span> 	<span id="hole2">•</span>
+	</div>
+	
 	<input id="license" type="text" size="7" value="" maxlength="7"
-		title="Enter license plate characters in correct order"  
+		title="A California license number in the form: 1ABC234"  
 		onkeypress="if(event.keyCode==13) return false;" 
 		onpaste="return false;" oncopy="return false" oncut="return false" >
-	<br>	
+	<br>
+	<button class="inpt" id="start" type="button" onclick="clearLicense();" 
+		title="Click after you have memorized the plate number.">Got It</button>	  
+	&nbsp; &nbsp;
 	<button class="inpt" id="verify" type="button" onclick="verifyInput();" 
 		title="See if you entered the license correctly.">Verify</button>	  
-	&nbsp;
+	<br>
 	<button class="inpt" id="show" type="button" onclick="showThem(false);" 
-		title="Show the license plate.">Show</button>	
+		title="Show the license plate.">Show #</button>	
+	&nbsp;
 	&nbsp;
 	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
 			title="Generate a new license plate">New Plate</button> 
