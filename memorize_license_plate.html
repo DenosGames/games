@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Dennis' Memorize Tool">
+<meta name="keywords" content="tool game memorize memory letters">
+<title>Memorize License Plate</title>
+<style>
+	html {
+		min-height: 100%;
+	}
+    body {
+		text-align: left;
+		font-family: Georgia, Verdana, Arial, Trebuchet, sans-serif;
+		font-size: 18px;
+		background-color: DarkSeaGreen;
+		overflow: auto;
+		} 
+	h2, h3 {
+		margin: 0px;
+		text-align: left;
+		margin-left: 100px;
+		color: #F6F6F6;
+		font-size: 24px;
+		text-shadow: 2px 3px #303030;
+		}
+	h3 {
+		margin-left: 200px;
+		font-size: 20px;
+		}
+	div { 
+		text-align: center;
+		margin: 2px;
+		}
+	.inpt {
+		font-family: Courier, "Courier New", "Lucida Console", Monaco;
+		font-size: 24px;
+		font-weight: normal;
+		border-radius: 6px;
+		margin: 0px 0px 0px 10px;
+		padding: -5px 3px -5px 3px;
+		font-weight: bold;
+		height: 40px;
+		}
+	input:focus 
+		{outline:none;}
+	form {
+		padding: 4px 0px 0px 0px;
+		}
+	#helptext { 
+		background-color: lightcyan;
+		border: solid 1px black;
+		border-radius: 5px;
+		padding: 5px 4px 5px 4px; 
+		font-family: Tahoma, Arial, sans-serif;
+		font-size: 16px;  
+		display: inline;
+		position: absolute; 
+		text-align: left;
+		margin: 0px;
+		line-height: 1.3;
+		top: 70px;
+		left: 20px;
+		overflow: auto;
+		}
+	#verify {
+		text-align: center;
+		margin-top: 22px;
+		margin-left: 80px;
+	}
+	#prompt {
+		text-align: left;
+		color: black;
+		font-size: 22px;
+		font-family: Arial, Verdana, sans-serif;
+		padding: 0px;
+		margin: 10px 0px 0px 80px;
+		}
+	#prompt2 { 
+		margin-left: 150px;
+	}
+	#plate {
+		text-align: center;
+		color: navy;
+		background-color: white;
+		font-size: 36px;
+		font-family: Tahoma, Arial, Verdana, sans-serif;
+		padding: 0px 4px 0px 4px;
+		margin: 0px 0px 0px 80px;
+		border-radius: 5px;
+		}
+	#top {
+		text-align: center;
+		color: red;
+		background-color: white;
+		font-size: 28px;
+		font-family: "Brush Script MT", "Comic Sans MS", cursive;
+		font-style: italic;
+		padding: 0px 4px 0px 4px;
+		margin: 0px 0px 0px 80px;
+		border-radius: 8px 8px 0px 0px;
+		border: none;
+		width: 334px;
+		z-index: 2;
+	}
+	#month {
+		text-align: left;
+		color: navy;
+		font-size: 18px;
+		font-family:  Tahoma, Arial, sans-serif;
+		font-weight: bold;
+		font-style: normal;
+		padding: 0px 1px 0px 1px;
+		margin: 0px;
+		border: solid 1px blue;
+		text-transform: uppercase;
+		float: left;
+	}
+	#year {
+		text-align: right;
+		color: black;
+		font-size: 20px;
+		font-family: Tahoma, Arial, sans-serif;
+		font-style: normal;
+		font-weight: normal;
+		padding: 0px 2px 4px 2px;
+		margin: 0px;
+		border: none;
+		text-transform: uppercase;
+		float: right;
+	}
+	#license {
+		text-align: center;
+		color: navy;
+		font-size: 80px;
+		font-family:  Tahoma, sans-serif;
+		padding: 0px 1px 0px 1px;
+		margin: 0px 0px 0px 80px;
+		border-radius: 0px 0px 8px 8px;
+		border: none;
+		text-transform: uppercase;
+		width: 340px;
+		height: 90px;
+		cursor: auto;
+		caret-color: grey;
+		text-shadow: 3px 3px #e0e0e0;
+		}
+	#details {
+		color: yellow;
+		font-size: 22px;
+		font-family: Arial, Verdana, sans-serif;
+		text-align: left;
+		border: none;
+		margin: 15px 0px 8px 80px;
+		font-weight: bold;
+		}
+	#score {
+		color: navy;
+		font-size: 20px;
+		font-family: Arial, Verdana, sans-serif;
+		text-align: left;
+		width: 99%;
+		border: none;
+		margin-left: 80px;
+		margin-top: 6px;
+		}
+	.copyright {
+		color: #707070;
+		position: fixed;
+		bottom: 1%;
+		left: 160px;
+		font-size: 14px;
+	}
+	.copyright:hover {
+		color: #E0E0E0;
+		font-weight: bold;
+	}
+</style> 
+<script>
+<!-- HIDE FROM INCOMPATIBLE BROWSERS 
+var license = [];  // 
+var audio = "";
+var sound = true;
+var fade = true;
+var msg = "";
+var compliments = ["Good job","Awesome","Amazing","Terrific","Exceptional","Genius","You Rock"];
+var cinx = 0;
+var lastNbr = 99;
+var last = 99;
+var showCount = 4;
+var best = 0;
+var score = 0;
+var attempts = 0;
+var milli = 200;
+var op = 1;
+var fadeStarted = false;
+// Alphabet with 4 most common vowels added
+var theLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var help = true;
+var eStr = "";
+var months = [" ","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+function doPW() {
+	
+	let str = document.getElementById("pw").value;
+	eStr = btoa(str);
+	if (eStr == "Q2FyczU1") {
+		doHelp(); // closes help box
+		initialize(0);
+	}
+	else {
+		document.getElementById("pw").value = "";
+		document.getElementById("details").innerHTML = "Invalid Password. Please re-enter.";
+		document.getElementById("pw").focus();
+	}
+}
+
+function initialize(src) {
+	if (src == 0) { // onload
+		let device = navigator.platform;
+		displayDetails("Device is " + device + ".");
+		//  Add event listener to all for iphone, ipad
+		//  https://web.dev/articles/add-touch-to-your-site
+		if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
+			document.body.addEventListener('touchstart', function() {}, false);
+		}
+	}
+	else
+	if (src == 1) {  // Restart
+		displayDetails("Generating new license.");
+		document.getElementById("helptext").style.visibility = "hidden";
+		help = false;
+	}
+	cinx = 0;
+	showCount = 4;
+	const dateObj = new Date();
+	let month = dateObj.getUTCMonth() + 1; 
+	document.getElementById("month").innerHTML = months[month];
+	let year = dateObj.getUTCFullYear(); 
+	document.getElementById("year").innerHTML = year;
+	let backColor = getYearColor(year);
+	document.getElementById("year").style.backgroundColor = backColor;
+    license = [];
+	//document.getElementById("plate").style.opacity = 1.0;
+	document.getElementById("license").style.opacity = 1.0;
+	//document.getElementById("plate").innerHTML = "";
+	document.getElementById("license").innerHTML = "";
+	//document.getElementById("plate").value = "";
+	document.getElementById("license").value = "";
+	document.getElementById("show").disabled = true;
+	document.getElementById("restart").disabled = true;
+	if (eStr == "Q2FyczU1")
+		genNextPlate();
+}
+
+function getYearColor(year) {
+	// get the background color for the year sticker
+	let unit = year % 10;
+	switch (unit) {
+		case(0): case(5): return "yellow"; break;
+		case (1): case (6): return "red";  break;
+		case (2): case (7): return "green";  break;
+		case (3): case (8): return "orange"; break;
+		case (4): case (9): return "skyblue"; break;
+		default: return white;
+	}
+}
+
+function buildMessage(str) {
+	msg = msg + str;
+}
+
+function displayDetails(str) {
+	// display the string in element 'details'
+	document.getElementById("details").style.opacity = 1;
+	document.getElementById("details").innerHTML = str;
+}
+
+function getRandomNumber() {
+	// Return a random digit 1-9 that was not used last time
+	let n = 1;
+	do  {
+		n = Math.floor(Math.random() * 9) + 1; // random digit 1-9
+		}
+	while (n == lastNbr);
+	lastNbr = n;
+	return n;
+}
+
+function getRandomLetter() {
+	// return a random number 0-25 that was not used last time
+	let n = theLetters.length;  
+	do  {
+		n = Math.floor(Math.random() * (theLetters.length) ); // rand nbr 0 to end
+		}
+	while (n == last || theLetters[n] == theLetters[last] ); // if same as last, try again
+	if (last == 70 && n == 85) { // F was last, this is U 
+		// Keep it G rated, get a new random nbr representing A - T
+		n = Math.floor(Math.random() * 19); // A thru T
+		}
+	last = n;
+	return n;
+}
+
+function genNextPlate() {
+	// Generate a random California license plate
+	//document.getElementById("plate").innerHTML = "";
+	document.getElementById("license").value = "";
+	let n = getRandomNumber(); // 1 - 9 for leading digit
+	license.push(n);
+	// Add 3 letters
+	for (let i = 0; i < 3; i++) {
+		n = getRandomLetter();
+		let ch = theLetters[n]; //String.fromCharCode(n);
+		license.push(ch);
+	}
+	// Finally add 3 digits
+	for (let i = 0; i < 3; i++) {
+		n = getRandomNumber(); // + 65;  // gives Ascii characters A(65) to Z(90)
+		license.push(n);
+	}
+	// show the license
+	for (let i = 0; i < license.length; i++) {
+		//document.getElementById("plate").innerHTML += license[i];
+		document.getElementById("license").value += license[i];
+	}
+	document.getElementById("verify").disabled = true;
+	//clearLetters(); 
+	milli += 50;
+	displayDetails("Memorize the license plate.");
+	document.getElementById("license").focus();
+	setTimeout(clearLicense, 5000); // 5 seconds to memorize
+}
+
+function clearLicense() {
+	// clear the license plate value so user can enter it
+	document.getElementById("license").value = "";
+	displayDetails("Wait just a bit");
+	document.getElementById("verify").disabled = false;
+	document.getElementById("license").disabled = true;
+	setTimeout(allowInput, 3500);
+	
+}
+
+function allowInput() {
+	// Allow user input after waiting a bit
+	document.getElementById("license").disabled = false;
+	document.getElementById("restart").disabled = true;
+	displayDetails("Enter the license plate just shown.");
+	document.getElementById("license").focus();	
+}
+
+function doFade() {
+	// start fading letter if it hasn't started and past 1st letter
+	if (fadeStarted == false) {
+		fadeStarted = true;
+		if (fade) {  //Fade button says On
+			if (license.length > 1)  // past the first letter
+				fadeOutNext(); // Fade out the Next Letter
+		}
+	}
+}
+
+function fadeOutNext() {
+	// Fades out the plate by modifying the opacity attribute
+	let t1 = "";
+	op -= 0.05;
+	//document.getElementById("plate").style.opacity = op; 
+	if (op > 0)  // fade via recursive call until done
+	    t1 = setTimeout(fadeOutNext, 100); 
+}
+
+function fadeOutDetails() {
+	// Fades out the details line by modifying the opacity attribute
+	let t2 = "";
+	op -= 0.05;
+	document.getElementById("details").style.opacity = op; 
+	if (op > 0)  // fade via recursive call until done
+	    t2 = setTimeout(fadeOutDetails, 240); 
+}
+
+function startVerify() {
+	// clear the license and make user wait a bit
+	document.getElementById("license").value = "";
+	displayDetails("Enter the license plate that was just shown.");
+	t2 = setTimeout(verifyInput, 3000 );
+}
+
+function verifyInput() {
+	// See if user entered the right license in order
+	let error = false;
+	msg = "";
+	let i = 0;
+	let str = document.getElementById("license").value;
+	str = str.toUpperCase();
+	document.getElementById("license").value = str;
+	str.trim();
+	str = str.split(' ').join(''); // remove spaces
+	str = str.split(',').join(''); // remove commas
+	let len = license.length;
+	// compare string to saved array
+	for (i = 0; i < len; i++) {
+		if (license[i] != str.charAt(i).toUpperCase() ) {
+			error = true;
+			break;
+		}
+	}
+	document.getElementById("show").disabled = false;
+	attempts++;
+	if (error) {
+		msg = "Incorrect License #, first error occurred at position " 
+			+ (i+1).toString();
+		document.getElementById("verify").disabled = false;
+		document.getElementById("license").focus();	
+		if (sound) {
+			audio = new Audio("Doink.mp3"); 
+			audio.play();
+			}
+		}
+	else { // correct!
+		score++;
+		showScore();
+		msg = "Congrats, all " + len + " characters are correct!";
+		document.getElementById("verify").disabled = true;
+		if (len > 7 && len % 2 == 0) {
+			addCompliment();
+			}
+		document.getElementById("restart").disabled = false;
+		}
+	displayDetails(msg);
+	if (error == false) {
+		//document.getElementById("plate").style.opacity = 0;
+		//let timer = setTimeout(genNextPlate, 1000); 
+		}
+	
+}
+
+function showScore() {
+	let percent = (score / attempts) * 100;
+	document.getElementById("score").innerHTML = "Correct = " + score +
+		", Attempts: " + attempts + ", Rate: " + percent.toFixed(1) + "%";
+}
+
+function addCompliment() {
+	// cycle thru the compliments
+	buildMessage (compliments[cinx] + "!");
+	cinx = (++cinx % compliments.length);
+}
+
+function showThem(restart) {
+	// show the license up to 4 times (like a hint or help)
+	if (showCount <= 0) {
+		document.getElementById("restart").disabled = false;
+		return;
+	}
+	op = 1;
+	document.getElementById("details").style.opacity = 1; // make new letter visible
+	showCount--;
+	document.getElementById("show").title = "Click this to show the license.";
+	msg = "";
+	buildMessage("Correct = " + license + ". ");
+	displayDetails(msg);
+	fadeOutDetails();
+	document.getElementById("license").focus();	
+}
+
+function ding() {
+	if (sound) {
+		audio = new Audio("ding2.mp3"); 
+		audio.play();	
+	}
+}
+
+function tada() {
+	if (sound) {
+		if (cinx < 3)
+			audio = new Audio("applause.wav");
+		else
+			audio = new Audio("TaDaNice.mp3"); 
+		audio.play();	
+	}
+}
+
+function doSound() {
+	// Toggle the sound setting, change button to Sound On or Sound Off
+	if (sound) {
+		sound = false;
+		document.getElementById("sound").innerHTML = "Sound Off";
+	}
+	else {
+		sound = true;
+		document.getElementById("sound").innerHTML = "Sound On&nbsp;";
+		}
+}
+
+function toggleFade() {
+	// Toggle the fade setting, change button to show On or Off
+	if (fade) {
+		fade = false;
+		document.getElementById("fade").innerHTML = "Fade Off";
+	}
+	else {
+		fade = true;
+		document.getElementById("fade").innerHTML = "Fade On";
+		}
+}
+
+function doHelp() {
+	// Show or hide help, button is a Toggle
+	if (help) {  // Help is visible, hide it
+		help = false; // toggle boolean
+		document.getElementById("helptext").style.visibility = "hidden";
+		document.getElementById("license").focus();
+	} 
+	else // False, Help is hidden, show it
+	if (!help)
+	{
+		help = true;
+		document.getElementById("helptext").style.visibility = "visible";
+		document.getElementById("license").focus();
+	}
+	else
+		alert("Help not true or false?");
+}
+
+function doFocus() {
+	document.getElementById("verify").disabled = true;
+	document.getElementById("show").disabled = true;
+	document.getElementById("restart").disabled = true;
+	document.getElementById("pw").focus();
+}
+
+function showPW() {
+	document.getElementById("pw").type = "text";
+	setTimeout (hidePW, 2500);
+}
+
+function hidePW() {
+	document.getElementById("pw").type = "password";
+}
+
+function clearPW() {
+	document.getElementById("pw").value = "";
+	document.getElementById("pw").focus();
+}
+
+// STOP HIDING FROM INCOMPATIBLE BROWSERS -->
+</script>
+
+</head>
+<body onload="doFocus();">
+<noscript>Your browser does not support JavaScript</noscript>
+<h2>Memorize License Plates</h2>
+<h3>(California)</h3>
+<div id="helptext">
+	<strong> &nbsp; Memorize License Plate</strong><br>
+	A random California license plate will be shown for 3 seconds.<br>
+    After a brief pause, you must enter the plate just shown.<br>
+	You may enter lowercase letters as input is uppercased.<br>
+	Click the Show button to see the correct license characters.<br>
+	After getting it correct, click New Plate to generate a new plate.<br>
+	<br>
+	Enter Password: 
+	<input class="pass" id="pw" type="password" size="10" value="" 
+		onpaste="return false;" oncopy="return false"
+		title="Enter the password" > 
+	&nbsp;
+	<button class="pass" type="button" onclick="doPW();" 
+		title="See if the password is correct.">Validate PW</button>
+	&nbsp;
+	<button class="pass" type="button" onclick="showPW();" 
+		title="Show the password for a short time.">Show</button>
+		&nbsp;
+	<button class="pass" type="button" onclick="clearPW();" 
+		title="Clear the password.">Clear</button>	
+</div>
+
+<form action="/" >
+	<br>
+	<div id="top"><span id="month"></span>California<span id="year"></span></div>
+	<input id="license" type="text" size="7" value="" maxlength="7"
+		title="Enter license plate characters in correct order"  
+		onkeypress="if(event.keyCode==13) return false;" 
+		onpaste="return false;" oncopy="return false" oncut="return false" >
+	<br>	
+	<button class="inpt" id="verify" type="button" onclick="verifyInput();" 
+		title="See if you entered the license correctly.">Verify</button>	  
+	&nbsp;
+	<button class="inpt" id="show" type="button" onclick="showThem(false);" 
+		title="Show the license plate.">Show</button>	
+	&nbsp;
+	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
+			title="Generate a new license plate">New Plate</button> 
+</form>
+
+<div id="details" onpaste="return false;" oncopy="return false">&nbsp;</div>
+
+<div id="score">&nbsp;</div>
+<br>
+<div class="copyright" id="copy">	
+Copyright &copy; 2024 Dennis Martin 
+</div>
+</body>
+</html>
