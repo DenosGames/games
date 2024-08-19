@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Dennis' Memorize Tool">
+<meta name="keywords" content="tool game memorize memory letters">
+<title>Memorize License Plate</title>
+<style>
+	html {
+		min-height: 100%;
+	}
+    body {
+		text-align: left;
+		font-family: Georgia, Verdana, Arial, Trebuchet, sans-serif;
+		font-size: 18px;
+		background-color: DarkSeaGreen;
+		overflow: auto;
+		} 
+	h2, h3 {
+		margin: 0px;
+		text-align: left;
+		margin-left: 100px;
+		color: #F6F6F6;
+		font-size: 24px;
+		text-shadow: 2px 3px #303030;
+		}
+	h3 {
+		margin-left: 200px;
+		font-size: 20px;
+		}
+	div { 
+		text-align: center;
+		margin: 2px;
+		}
+	.inpt {
+		font-family: Courier, "Courier New", "Lucida Console", Monaco;
+		font-size: 24px;
+		font-weight: normal;
+		border-radius: 6px;
+		margin: 0px 0px 0px 30px;
+		padding: 0px 1px 0px 1px;
+		font-weight: bold;
+		height: 40px;
+		}
+	input:focus 
+		{outline:none;}
+	form {
+		padding: 4px 0px 0px 0px;
+		}
+	#helptext { 
+		background-color: lightcyan;
+		border: solid 1px black;
+		border-radius: 5px;
+		padding: 5px 4px 5px 4px; 
+		font-family: Tahoma, Arial, sans-serif;
+		font-size: 16px;  
+		display: inline;
+		position: absolute; 
+		text-align: left;
+		margin: 0px;
+		line-height: 1.3;
+		top: 70px;
+		left: 10px;
+		overflow: auto;
+		}
+	#verify {
+		text-align: center;
+		margin-top: 22px;
+		margin-left: 10px;
+	}
+	#restart {
+		text-align: center;
+		margin-top: 12px;
+		margin-left: 10px;
+	}
+	#start {
+		text-align: center;
+		margin-top: 12px;
+		margin-left:50px;
+	}
+	#show {
+		text-align: center;
+		margin-top: 12px;
+		margin-left: 50px;
+	}
+	#prompt {
+		text-align: left;
+		color: black;
+		font-size: 22px;
+		font-family: Arial, Verdana, sans-serif;
+		padding: 0px;
+		margin: 10px 0px 0px 50px;
+		}
+	#prompt2 { 
+		margin-left: 150px;
+	}
+	#top, #bottom {
+		text-align: center;
+		color: red;
+		background-color: white;
+		font-size: 32px;
+		font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+		font-style: italic;
+		font-stretch: expanded;
+		padding: 0px 4px 2px 4px;
+		margin: 0px 0px 0px 50px;
+		border-radius: 8px 8px 0px 0px;
+		border: none;
+		width: 364px;
+	}
+	#bottom {
+		font-size: 20px;
+		font-family: monospace, "Lucida Console", Arial, sans-serif;
+		font-style: normal;
+		font-stretch: expanded;
+		font-weight: normal;
+		padding: 0px 4px 4px 4px;
+		border-radius: 0px 0px 8px 8px;
+		}
+	#hole1, #hole3 {
+		color: DarkSeaGreen;
+		font-size: 20px;
+		font-family: "Lucida Console", Arial, Tahoma, sans-serif;
+		font-style: normal;
+		font-stretch: normal;
+		padding-left: 6px;
+		margin-top: -2px; 
+		float: left;
+	}
+	#hole3 {
+		margin-top: 2px; 
+		}
+	#month, #month2 {
+		text-align: left;
+		color: black;
+		font-size: 20px;
+		font-family: "Lucida Console", Arial, Tahoma, sans-serif;
+		font-weight: bold;
+		font-style: normal;
+		font-stretch: normal;
+		padding: 0px 1px 0px 1px;
+		margin-top: 3px;
+		border: solid 1px blue;
+		border-radius: 2px;
+		text-transform: uppercase;
+		float: left;
+	}
+	#month2 {
+		border: none;
+		visibility: hidden;
+		}
+	#hole2, #hole4 {
+		color: DarkSeaGreen;
+		font-size: 20px;
+		font-family: Arial, Tahoma, sans-serif;
+		font-style: normal;
+		font-stretch: normal;
+		padding-right: 6px;
+		margin-top: -2px; 
+		float: right;
+		}
+	#hole4 {
+		margin-top: 2px;
+		}
+	#year, #year2 {
+		text-align: right;
+		color: black;
+		font-size: 20px;
+		font-family: "Lucida Console", Arial, Tahoma, sans-serif;
+		font-style: normal;
+		font-weight: bold;
+		padding: 0px 2px 4px 2px;
+		margin-top: 3px;
+		border: none;
+		text-transform: uppercase;
+		float: right;
+	}
+	#year2 {
+		visibility: hidden;
+		}
+	#license {
+		text-align: center;
+		color: navy;
+		font-size: 82px;
+		font-family: Tahoma, Arial, sans-serif;
+		padding: 0px 1px 0px 1px;
+		margin: 0px 0px 0px 50px;
+		border-radius: 0px;
+		border: none;
+		text-transform: uppercase;
+		width: 370px;
+		height: 90px;
+		caret-color: grey;
+		text-shadow: 2px 2px #e0e0e0;
+		font-stretch: semi-condensed;
+		}
+	#details {
+		color: yellow;
+		font-size: 22px;
+		font-family: Arial, Verdana, sans-serif;
+		text-align: left;
+		border: none;
+		margin: 15px 0px 8px 50px;
+		font-weight: bold;
+		}
+	#score {
+		color: navy;
+		font-size: 20px;
+		font-family: Arial, Verdana, sans-serif;
+		text-align: left;
+		width: 99%;
+		border: none;
+		margin-left: 50px;
+		margin-top: 6px;
+		}
+	.copyright {
+		color: #707070;
+		position: fixed;
+		bottom: 1%;
+		left: 120px;
+		font-size: 14px;
+	}
+	.copyright:hover {
+		color: #E0E0E0;
+		font-weight: bold;
+	}
+</style> 
+<script>
+<!-- HIDE FROM INCOMPATIBLE BROWSERS 
+var license = [];  // 
+var audio = "";
+var sound = true;
+var fade = true;
+var msg = "";
+var lastNbr = 99;
+var last = 99;
+var best = 0;
+var score = 0;
+var attempts = 0;
+var milli = 200;
+var op = 1;
+var fadeStarted = false;
+// Alphabet with 4 most common vowels added
+var theLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var help = true;
+var eStr = "";
+var months = [" ","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+function doPW() {
+	
+	let str = document.getElementById("pw").value;
+	eStr = btoa(str);
+	if (eStr == "Q2FyczU1") {
+		doHelp(); // closes help box
+		initialize(0);
+	}
+	else {
+		document.getElementById("pw").value = "";
+		document.getElementById("details").innerHTML = "Invalid Password. Please re-enter.";
+		document.getElementById("pw").focus();
+	}
+}
+
+function initialize(src) {
+	if (src == 0) { // onload
+		let device = navigator.platform;
+		displayDetails("Device is " + device + ".");
+		//  Add event listener to all for iphone, ipad
+		//  https://web.dev/articles/add-touch-to-your-site
+		if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
+			document.body.addEventListener('touchstart', function() {}, false);
+		}
+	}
+	else
+	if (src == 1) {  // Restart
+		displayDetails("Generating new license.");
+		document.getElementById("helptext").style.visibility = "hidden";
+		help = false;
+	}
+	const dateObj = new Date();
+	let month = dateObj.getUTCMonth() + 1; 
+	document.getElementById("month").innerHTML = months[month];
+	let year = dateObj.getUTCFullYear(); 
+	document.getElementById("year").innerHTML = year;
+	let backColor = getYearColor(year);
+	document.getElementById("year").style.backgroundColor = backColor;
+    license = [];
+	//document.getElementById("plate").style.opacity = 1.0;
+	document.getElementById("license").style.opacity = 1.0;
+	//document.getElementById("plate").innerHTML = "";
+	document.getElementById("license").innerHTML = "";
+	//document.getElementById("plate").value = "";
+	document.getElementById("license").value = "";
+	document.getElementById("show").disabled = true;
+	document.getElementById("restart").disabled = true;
+	document.getElementById("start").disabled = false;
+	if (eStr == "Q2FyczU1")
+		genNextPlate();
+}
+
+function getYearColor(year) {
+	// get the background color for the year sticker
+	let unit = year % 10;
+	switch (unit) {
+		case(0): case(5): return "yellow"; break;
+		case (1): case (6): return "red";  break;
+		case (2): case (7): return "green";  break;
+		case (3): case (8): return "orange"; break;
+		case (4): case (9): return "dodgerblue"; break;
+		default: return white;
+	}
+}
+
+function buildMessage(str) {
+	msg = msg + str;
+}
+
+function displayDetails(str) {
+	// display the string in element 'details'
+	document.getElementById("details").style.opacity = 1;
+	document.getElementById("details").innerHTML = str;
+}
+
+function getRandomNumber() {
+	// Return a random digit 1-9 that was not used last time
+	let n = 1;
+	do  {
+		n = Math.floor(Math.random() * 9) + 1; // random digit 1-9
+		}
+	while (n == lastNbr);
+	lastNbr = n;
+	return n;
+}
+
+function getRandomLetter() {
+	// return a random number 0-25 that was not used last time
+	let n = theLetters.length;  
+	do  {
+		n = Math.floor(Math.random() * (theLetters.length) ); // rand nbr 0 to end
+		}
+	while (n == last || theLetters[n] == theLetters[last] ); // if same as last, try again
+	if (last == 70 && n == 85) { // F was last, this is U 
+		// Keep it G rated, get a new random nbr representing A - T
+		n = Math.floor(Math.random() * 19); // A thru T
+		}
+	last = n;
+	return n;
+}
+
+function genNextPlate() {
+	// Generate a random California license plate
+	//document.getElementById("plate").innerHTML = "";
+	document.getElementById("license").value = "";
+	let n = getRandomNumber(); // 1 - 9 for leading digit
+	license.push(n);
+	// Add 3 letters
+	for (let i = 0; i < 3; i++) {
+		n = getRandomLetter();
+		let ch = theLetters[n]; //String.fromCharCode(n);
+		license.push(ch);
+	}
+	// Finally add 3 digits
+	for (let i = 0; i < 3; i++) {
+		n = getRandomNumber(); // + 65;  // gives Ascii characters A(65) to Z(90)
+		license.push(n);
+	}
+	// show the license
+	for (let i = 0; i < license.length; i++) {
+		//document.getElementById("plate").innerHTML += license[i];
+		document.getElementById("license").value += license[i];
+	}
+	document.getElementById("verify").disabled = true;
+	//clearLetters(); 
+	milli += 50;
+	displayDetails("Memorize the license and click Got It.");
+	document.getElementById("license").focus();
+}
+
+function clearLicense() {
+	// clear the license plate value so user can enter it
+	license = document.getElementById("license").value.toUpperCase();
+	document.getElementById("license").value = "";
+	displayDetails("Enter the license plate and click Verify.");	
+	document.getElementById("start").disabled = true;
+	document.getElementById("verify").disabled = false;
+	document.getElementById("license").disabled = false;
+	document.getElementById("restart").disabled = true;
+	document.getElementById("license").focus();	
+}
+
+function fadeOutDetails() {
+	// Fades out the details line by modifying the opacity attribute
+	let t2 = "";
+	op -= 0.04;
+	document.getElementById("details").style.opacity = op; 
+	if (op > 0)  // fade via recursive call until done
+	    t2 = setTimeout(fadeOutDetails, 200); 
+}
+
+function verifyInput() {
+	// See if user entered the right license in order
+	let error = false;
+	let i = 0;
+	let str = document.getElementById("license").value;
+	str = str.toUpperCase();
+	document.getElementById("license").value = str;
+	str.trim();
+	str = str.split(' ').join(''); // remove spaces
+	str = str.split(',').join(''); // remove commas
+	let len = license.length;
+	// compare string to saved array
+	for (i = 0; i < len; i++) {
+		if (license[i] != str.charAt(i).toUpperCase() ) {
+			error = true;
+			break;
+		}
+	}
+	document.getElementById("show").disabled = false;
+	attempts++;
+	if (error) {
+		displayDetails("Incorrect, first error occurred at position " 
+			+ (i+1).toString() );
+		document.getElementById("verify").disabled = false;
+		document.getElementById("license").focus();	
+		if (sound) {
+			audio = new Audio("Doink.mp3"); 
+			audio.play();
+			}
+		}
+	else { // correct!
+		score++;
+		showScore();
+		displayDetails("Congrats, all " + len + " characters are correct!");
+		document.getElementById("verify").disabled = true;
+		document.getElementById("restart").disabled = false;
+		}
+	if (error == false) {
+		//document.getElementById("plate").style.opacity = 0;
+		//let timer = setTimeout(genNextPlate, 1000); 
+	}
+}
+
+function showScore() {
+	let percent = (score / attempts) * 100;
+	document.getElementById("score").innerHTML = "Correct = " + score +
+		", Attempts: " + attempts + ", Rate: " + percent.toFixed(1) + "%";
+}
+
+function showThem(restart) {
+	// show the license 
+	op = 1;
+	document.getElementById("details").style.opacity = 1; // make new letter visible
+	document.getElementById("show").title = "Click this to show the license.";
+	msg = "";
+	buildMessage("Correct = " + license + ". ");
+	displayDetails(msg);
+	fadeOutDetails();
+	document.getElementById("license").focus();	
+}
+
+function ding() {
+	if (sound) {
+		audio = new Audio("ding2.mp3"); 
+		audio.play();	
+	}
+}
+
+function doSound() {
+	// Toggle the sound setting, change button to Sound On or Sound Off
+	if (sound) {
+		sound = false;
+		document.getElementById("sound").innerHTML = "Sound Off";
+	}
+	else {
+		sound = true;
+		document.getElementById("sound").innerHTML = "Sound On&nbsp;";
+		}
+}
+
+function toggleFade() {
+	// Toggle the fade setting, change button to show On or Off
+	if (fade) {
+		fade = false;
+		document.getElementById("fade").innerHTML = "Fade Off";
+	}
+	else {
+		fade = true;
+		document.getElementById("fade").innerHTML = "Fade On";
+		}
+}
+
+function doHelp() {
+	// Show or hide help, button is a Toggle
+	if (help) {  // Help is visible, hide it
+		help = false; // toggle boolean
+		document.getElementById("helptext").style.visibility = "hidden";
+		document.getElementById("license").focus();
+	} 
+	else // False, Help is hidden, show it
+	if (!help)
+	{
+		help = true;
+		document.getElementById("helptext").style.visibility = "visible";
+		document.getElementById("license").focus();
+	}
+	else
+		alert("Help not true or false?");
+}
+
+function doFocus() {
+	document.getElementById("verify").disabled = true;
+	document.getElementById("show").disabled = true;
+	document.getElementById("restart").disabled = true;
+	document.getElementById("pw").focus();
+}
+
+function showPW() {
+	document.getElementById("pw").type = "text";
+	setTimeout (hidePW, 2500);
+}
+
+function hidePW() {
+	document.getElementById("pw").type = "password";
+}
+
+function clearPW() {
+	document.getElementById("pw").value = "";
+	document.getElementById("pw").focus();
+}
+
+// STOP HIDING FROM INCOMPATIBLE BROWSERS -->
+</script>
+
+</head>
+<body onload="doFocus();">
+<noscript>Your browser does not support JavaScript</noscript>
+<h2>Memorize License Plates</h2>
+<h3>(California)</h3>
+<div id="helptext">
+	<strong> &nbsp; Memorize License Plate</strong><br>
+	A random California license plate will be shown.<br>
+	Memorize the plate number.<br>
+	You may backspace and enter your own number.<br>
+    Then click 'Got Ot'.<br>
+	You may enter lowercase letters as input is uppercased.<br>
+	After you have memorized the number, click 'Verify'.<br>
+	Click the Show button to see the correct license characters.<br>
+	After getting it correct, click New Plate to generate a new plate.<br>
+	<br>
+	Enter Password: 
+	<input class="pass" id="pw" type="password" size="10" value="" 
+		onpaste="return false;" oncopy="return false"
+		title="Enter the password" > 
+	&nbsp;
+	<button class="pass" type="button" onclick="doPW();" 
+		title="See if the password is correct.">Validate PW</button>
+	&nbsp;
+	<button class="pass" type="button" onclick="showPW();" 
+		title="Show the password for a short time.">Show</button>
+		&nbsp;
+	<button class="pass" type="button" onclick="clearPW();" 
+		title="Clear the password.">Clear</button>	
+</div>
+<br>
+<form action="/" >
+	<div id="top"><span id="month"></span> <span id="hole1">•</span>
+	California <span id="year"></span> 	<span id="hole2">•</span>
+	</div>
+	<input id="license" type="text" size="7" value="" maxlength="7"
+		title="A California license number in the form: 1ABC234"  
+		onkeypress="if(event.keyCode==13) return false;" 
+		onpaste="return false;" oncopy="return false" oncut="return false" >
+		
+	<div id="bottom"><span id="month2">&nbsp;&nbsp;&nbsp;</span> <span id="hole3">•</span>
+	dmv.ca.gov<span id="year2">&nbsp;&nbsp;&nbsp;&nbsp;</span> <span id="hole4">•</span>
+	</div>
+	
+	<br>
+	<button class="inpt" id="start" type="button" onclick="clearLicense();" 
+		title="Click after you have memorized the plate number.">Got It</button>	  
+	&nbsp; &nbsp;
+	<button class="inpt" id="verify" type="button" onclick="verifyInput();" 
+		title="See if you entered the license correctly.">Verify</button>	  
+	<br>
+	<button class="inpt" id="show" type="button" onclick="showThem(false);" 
+		title="Show the license plate.">Show #</button>	
+	&nbsp;
+	&nbsp;
+	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
+			title="Generate a new license plate">New Plate</button> 
+</form>
+
+<div id="details" onpaste="return false;" oncopy="return false">&nbsp;</div>
+
+<div id="score">&nbsp;</div>
+<br>
+<div class="copyright" id="copy">	
+Copyright &copy; 2024 Dennis Martin 
+</div>
+</body>
+</html>
