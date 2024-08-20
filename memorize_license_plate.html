@@ -412,10 +412,6 @@ function verifyInput() {
 		document.getElementById("verify").disabled = true;
 		document.getElementById("restart").disabled = false;
 		}
-	if (error == false) {
-		//document.getElementById("plate").style.opacity = 0;
-		//let timer = setTimeout(genNextPlate, 1000); 
-	}
 }
 
 function showScore() {
@@ -546,8 +542,7 @@ function clearPW() {
 	<br>
 	<button class="inpt" id="show" type="button" onclick="showThem(false);" 
 		title="Show the license plate.">Show #</button>	
-	&nbsp;
-	&nbsp;
+	&nbsp;	&nbsp;
 	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
 			title="Generate a new license plate">New Plate</button> 
 </form>
