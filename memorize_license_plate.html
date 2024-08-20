@@ -262,11 +262,8 @@ function initialize(src) {
 	let backColor = getYearColor(year);
 	document.getElementById("year").style.backgroundColor = backColor;
     license = [];
-	//document.getElementById("plate").style.opacity = 1.0;
 	document.getElementById("license").style.opacity = 1.0;
-	//document.getElementById("plate").innerHTML = "";
 	document.getElementById("license").innerHTML = "";
-	//document.getElementById("plate").value = "";
 	document.getElementById("license").value = "";
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
@@ -278,7 +275,7 @@ function getYearColor(year) {
 	// get the background color for the year sticker
 	let unit = year % 10;
 	switch (unit) {
-		case(0): case(5): return "yellow"; break;
+		case (0): case (5): return "yellow"; break;
 		case (1): case (6): return "red";  break;
 		case (2): case (7): return "green";  break;
 		case (3): case (8): return "orange"; break;
@@ -333,7 +330,6 @@ function genLinPlate() {
 
 function genNextPlate() {
 	// Generate a random California license plate
-	//document.getElementById("plate").innerHTML = "";
 	document.getElementById("license").value = "";
 	let n = getRandomNumber(); // 1 - 9 for leading digit
 	license.push(n);
@@ -350,7 +346,6 @@ function genNextPlate() {
 	}
 	// show the license
 	for (let i = 0; i < license.length; i++) {
-		//document.getElementById("plate").innerHTML += license[i];
 		document.getElementById("license").value += license[i];
 	}
 	document.getElementById("verify").disabled = true;
@@ -381,7 +376,7 @@ function fadeOutDetails() {
 }
 
 function verifyInput() {
-	// See if user entered the right license in order
+	// See if user entered the right license plate characters in order
 	let error = false;
 	let i = 0;
 	let str = document.getElementById("license").value;
