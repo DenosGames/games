@@ -231,10 +231,8 @@ var last = 99;
 var best = 0;
 var score = 0;
 var attempts = 0;
-var milli = 200;
 var op = 1;
 var fadeStarted = false;
-// Alphabet with 4 most common vowels added
 var theLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var help = true;
 var eStr = "";
@@ -279,11 +277,8 @@ function initialize(src) {
 	let backColor = getYearColor(year);
 	document.getElementById("year").style.backgroundColor = backColor;
     license = [];
-	//document.getElementById("plate").style.opacity = 1.0;
 	document.getElementById("license").style.opacity = 1.0;
-	//document.getElementById("plate").innerHTML = "";
 	document.getElementById("license").innerHTML = "";
-	//document.getElementById("plate").value = "";
 	document.getElementById("license").value = "";
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
@@ -343,7 +338,6 @@ function getRandomLetter() {
 
 function genNextPlate() {
 	// Generate a random California license plate
-	//document.getElementById("plate").innerHTML = "";
 	document.getElementById("license").value = "";
 	let n = getRandomNumber(); // 1 - 9 for leading digit
 	license.push(n);
@@ -360,12 +354,10 @@ function genNextPlate() {
 	}
 	// show the license
 	for (let i = 0; i < license.length; i++) {
-		//document.getElementById("plate").innerHTML += license[i];
 		document.getElementById("license").value += license[i];
 	}
 	document.getElementById("verify").disabled = true;
 	//clearLetters(); 
-	milli += 50;
 	displayDetails("Memorize the license and click Got It.");
 	document.getElementById("license").focus();
 }
@@ -428,10 +420,6 @@ function verifyInput() {
 		document.getElementById("verify").disabled = true;
 		document.getElementById("restart").disabled = false;
 		}
-	if (error == false) {
-		//document.getElementById("plate").style.opacity = 0;
-		//let timer = setTimeout(genNextPlate, 1000); 
-	}
 }
 
 function showScore() {
@@ -563,11 +551,9 @@ function clearPW() {
 		title="A California license number in the form: 1ABC234"  
 		onkeypress="if(event.keyCode==13) return false;" 
 		onpaste="return false;" oncopy="return false" oncut="return false" >
-		
 	<div id="bottom"><span id="month2">&nbsp;&nbsp;&nbsp;</span> <span id="hole3">&nbsp; •</span>
 	dmv.ca.gov<span id="year2">&nbsp;&nbsp;&nbsp;&nbsp;</span> <span id="hole4">•</span>
 	</div>
-	
 	<br>
 	<button class="inpt" id="start" type="button" onclick="clearLicense();" 
 		title="Click after you have memorized the plate number.">Got It</button>	  
@@ -577,8 +563,7 @@ function clearPW() {
 	<br>
 	<button class="inpt" id="show" type="button" onclick="showThem(false);" 
 		title="Show the license plate.">Show #</button>	
-	&nbsp;
-	&nbsp;
+	&nbsp; 	&nbsp;
 	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
 			title="Generate a new license plate">New Plate</button> 
 </form>
