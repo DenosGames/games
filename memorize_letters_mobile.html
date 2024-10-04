@@ -238,6 +238,7 @@ var fadeStarted = false;
 var theLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZEAOI";
 var help = true;
 var eStr = "";
+var device = navigator.platform;
 
 function doPW() {
 	let str = document.getElementById("pw").value;
@@ -257,8 +258,8 @@ function initialize(src) {
 	if (src == 0) { // onload
 		//let device = navigator.platform;
 		let w = window.innerWidth;
-		displayDetails( //"Device is " + device + 
-			" Width is " + w + ". Enter first letter and click Verify");
+		displayDetails( "Device is " + device + 
+			". Width is " + w + ". Enter first letter and click Verify");
 		//  Add event listener to all for iphone, ipad
 		//  https://web.dev/articles/add-touch-to-your-site
 		if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
