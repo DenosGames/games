@@ -154,6 +154,9 @@
 		margin: 0px 0px 0px 8px;
 		font-weight: bold;
 	}
+	#ltr {
+		font-size: 44px;
+		}
 	#count {
 		font-size: 36px;
 		font-family:  monospace, Courier, Arial, Verdana, sans-serif;
@@ -223,7 +226,7 @@ function initialize(src) {
 	let w = window.innerWidth;
 	if (src == 0) { // onload
 		displayDetails("Device is " + device + 
-		", Width is " + w + ". Enter first letter and Verify");
+		", Width is " + w + ". <br>Enter first letter and Verify");
 		//  Add event listener to all for iphone, ipad
 		//  https://web.dev/articles/add-touch-to-your-site
 		if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
@@ -288,7 +291,7 @@ function getNext() {
 	numbers.push(ch);
 	document.getElementById("count").innerHTML = numbers.length;
 	document.getElementById("verify").disabled = false;
-		document.getElementById("restart").disabled = false;
+	document.getElementById("restart").disabled = false;
 	clearNumbers(); 
 	milli += 50;
 	document.getElementById("numbers").focus();

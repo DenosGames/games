@@ -10,6 +10,9 @@
 	html {
 		height: 100%;
 	}
+	* {
+	box-sizing: border-box;
+	}
     body {
 		width: 100%;
 		height: 100%;
@@ -37,14 +40,11 @@
 		margin: 2px;
 		}
 	.inpt {
-		font-family: Courier, "Courier New", "Lucida Console", Monaco;
+		font-family: Verdana, Tahoma, "Courier New", "Lucida Console";
 		font-size: 24px;
 		font-weight: normal;
-		border-radius: 6px;
-		margin: 0px 0px 0px 25px;
-		padding: 0px 4px 0px 4px;
-		font-weight: bold;
-		height: 40px;
+		margin-top: 2px;
+		padding: 4px 1px 4px 1px;
 		}
 	form {
 		padding: 4px 0px 0px 0px;
@@ -55,7 +55,7 @@
 		border-radius: 5px;
 		padding: 5px 4px 5px 4px; 
 		font-family: Tahoma, Arial, sans-serif;
-		font-size: 16px;  
+		font-size: 14px;  
 		display: inline;
 		position: absolute; 
 		text-align: left;
@@ -112,10 +112,6 @@
 	.alphakey3:hover {
 		color: blue;
 	}
-	#hideKeys {
-		margin: 10px 0px 0px 60px;
-		font-size: 18px;
-		}
 	#spaceprompt {
 		text-align: left;
 		color: #555;
@@ -146,7 +142,7 @@
 		font-size: 24px;
 		font-family: Georgia, Verdana, Arial, sans-serif;
 		padding: 3px;
-		margin: 0px 0px 0px 60px;
+		margin: 0px 0px 0px 55px;
 		border-radius: 5px;
 		}
 	#details {
@@ -191,6 +187,9 @@
 		padding: 0px;
 		margin: 0px 0px 0px 8px;
 		font-weight: bold;
+	}
+	#ltr {
+	font-size: 32px;
 	}
 	#count {
 		font-family:  Arial, Verdana;
@@ -241,7 +240,6 @@ var help = true;
 var eStr = "";
 
 function doPW() {
-	document.getElementById("hideKeys").disabled = true;
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
 	if (eStr == "RGVubzku") {
@@ -282,8 +280,6 @@ function initialize(src) {
 	document.getElementById("count").innerHTML = "0";
 	//document.getElementById("verify").disabled = true;
 	document.getElementById("show").disabled = true;
-	document.getElementById("hideKeys").disabled = false;
-	document.getElementById("hideKeys").checked = false;
 	showScore();
 	if (eStr == "RGVubzku")
 		setTimeout (getNext, 1500);
@@ -325,6 +321,7 @@ function getNext() {
 	letters.push(ch);
 	document.getElementById("count").innerHTML = letters.length;
 	document.getElementById("verify").disabled = false;
+	document.getElementById("restart").disabled = false;
 	clearLetters(); 
 	milli += 50;
 	//displayDetails("Enter the first letter and click Verify");
@@ -539,29 +536,6 @@ function doHelp() {
 		alert("Help not true or false?");
 }
 
-function hideTheKeys() {
-	// Hide the keypad if user checks the box
-	// This removes the space taken by the keys so helps small screens
-	if (document.getElementById("hideKeys").checked ) {
-		document.getElementById("hideKeys").style.display = "none";
-		let cusid_ele = document.getElementsByClassName('alphakey');
-		for (let i = 0; i < cusid_ele.length; ++i) {
-			let item = cusid_ele[i];  
-			item.style.display = "none";
-		}
-	}
-	document.getElementById("a").style.display = "none";
-	document.getElementById("z").style.display = "none";
-	document.getElementById("hideKeys").style.display = "none";
-	document.getElementById("spaceprompt").style.display = "none";
-	document.getElementById("keypad").style.display = "none";
-	document.getElementById("helptext").style.visibility = "hidden";
-	document.getElementById("prompt").style.marginLeft = "80px"; 
-	document.getElementById("prompt").style.marginBottom = "20px"; 
-	document.getElementById("letters").style.marginTop = "10px";
-	document.getElementById("letters").focus();
-}
-
 function doFocus() {
 	document.getElementById("verify").disabled = true;
 	document.getElementById("show").disabled = true;
@@ -592,13 +566,12 @@ function clearPW() {
 
 <div id="helptext">
 	<strong> &nbsp; Memorize Letters Mobile</strong><br>
-	A new random letter will be shown after 'Next Letter', adding to a sequence.<br>
-    You must enter all the letters in the same order that they were shown.<br>
-	You may use the keypad displayed or the keyboard on your device.<br>
-	You may enter lowercase, spaces and commas from your keypad.<br>
-	You can click the Show button to see the correct sequence.<br>
-	You can permanently hide the keypad by clicking the check box.<br>
-	If using a phone, turn it sideways.<br>
+	A new random letter will be shown, adding to a sequence.<br>
+    You must enter all the letters in the same order shown.<br>
+	You must enter letters using the displayed keypad.<br>
+	Click the Show button to see the correct sequence.<br>
+	Click the New button to start a new sequence.<br>
+	If using your phone, turn it sideways.<br>
 	<br>
 	Enter Password: 
 	<input class="pass" id="pw" type="password" size="10" value="" 
@@ -656,13 +629,9 @@ function clearPW() {
 		<input class = "alphakey" type="button" title="Backspace" value="&larr;" onclick="updateString('0')" >
 		<!-- <input class = "alphakey" type="button"title="Clear" value="Cl" onclick="updateString('1')"> -->
 		<br>
-		&nbsp;
-		<input  type="checkbox" id="hideKeys" name="hideKeys" 
-				title="Removes the keypad" onclick="hideTheKeys()">
-		<span id="spaceprompt"> Hide Keypad Above</span>	
 	</div>
 	<br>
-	<input  id="letters" type="text" size="29" value="" 
+	<input  id="letters" type="text" size="29" value="" readonly
 		title="Enter letters in correct order"  
 		onkeypress="if(event.keyCode==13) return false;" 
 		onpaste="return false;" oncopy="return false" oncut="return false" 
