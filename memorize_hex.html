@@ -534,8 +534,13 @@ function doFocus() {
 		document.getElementById("helptext").style.top = "70px";
 	}
 	let w = window.innerWidth;
-	if (w <= 600)
-			document.getElementById("helptext").style.fontSize = "12px";
+	if (w <= 600) {
+		document.getElementById("helptext").style.fontSize = "12px";
+		document.getElementById("restart").innerHTML = "New";	
+	} // Use innerHTML for button vs input tag
+	else {
+		document.getElementById("restart").innerHTML = "New Seq";	
+	}
 	document.getElementById("verify").disabled = true;
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
@@ -654,8 +659,8 @@ function clearPW() {
 	<button class="inpt" id="show" type="button" onclick="showThem(false);" 
 		title="If you are having trouble, click this to show the numbers.">Show</button>
 	&nbsp; &nbsp;
-	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
-			title="Start a new sequence of hex digits">New Seq</button> 
+	<button class="inpt" id="restart"  onclick="initialize(1);"
+			title="Start a new sequence of hex digits"></button> 
 </form>
 
 <br>
