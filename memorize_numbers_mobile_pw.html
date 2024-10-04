@@ -586,7 +586,7 @@ function hidePW() {
 		<input class = "numkey" type="button" name="backspace" value=" C "
 			title="Clear all digits" onclick="updateString('C')" >
 	</div>
-	<input  id="numbers" type="text" size="23" value="" 
+	<input  id="numbers" type="text" size="23" value="" readonly
 		title="Enter all the numbers in the correct order"  
 		onkeypress="if(event.keyCode==13) return false;" onpaste="return false" 
 		oncopy="return false" autocomplete="off" onkeydown="doFade();">
@@ -598,7 +598,7 @@ function hidePW() {
 		title="Click to show the correct digit sequence up to this point.">Show #s</button>
 	&nbsp;	
 	<button class="inpt"  id="restart" type="reset" onclick="initialize(1);"
-			title="Cancel the current sequence and start a new one.">ReStart</button> 
+			title="Cancel the current sequence and start a new one.">New Seq</button> 
 </form>
 
 <div id="details" onpaste="return false;" oncopy="return false">&nbsp;</div>
