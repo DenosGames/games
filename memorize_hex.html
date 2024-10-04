@@ -39,12 +39,11 @@
 		}
 	.inpt {
 		font-family: Courier, "Courier New", "Lucida Console", Monaco;
-		font-size: 28px;
+		font-size: 26px;
 		font-weight: normal;
 		border-radius: 5px;
 		margin: 0px;
-		padding: 0px 3px 1px 3px;
-		height: 48px;
+		padding: 4px 2px 4px 2px;
 		font-weight: bold;
 		}
 	form {
@@ -147,7 +146,7 @@
 		color: #707070;
 		position: fixed;
 		bottom: 1%;
-		left: 100px;
+		left: 80px;
 		font-size: 14px;
 	}
 	.copyright:hover {
@@ -174,19 +173,22 @@
 		font-size: 18px;
 		}
 	@media only screen and (max-width: 600px) {
-	  .right {
+	.right {
 		float: none;
 		display: block;
 	  }
-	  .left {
+	.left {
 		float: none;
 		display: block;
 	  }
-	  .centered {
+	.centered {
 		float: none;
 		display: block;
 	  }
-	  .copyright {
+	#helptext { 
+		font-size: 16px;  
+	}
+	.copyright {
 		font-size: 8px;
 	  }
 	}
@@ -654,12 +656,12 @@ function clearPW() {
 	<br>	
 	<button class="inpt" id="verify" type="button" onclick="verifyInput();" 
 	   	title="See if you entered the hex numbers correctly.">Verify</button>	  
-	&nbsp; &nbsp; &nbsp;
+	&nbsp; &nbsp; 
 	<button class="inpt" id="show" type="button" onclick="showThem(false);" 
 		title="If you are having trouble, click this to show the numbers.">Show</button>
-	&nbsp; &nbsp; &nbsp;
+	&nbsp; &nbsp;
 	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
-			title="Start a new sequence of hex digits">New Seq.</button> 
+			title="Start a new sequence of hex digits">New Seq</button> 
 </form>
 
 <br>
