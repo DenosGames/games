@@ -221,8 +221,10 @@ function doPW() {
 }
 
 function initialize(src) {
+	let w = window.innerWidth;
 	if (src == 0) { // onload
-		displayDetails("Device is " + device + ". Enter first letter and Verify");
+		displayDetails("Device is " + device + 
+		", Width is " + w + ". Enter first letter and Verify");
 		//  Add event listener to all for iphone, ipad
 		//  https://web.dev/articles/add-touch-to-your-site
 		if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
@@ -532,6 +534,9 @@ function doFocus() {
 		//document.getElementById("heading").style.display = "none";
 		document.getElementById("helptext").style.top = "70px";
 	}
+	let w = window.innerWidth;
+	if (w <= 600)
+			document.getElementById("helptext").style.fontSize = "14px";
 	document.getElementById("verify").disabled = true;
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
