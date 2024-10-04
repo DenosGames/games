@@ -35,7 +35,6 @@
 		font-family: Courier, "Courier New", "Lucida Console", Monaco;
 		font-size: 26px;
 		font-weight: normal;
-		border-radius: 5px;
 		margin: 0px;
 		padding: 4px 2px 4px 2px;
 		font-weight: bold;
@@ -164,6 +163,7 @@
 		}
 	.pass {
 		font-size: 18px;
+		border-radius: 0px;
 		}
 	@media only screen and (max-width: 600px) {
 	.right {
@@ -581,10 +581,10 @@ function clearPW() {
 		onpaste="return false;" oncopy="return false"
 		title="Enter the password" > 
 	&nbsp;
-	<button class="pass" type="button" onclick="doPW();" 
+	<button class="pass"  onclick="doPW();" 
 		title="See if the password is correct.">Validate</button>
 	&nbsp;
-	<button class="pass" type="button" onclick="showPW();" 
+	<button class="pass"  onclick="showPW();" 
 		title="Show the password for a short time.">Show</button>
 	
 </div>
