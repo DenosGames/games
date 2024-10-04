@@ -8,10 +8,13 @@
 <meta name="keywords" content="memorize remember Hexadecimal numbers">
 <title>Memorize Hex</title>
 <style>
-	html {
-		min-height: 100%;
+	html { height: 100%; }
+	* {
+	box-sizing: border-box;
 	}
     body {
+		width: 100%;
+		height: 100%;
 		text-align: left;
 		font-family	: Georgia, Verdana, Arial, Trebuchet, sans-serif;
 		font-size: 18px;
@@ -21,7 +24,7 @@
 		text-align: left;
 		padding: 0px;
 		margin: 0px;
-		margin-left: 60px;
+		margin-left: 30px;
 		color: #F0F0F0;
 		font-size: 24px;
 		text-shadow: 3px 4px #303010;
@@ -60,12 +63,12 @@
 		margin: 0px;
 		line-height: 1.3;
 		top: 70px;
-		left: 67px;
-		width: 537px;
+		left: 37px;
+		width: 542px;
 		}
 	#keypad {
 		text-align: left;
-		margin-left: 60px;
+		margin-left: 30px;
 		padding: 6px 0px 2px 1px;
 	}
 	.numkey {
@@ -101,7 +104,7 @@
 	#verify {
 		text-align: center;
 		margin-top: 25px;
-		margin-left: 60px;
+		margin-left: 30px;
 	}
 	.prompt {
 		text-align: left;
@@ -109,7 +112,7 @@
 		font-size: 22px;
 		font-family: Arial, Verdana, sans-serif;
 		padding: 0px;
-		margin: 0px 0px 0px 65px;
+		margin: 0px 0px 0px 35px;
 		}
 	#numbers {
 		text-align: left;
@@ -117,7 +120,7 @@
 		font-size: 32px;
 		font-family: Arial, Verdana, sans-serif;
 		padding: 3px;
-		margin: 2px 0px 0px 60px;
+		margin: 2px 0px 0px 30px;
 		border-radius: 5px;
 		}
 	#details {
@@ -127,7 +130,7 @@
 		text-align: left;
 		width: 99%;
 		border: none;
-		margin-left: 60px;
+		margin-left: 30px;
 		font-weight: bold;
 		}
 	#score {
@@ -137,7 +140,7 @@
 		text-align: left;
 		width: 99%;
 		border: none;
-		margin-left: 60px;
+		margin-left: 30px;
 		margin-top: 10px;
 		}
 	.copyright {
@@ -170,6 +173,23 @@
 	.pass {
 		font-size: 18px;
 		}
+	@media only screen and (max-width: 600px) {
+	  .right {
+		float: none;
+		display: block;
+	  }
+	  .left {
+		float: none;
+		display: block;
+	  }
+	  .centered {
+		float: none;
+		display: block;
+	  }
+	  .copyright {
+		font-size: 8px;
+	  }
+	}
 </style> 
 <script>
 <!-- HIDE FROM INCOMPATIBLE BROWSERS 
@@ -272,6 +292,7 @@ function getNext() {
 	numbers.push(ch);
 	document.getElementById("count").innerHTML = numbers.length;
 	document.getElementById("verify").disabled = false;
+		document.getElementById("restart").disabled = false;
 	clearNumbers(); 
 	milli += 50;
 	document.getElementById("numbers").focus();
@@ -626,7 +647,7 @@ function clearPW() {
 		<input class = "numkey" type="button"  value="Cl"
 			title="Clear all digits" onclick="updateString('R')" > 
 	</div>
-	<input  id="numbers" type="text" size="28" value="" 
+	<input  id="numbers" type="text" size="24" value="" 
 		title="Enter all the hex numbers in the correct order"  
 		onkeypress="if(event.keyCode==13) return false;" onpaste="return false" 
 		oncopy="return false" autocomplete="off" onkeydown="doFade();">
