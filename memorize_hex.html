@@ -649,7 +649,7 @@ function clearPW() {
 		<input class = "numkey" type="button"  value="Cl"
 			title="Clear all digits" onclick="updateString('R')" > 
 	</div>
-	<input  id="numbers" type="text" size="24" value="" inputmode='none'
+	<input inputmode="none" id="numbers" type="text" size="24" readonly
 		title="Enter all the hex numbers in the correct order"  
 		onkeypress="if(event.keyCode==13) return false;" onpaste="return false" 
 		oncopy="return false" autocomplete="off" onkeydown="doFade();">
