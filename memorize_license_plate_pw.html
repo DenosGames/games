@@ -3,14 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Dennis' Memorize Tool">
-<meta name="keywords" content="tool game memorize memory letters">
+<meta name="description" content="Dennis' MV Chess Club page>
+<meta name="keywords" content="chess mission viejo play">
 <title>Memorize License Plate</title>
 <style>
-	html {
-		min-height: 100%;
+	html { height: 100%; }
+	* {
+	box-sizing: border-box;
 	}
     body {
+		width: 100%;
+		height: 100%;
 		text-align: left;
 		font-family: Georgia, Verdana, Arial, Trebuchet, sans-serif;
 		font-size: 18px;
@@ -105,7 +108,7 @@
 		border-radius: 0px;
 		border: none;
 		text-transform: uppercase;
-		width: 375px;
+		width: 369px;
 		height: 90px;
 		caret-color: grey;
 		text-shadow: 3px 2px #e0e0e0;
@@ -135,7 +138,7 @@
 		}
 	#hole1, #hole3 {
 		color: Green;
-		font-size: 24px;
+		font-size: 26px;
 		font-family: Arial, Tahoma, sans-serif;
 		font-style: normal;
 		font-weight: normal;
@@ -163,7 +166,7 @@
 	}
 	#hole2, #hole4 {
 		color: Green;
-		font-size: 24px;
+		font-size: 26px;
 		font-family: Arial, Tahoma, sans-serif;
 		font-style: normal;
 		font-weight: normal;
@@ -208,16 +211,33 @@
 		margin-top: 6px;
 		}
 	.copyright {
-		color: #707070;
+		color: #808080;
 		position: fixed;
 		bottom: 1%;
 		left: 130px;
 		font-size: 14px;
 	}
 	.copyright:hover {
-		color: black;
+		color: #404040;
 		font-weight: bold;
 	}
+@media only screen and (max-width: 600px) {
+  .right {
+	float: none;
+	display: block;
+  }
+  .left {
+	float: none;
+	display: block;
+  }
+  .centered {
+	float: none;
+	display: block;
+  }
+  .copyright {
+	font-size: 8px;
+  }
+}
 </style> 
 <script>
 <!-- HIDE FROM INCOMPATIBLE BROWSERS 
@@ -517,7 +537,6 @@ function clearPW() {
 <body onload="doFocus();">
 <noscript>Your browser does not support JavaScript</noscript>
 <h2>Memorize License Plates</h2>
-<h3>(California)</h3>
 <div id="helptext">
 	A random California license plate will be shown.<br>
 	Memorize the plate number.<br>

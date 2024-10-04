@@ -8,9 +8,11 @@
 <title>Memorize Letters</title>
 <style>
 	html {
-		min-height: 100%;
+		height: 100%;
 	}
     body {
+		width: 100%;
+		height: 100%;
 		text-align: left;
 		font-family: Georgia, Verdana, Arial, Trebuchet, sans-serif;
 		font-size: 18px;
@@ -197,7 +199,24 @@
 		font-size: 28px;
 		opacity: 0.8;
 		color: navy;
-		}
+	}
+	@media only screen and (max-width: 600px) {
+	  .right {
+		float: none;
+		display: block;
+	  }
+	  .left {
+		float: none;
+		display: block;
+	  }
+	  .centered {
+		float: none;
+		display: block;
+	  }
+	  .copyright {
+		font-size: 8px;
+	  }
+}
 </style> 
 <script>
 <!-- HIDE FROM INCOMPATIBLE BROWSERS 
@@ -238,7 +257,7 @@ function doPW() {
 function initialize(src) {
 	if (src == 0) { // onload
 		let device = navigator.platform;
-		displayDetails("Device is " + device + ". Enter first letter and Verify");
+		displayDetails("Device is " + device + ". Enter first letter and click Verify");
 		//  Add event listener to all for iphone, ipad
 		//  https://web.dev/articles/add-touch-to-your-site
 		if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
