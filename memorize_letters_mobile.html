@@ -8,7 +8,7 @@
 <title>Memorize Letters M</title>
 <style>
 	html {
-		height: 100%;
+		min-height: 100%;
 	}
 	* {
 	box-sizing: border-box;
@@ -20,7 +20,7 @@
 		font-family: Georgia, Verdana, Arial, Trebuchet, sans-serif;
 		font-size: 18px;
 		background-color: DarkSeaGreen;
-		overflow: auto;
+		overflow: scroll;
 		} 
 	h2, h3 {
 		margin: 0px;
@@ -72,7 +72,7 @@
 	}
 	.alphakey {
 		font-family: Verdana, Arial, sans-serif;
-		padding: 2px;
+		padding-bottom: 2px;
 		margin:  0px 8px 4px 2px;
 		width: 40px;
 		height: 37px;
@@ -122,7 +122,7 @@
 	}
 	#verify {
 		text-align: center;
-		margin-top: 22px;
+		margin-top: 17px;
 		margin-left: 60px;
 	}
 	#prompt, #prompt2 {
@@ -141,7 +141,7 @@
 		color: navy;
 		font-size: 24px;
 		font-family: Georgia, Verdana, Arial, sans-serif;
-		padding: 3px;
+		padding-bottom: 4px;
 		margin: 0px 0px 0px 55px;
 		border-radius: 5px;
 		}
@@ -151,7 +151,7 @@
 		font-family: Arial, Verdana, sans-serif;
 		text-align: left;
 		border: none;
-		margin: 10px 0px 8px 60px;
+		margin: 7px 0px 7px 60px;
 		font-weight: bold;
 		}
 	#score {
@@ -162,7 +162,7 @@
 		width: 99%;
 		border: none;
 		margin-left: 60px;
-		margin-top: 6px;
+		margin-top: 5px;
 		}
 	a {
 		margin-left: 10px;
@@ -629,9 +629,9 @@ function clearPW() {
 		<input class = "alphakey" type="button" value=" M " onclick="updateString('M')" >
 		<input class = "alphakey" type="button" title="Backspace" value="&larr;" onclick="updateString('0')" >
 		<!-- <input class = "alphakey" type="button"title="Clear" value="Cl" onclick="updateString('1')"> -->
-		<br>
+	
 	</div>
-	<br>
+	
 	<input  id="letters" type="text" size="29" value="" readonly
 		title="Enter letters in correct order"  
 		onkeypress="if(event.keyCode==13) return false;" 
