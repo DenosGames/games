@@ -522,17 +522,15 @@ function hidePW() {
 <h2 onclick="doHelp();">Memorize Digit Sequence</h2>
 
 <div id="helptext">
-	A new random digit will be shown after 'Next Digit'.<br>
-	This digit is part of an increasing sequence of digits.<br>
-    You must enter the entire sequence in the order shown,<br>
-	&nbsp; starting with the first digit that is displayed (see above).<br>
-	You may use this keypad or your device's keyboard.<br>
-	You may enter optional spaces/commas on your keypad.<br>
-	Click/Tap 'Verify' to see if you entered all the digits<br>
+	A random digit will be shown after 'Next Digit'.<br>
+	It is part of an increasing sequence of digits.<br>
+    You must enter the whole sequence in the correct order,<br>
+	&nbsp;starting with the first digit that is displayed (see above).<br>
+	You must use the displayed keyboard.<br>
+	Click/tap 'Verify' to see if you entered all the digits<br>
 	&nbsp; in the correct order. If not try again. Or...<br>
-	Click/Tap 'Show' to see the correct sequence.<br>
-	Click/Tap 'Restart' to cancel the current sequence and<br>
-	&nbsp; start a new one. Click/Tap in this box to close it.<br>
+	Click/tap 'Show' to see the correct sequence.<br>
+	Click/tap 'New' to start a new sequence.<br>
 	<br>
 	Enter Password: 
 	<input class="pass" id="pw" type="password" size="10" value="" 
@@ -595,7 +593,7 @@ function hidePW() {
 			title="Verifies if you entered the all of the digits in the correct order.">Verify</button>	  
 	&nbsp;
 	<button class="inpt" id="show" type="button" onclick="showThem(false);" 
-		title="Click to show the correct digit sequence up to this point.">Show #s</button>
+		title="Show the correct digit sequence up to this point.">Show</button>
 	&nbsp;	
 	<button class="inpt"  id="restart" type="reset" onclick="initialize(1);"
 			title="Cancel the current sequence and start a new one.">New Seq</button> 
