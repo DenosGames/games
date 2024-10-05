@@ -128,10 +128,10 @@
 	#prompt, #prompt2 {
 		text-align: left;
 		color: black;
-		font-size: 24px;
+		font-size: 20px;
 		font-family: Arial, Verdana, sans-serif;
 		padding: 0px;
-		margin: 0px 0px 0px 10px;
+		margin: -8px 0px 0px 10px;
 		}
 	#prompt2 { 
 		margin-left: 10px;
@@ -189,7 +189,7 @@
 		font-weight: bold;
 	}
 	#ltr {
-	font-size: 32px;
+	font-size: 28px;
 	}
 	#count {
 		font-family:  Arial, Verdana;
@@ -198,7 +198,7 @@
 		color: navy;
 	}
 	.pass {
-		font-size: 18px;
+		font-size: 19px;
 	}
 	@media only screen and (max-width: 600px) {
 	  .right {
@@ -563,6 +563,7 @@ function clearPW() {
 
 </head>
 <body onload="doFocus();">
+
 <noscript>Your browser does not support JavaScript</noscript>
 
 <div id="helptext">
@@ -589,12 +590,13 @@ function clearPW() {
 		title="Clear the password.">Clear</button>	
 </div>
 
+<span id="prompt">Next Letter: </span>
+<span id="ltr">_</span>
+<span id="prompt2">Count: </span>
+<span id="count">&nbsp;</span>
+
 <form action="/" >
-	<span id="prompt">Next Letter: </span>
-	<span id="ltr">_</span>
-	<span id="prompt2">Count: </span>
-	<span id="count">&nbsp;</span>
-	
+		
 	<div id="keypad">
 		<!-- Row 1 -->	 
 		<input class = "alphakey" type="button" value=" Q " onclick="updateString('Q')" >
