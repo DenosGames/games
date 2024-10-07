@@ -238,7 +238,7 @@ var device = navigator.platform;
 function doPW() {
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
-	if (eStr == "TXVzaWMj") {
+	if (eStr == "TXVzaWM=") {
 		doHelp(); // closes help box
 		initialize(0);
 	}
@@ -660,9 +660,9 @@ function clearPW() {
 	&nbsp; &nbsp;If you enter them incorrectly, re-click the keys until you get the order correct.<br>
 	Click Begin to start the sequence with the first key/note.<br>
 	Click Show to see the answer sequence (up to 3 times).<br>
-	Click Restart to start over with a new sequence. <br>
-	Click Cancel to delete your click sequence and re-enter the key sequence.<br>
-	This version uses both the black and white notes, the chromatic scale.<br>
+	Click 'New Seq' to start over with a new sequence. <br>
+	Click Cancel to delete your click sequence and re-enter it.<br>
+	This version uses both the black and white keys, the chromatic scale.<br>
 	<br>
 	Enter Password: 
 	<input class="pass" id="pw" type="password" size="10" value="" 
@@ -705,7 +705,7 @@ function clearPW() {
 		title="Show the correct notes.">Show</button>	  
 	&nbsp;
 	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
-			title="Reset everything and start a new sequence of notes">New Seq.</button> 
+			title="Start a new sequence of notes">New Seq</button> 
 	&nbsp;
 	<button class="inpt" id="cancel" type="button" onclick="cancelClicks();"
 			title="Cancel all sounds and clicks so you can re-enter the note sequence for this round.">

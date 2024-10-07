@@ -11,7 +11,12 @@
 	html {
 		min-height: 100%;
 	}
+	* {
+		box-sizing: border-box;
+	}
     body {
+		width: 100%;
+		height: 100%;
 		text-align: left;
 		font-family: Tahoma, Arial, Trebuchet, sans-serif;
 		font-size: 20px;
@@ -156,19 +161,19 @@
 		z-index: 2;
 	}
 	#n05 {
-		left: 64px; 
+		left: 68px; 
 		}
 	#n15 {
-		left: 129px;
+		left: 131px;
 		}
 	#n35 {			/* F# */
-		left: 251px;
+		left: 253px;
 		}
 	#n45 {
-		left: 313px;
+		left: 316px;
 		}
 	#n55 {
-		left: 376px;
+		left: 378px;
 		}
 	sub {
 		font-size: 12px;
@@ -184,7 +189,7 @@
 		display:inline; 
 		z-index: 5;
 		visibility: visible;
-		opacity: 0.95;
+		opacity: 0.85;
 		position: absolute; 
 		text-align: left;
 		margin: 1px;
@@ -195,6 +200,26 @@
 	.pass {
 		font-size: 18px;
 		}
+	@media only screen and (max-width: 600px) {
+		.right {
+			float: none;
+			display: block;
+		  }
+		.left {
+			float: none;
+			display: block;
+		  }
+		.centered {
+			float: none;
+			display: block;
+		  }
+		#helptext { 
+			font-size: 14px;  
+		}
+		.copyright {
+			font-size: 12px;
+		  }
+	}
 </style> 
 <script>
 <!-- HIDE FROM INCOMPATIBLE BROWSERS 
@@ -227,7 +252,7 @@ var device = navigator.platform;
 function doPW() {
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
-	if (eStr == "TXVzaWMj") {
+	if (eStr == "TXVzaWM=") {
 		doHelp(); // closes help box
 		initialize(0);
 	}
@@ -257,7 +282,6 @@ function initialize(src) {
 	document.getElementById("cancel").disabled = false;
 	document.getElementById("restart").disabled = true;
 	// user interaction now required in Chrome to start autoplay
-	//displayDetails("Click the Blue Help box to close it");
 	// only declare one audiocontext or Edge will max out at 6
 	if (src  == 1) {
 		context = "";
@@ -655,12 +679,11 @@ function clearPW() {
 <div id="helptext">
 	<strong> &nbsp; Memorize Notes</strong><br>
 	An increasing sequence of notes/keys will be played.<br>
-	&nbsp; &nbsp;<u>You must replay them  by clicking/touching the keys in the same order.</u><br>
-	&nbsp; &nbsp;If you enter them incorrectly, re-click the keys until you get the order right.<br>
-	Click Begin to start the sequence with the first key/note.<br>
-	Click Show to see the answer sequence (up to 3 times).<br>
-	Click Restart to start over with a new sequence. <br>
-	Click Cancel to delete your click sequence and re-enter the key sequence.<br>
+	&nbsp; &nbsp;<u>You must replay them  by tapping the keys in order.</u><br>
+	&nbsp; &nbsp;If you enter them incorrectly, try again	.<br>
+	Tap Begin to start the sequence with the first key/note.<br>
+	Tap 'New Seq' to start over with a new sequence.<br>
+	Tap Cancel to delete your tap sequence and re-enter it.<br>
 	<br>
 	Enter Password: 
 	<input class="pass" id="pw" type="password" size="10" value="" 
@@ -703,7 +726,7 @@ function clearPW() {
 		title="Show the correct notes.">Show</button>	  
 	&nbsp;
 	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
-			title="Reset everything and start a new sequence of notes">New Seq.</button> 
+			title="Start a new sequence of notes">New Seq</button> 
 	&nbsp;
 	<button class="inpt" id="cancel" type="button" onclick="cancelClicks();"
 			title="Cancel all clicks so you can re-enter the note sequence for this round.">

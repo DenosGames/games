@@ -11,9 +11,12 @@
 	html {
 		min-height: 100%;
 	}
+	* {
+		box-sizing: border-box;
+	}
     body {
 		text-align: left;
-		font-family: Georgia, Tahoma, Arial, sans-serif;
+		font-family: Tahoma, Arial, Trebuchet, sans-serif;
 		font-size: 18px;
 		background-color: #8FB686;
 		} 
@@ -157,19 +160,19 @@
 		z-index: 2;
 	}
 	#n05 {
-		left: 79px; 
+		left: 85px; 
 		}
 	#n15 {
 		left: 163px;
 		}
 	#n35 {			/* F# */
-		left: 319px;
+		left: 322px;
 		}
 	#n45 {
-		left: 401px;
+		left: 402px;
 		}
 	#n55 {
-		left: 480px;
+		left: 482px;
 		}
 	sub {
 		font-size: 12px;
@@ -185,7 +188,7 @@
 		display: inline; 
 		z-index: 5;
 		visibility: visible;
-		opacity: 0.95;
+		opacity: 0.85;
 		position: absolute; 
 		text-align: left;
 		margin: 1px;
@@ -193,16 +196,6 @@
 		left: 16px;
 		top: 28px;
 		width: 635px;
-		}
-	#close {
-		background-color: red;
-		color: black;
-		float: right;
-		font-size: 20px;
-		}
-	#close:hover {
-		color: white;
-		background-color: red;
 		}
 	.pass {
 		font-size: 18px;
@@ -239,7 +232,7 @@ var device = navigator.platform;
 function doPW() {
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
-	if (eStr == "TXVzaWMj") {
+	if (eStr == "TXVzaWM=") {
 		doHelp();  // closes help box
 		initialize(0);
 	}
@@ -269,7 +262,6 @@ function initialize(src) {
 	document.getElementById("cancel").disabled = false;
 	document.getElementById("restart").disabled = true;
 	// user interaction now required in Chrome to start autoplay
-	//displayDetails("Click the Blue Help box to close it");
 	// only declare one audiocontext or Edge will max out at 6
 	if (src  == 1) {
 		context = "";
@@ -658,8 +650,8 @@ function clearPW() {
 	&nbsp; &nbsp;If you enter them incorrectly, re-click the keys until you get the order correct.<br>
 	Click Begin to start the sequence with the first key/note.<br>
 	Click Show to see the answer sequence (up to 3 times).<br>
-	Click Restart to start over with a new sequence. <br>
-	Click Cancel to delete your click sequence and re-enter the key sequence.<br>
+	Click 'New Seq' to start over with a new sequence. <br>
+	Click Cancel to delete your click sequence and re-enter it.<br>
 	<br>
 	Enter Password: 
 	<input class="pass" id="pw" type="password" size="10" value="" 
@@ -702,7 +694,7 @@ function clearPW() {
 		title="Show the correct notes.">Show</button>	  
 	&nbsp;
 	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
-			title="Reset everything and start a new sequence of notes">New Seq.</button> 
+			title="Start a new sequence of notes">New Seq</button> 
 	&nbsp;
 	<button class="inpt" id="cancel" type="button" onclick="cancelClicks();"
 			title="Cancel all clicks so you can re-enter the note sequence for this round.">
