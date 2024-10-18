@@ -211,7 +211,7 @@ var device = navigator.platform;
 function doPW() {
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
-	if (eStr == "RGVubzku") {
+	if (eStr == "ZGVubzku") {
 		doHelp(); // closes help box
 		initialize(0);
 	}
@@ -250,7 +250,7 @@ function initialize(src) {
 	document.getElementById("show").disabled = true;
 	//document.getElementById("hideKeys").checked = false;
 	showScore();
-	if (eStr == "RGVubzku")
+	if (eStr == "ZGVubzku")
 		setTimeout (getNext, 1500);
 }
 

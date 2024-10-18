@@ -111,8 +111,7 @@
 		width: 369px;
 		height: 90px;
 		caret-color: grey;
-		text-shadow: 3px 2px #e0e0e0;
-		font-stretch: semi-condensed;
+		text-shadow: 2px 2px #e0e0e0;
 		}
 	#top, #bottom {
 		text-align: center;
@@ -121,7 +120,7 @@
 		font-size: 32px;
 		font-family: "Brush Script MT", "Lucida Handwriting", cursive;
 		font-style: italic;
-		font-stretch: extra-expanded;
+		font-weight: bold;
 		padding: 0px 4px 2px 4px;
 		margin: 0px 0px 0px 50px;
 		border-radius: 8px 8px 0px 0px;
@@ -262,7 +261,7 @@ function doPW() {
 	
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
-	if (eStr == "Q2FyczU1") {
+	if (eStr == "ZGVubzku") {
 		doHelp(); // closes help box
 		initialize(0);
 	}
@@ -303,7 +302,7 @@ function initialize(src) {
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
 	document.getElementById("start").disabled = false;
-	if (eStr == "Q2FyczU1")
+	if (eStr == "ZGVubzku")
 		genNextPlate();
 }
 

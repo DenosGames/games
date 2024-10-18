@@ -6,10 +6,13 @@
 <meta name="keywords" content="Memorize pawn pattern spatial recognition memory remember">
 <title>Memorize Pawns 8x8</title>
 <style>
-	html {
-		min-height: 100%;
+	html { height: 100%; }
+	* {
+	box-sizing: border-box;
 	}
     body {
+		width: 100%;
+		height: 100%;
 		text-align: left;
 		font-family:  Arial, Trebuchet, sans-serif;
 		font-size: 20px;
@@ -35,10 +38,12 @@
 		font-size: 20px;
 		font-weight: normal;
 		border-radius: 5px;
-		margin: 0px 305px 0px 2px;
-		padding: 0px 3px 0px 3px;
-		height: 40px;
+		margin: 0px 0px 0px 0px;
+		padding: 3px 3px 4px 3px;
 		border: solid 1px #ffffcc;
+		}
+	#theColor {
+		margin-left: 320px;
 		}
 	form {
 		padding: 1px 0px 0px 0px;
@@ -71,7 +76,7 @@
 	.copyright {
 		color: #305050;
 		position: fixed;
-		bottom: 1%;
+		bottom: 2px;
 		left: 240px;
 		font-size: 13px;
 	}
@@ -156,6 +161,8 @@
 </style> 
 <script>
 <!-- HIDE FROM INCOMPATIBLE BROWSERS 
+// This version does not allow pawns in the first or last rows
+// as that is not valid in a real chess game/position.
 var squares = [];  // the randomly-picked colored squares
 var answer = [];   // holds the pattern
 var audio = "";
@@ -179,7 +186,7 @@ function doPW() {
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
 	document.getElementById("details").innerHTML = eStr;
-	if (eStr == "TWFnbnVzNQ==") {
+	if (eStr == "Y21hdGU=") {
 		score = sessionStorage.getItem("score");
 		score = score * 1.0;
 		colorIndex = sessionStorage.getItem("color");
@@ -436,8 +443,6 @@ function hidePW() {
 
 </head>
 <body onload="doFocus(); changeColor(99);">
-
-<h2>Memorize Pawns 8x8</h2>
 
 <span id="helptext">
 	Welcome to Memorize Pawns, an exercise in spatial recognition.<br>

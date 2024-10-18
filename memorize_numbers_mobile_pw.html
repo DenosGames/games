@@ -194,7 +194,7 @@ let eStr = "";
 function doPW() {
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
-	if (eStr == "RGVubzku") {
+	if (eStr == "ZGVubzku") {
 		doHelp(); // closes help box
 		initialize(0);
 	}
@@ -229,7 +229,8 @@ function initialize(src) {
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
 	displayDetails("Enter the first number and click Verify");
-	setTimeout(getNext, 2000);
+	if (eStr == "ZGVubzku")
+		setTimeout(getNext, 2000);
 }
 
 function buildMessage(str) {

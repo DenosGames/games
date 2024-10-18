@@ -6,7 +6,7 @@
 <meta name="description" content="Dennis' Memorize Numbers">
 <meta name="author" content="Dennis Martin">
 <meta name="keywords" content="Memorize pawn pattern spatial recognition memory remember">
-<title>Memorize Numbers PW2</title>
+<title>Memorize Numbers</title>
 <style>
 html { height: 100%; }
 	* {
@@ -199,12 +199,11 @@ let eStr = "";
 function doPW() {
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
-	if (eStr == "RGVubzku") {
+	if (eStr == "ZGVubzku") {
 		doHelp(); // closes help box
 		initialize(0);
 	}
 	else {
-		//document.getElementById("pw").value = "";
 		document.getElementById("details").innerHTML = "Invalid Password. Please re-enter.";
 		document.getElementById("pw").focus();
 	}
@@ -233,7 +232,7 @@ function initialize(src) {
 	document.getElementById("show").disabled = true;
 	document.getElementById("restart").disabled = true;
 	displayDetails("Enter the first number and click Verify");
-	if (eStr == "RGVubzku")
+	if (eStr == "ZGVubzku")
 		setTimeout (getNext, 1500);
 }
 

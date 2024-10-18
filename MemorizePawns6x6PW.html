@@ -6,10 +6,13 @@
 <meta name="keywords" content="Memorize pawn pattern spatial recognition memory remember">
 <title>Memorize Pawns 6x6</title>
 <style>
-	html {
-		min-height: 100%;
+	html { height: 100%; }
+	* {
+	box-sizing: border-box;
 	}
     body {
+		width: 100%;
+		height: 100%;
 		text-align: left;
 		font-family:  Arial, Trebuchet, sans-serif;
 		font-size: 18px;
@@ -19,7 +22,7 @@
 		font-family:  Verdana, Arial, sans-serif;
 		margin: 0px;
 		text-align: left;
-		margin-left: 98px;
+		margin-left: 135px;
 		margin-bottom: 4px;
 		padding: 0px;
 		font-size: 24px;
@@ -34,13 +37,15 @@
 		}
 	.inpt {
 		font-family:  Verdana, "Courier New", "Lucida Console";
-		font-size: 24px;
+		font-size: 22px;
 		font-weight: normal;
 		border-radius: 5px;
-		margin: 12px 145px 0px 2px;
-		padding: 2px 3px 2px 3px;
-		height: 40px;
+		margin: 12px 0px 0px 35px;
+		padding: 3px 3px 4px 3px;
 		border: solid 1px #ffffcc;
+		}
+	#theColor {
+		margin-left: 170px;
 		}
 	form {
 		padding: 5px 0px 0px 0px;
@@ -75,7 +80,7 @@
 	.copyright {
 		color: #303030;
 		position: fixed;
-		bottom: 1px;
+		bottom: 2px;
 		left: 180px;
 		font-size: 12px;
 	}
@@ -91,8 +96,8 @@
 		border-collapse: collapse;
 		}
 	td {
-		height: 70px;
-		width: 70px;
+		height: 80px;
+		width: 80px;
 		border: none;
 		}
 	#letters {
@@ -134,7 +139,7 @@
 		pointer-events: none;
 		border: none;
 		transition: background-color 400ms linear; 
-		text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 #000, 1px 1px 0 black;
+		text-shadow: -2px -1px 0 black, 2px -1px 0 black, -1px 2px 0 #000, 2px 2px 0 black;
 	}
 	#helptext { 
 		font-family: Arial, Tahoma, sans-serif; 
@@ -152,13 +157,14 @@
 		text-align: left;
 		margin: 1px;
 		line-height: 1.3;
-		left: 20px;
+		left: 22px;
 		top: 40px;
 	}
 </style> 
 <script>
 <!-- HIDE FROM INCOMPATIBLE BROWSERS 
 var squares = [];  // the randomly-picked colored squares
+var pawnColor = [];  // white (0) or black (1) pawn
 var answer = [];   // holds the pattern
 var audio = "";
 var msg = "";
@@ -172,7 +178,7 @@ var count = 0;
 var colorIndex = 0;
 var colorNames = ["Green", "Blue", "Red", "Violet", "Brown"];
 var actualColors = ["MediumSeagreen", "RoyalBlue", "Red", "Violet", "Peru"];
-const NEXTLEVEL = 12;
+const NEXTLEVEL = 12; // Max of 6+6 pawns
 var help = true;
 var darkSquares = [1,3,5,6,8,10,13,15,17,18,20,22,25,27,29,30,32,34];
 
@@ -180,7 +186,7 @@ function doPW() {
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
 	document.getElementById("details").innerHTML = eStr;
-	if (eStr == "TWFnbnVzNQ==") {
+	if (eStr == "Y21hdGU=") {
 		score = sessionStorage.getItem("score");
 		score = score * 1.0;
 		colorIndex = sessionStorage.getItem("color");
@@ -204,6 +210,7 @@ function newPattern() {
 	showScore();
 	count = 0;
 	squares = [];  // the squares in the generated pattern
+	pawnColor = []; 
 	answer = [];
 	colorGrid();
 	clearAllSquares();
@@ -221,7 +228,7 @@ function colorGrid() {
 			}
 		else 
 			{
-			document.getElementById(id).style.backgroundColor = "floralwhite";
+			document.getElementById(id).style.backgroundColor = "cornsilk";
 			}
 	}
 }
@@ -230,7 +237,8 @@ function goToNextLevel() {
 	// go to the 8x8 version passing score and color
 	sessionStorage.setItem("score", score);
 	sessionStorage.setItem("color", colorIndex);
-	window.location.href = "MemorizePawns8x8PW.html";
+	//window.location.href = "MemorizePawns8x8PW.html";
+	window.open("MemorizePawns8x8PW.html", '_blank').focus();
 }
 
 function buildMessage(str) {
@@ -285,15 +293,18 @@ function generatePattern() {
 		let n = getRandomNumber(MAX);
 		if (squares.indexOf(n) > -1)  // found n in array squares
 			i--;  // keep loop index from increasing so try again
-		else
+		else {
 			squares.push(n); // add n to array
+			let i = Math.round(Math.random() ); // 0 or 1
+			pawnColor.push(i); // store color of pawn
+			}
 	}
 }
 
 function showPawns() {
 	// Show the pattern by showing the pawns
 	for (let i = 0; i < squares.length; i++) {
-		showPawn(squares[i]);
+		showPawn(squares[i], i);
 	}
 	displayDetails("Remember pawns.", "");
 }
@@ -304,11 +315,17 @@ function clearSquare(n) {
 	document.getElementById(id).innerHTML = "&nbsp;";
 }
 
-function showPawn(n) {
+function showPawn(n,i) {
 	// Show the pawn icon on square n
 	let id = "n" + n;
-	document.getElementById(id).style.color = "black";
-	document.getElementById(id).innerHTML = "&#9823"; // black pawn icon
+	if (pawnColor[i] == 0) {
+		document.getElementById(id).style.color = "white"; // in case of error
+		document.getElementById(id).innerHTML = "&#9817;"; // white pawn icon
+	}
+	else {
+		document.getElementById(id).style.color = "black"; // in case of error
+		document.getElementById(id).innerHTML = "&#9823"; // black pawn icon
+	}
 }
 
 function errorSquare(n) {
@@ -345,6 +362,7 @@ function driver() {
 function doClick(n) {
 	// User clicked key n, see if correct
 	let msg2 = "";
+	let i = squares.indexOf(n);
 	if (squares.indexOf(n) >= 0) { // clicked square is in answer array, correct
 		// see if already clicked this good answer square
 		if (answer.indexOf(n) > -1) { // already clicked this square
@@ -355,13 +373,11 @@ function doClick(n) {
 		answer.push(n); 
 		count++;
 		score+= 100;
-		showPawn(n);
+		showPawn(n,i);
 		if (answer.length == squares.length) { // matched correct nbr
 			disableClicks();
 			ding();
 			let id = "n" + n;
-			//document.getElementById(id).innerHTML = "&#x2713;";  // check mark char
-			//showPawn(n);
 			pawns++;
 			msg = "Good job, You found them all. Bonus 100.";
 			if (pawns > NEXTLEVEL)

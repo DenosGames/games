@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Dennis' Memorize Tool">
+<meta name="keywords" content="tool game memorize memory letters">
+<title>Memorize Letters</title>
+<style>
+	html {
+		height: 100%;
+	}
+    body {
+		width: 100%;
+		height: 100%;
+		text-align: left;
+		font-family: Georgia, Verdana, Arial, Trebuchet, sans-serif;
+		font-size: 18px;
+		background-color: DarkSeaGreen;
+		} 
+	h2, h3 {
+		margin: 0px;
+		text-align: left;
+		margin-left: 140px;
+		padding: 3px;
+		color: #F0F0F0;
+		font-size: 30px;
+		text-shadow: 3px 4px #303010;
+		}
+	p {
+		text-align: left;
+		margin: 2px;
+		}
+	div { 
+		text-align: center;
+		margin: 2px;
+		}
+	.inpt {
+		font-family: Courier, "Courier New", "Lucida Console", Monaco;
+		font-size: 28px;
+		font-weight: normal;
+		border-radius: 6px;
+		margin-right: 4px;
+		padding: 2px 2px 2px 2px;
+		height: 48px;
+		font-weight: bold;
+		}
+	form {
+		padding: 4px 0px 0px 0px;
+		}
+	.pass {
+		font-size: 18px;
+		}
+	#helptext { 
+		background-color: lightcyan;
+		border: solid 1px black;
+		border-radius: 5px;
+		padding: 12px 12px 12px 4px; 
+		font-family: Arial, sans-serif;
+		font-size: 18px;  
+		display: inline;
+		position: absolute; 
+		text-align: left;
+		margin: 0px;
+		line-height: 1.3;
+		top: 100px;
+		left: 40px;
+		opacity: 0.95;
+		}
+	#keypad {
+		text-align: left;
+		margin-left: 22px;
+		padding: 10px 0px 0px 1px;
+	}
+	.alphakey {
+		font-family: Verdana, Arial, sans-serif;
+		padding: 0px;
+		margin:  0px 2px 4px 8px;
+		width: 55px;
+		height: 52px;
+		font-size: 36px;
+		color: white;
+		background-color: #777;
+		border-radius: 8px;
+	}
+	.alphakey:hover {
+		color: blue;
+	}
+	.alphakey2 {
+		font-family: Verdana, Arial, sans-serif;
+		padding: 2px;
+		margin:  4px 2px 4px 34px;
+		width: 55px;
+		height: 52px;
+		font-size: 36px;
+		color: white;
+		background-color: #777;
+		border-radius: 8px;
+	}
+	.alphakey2:hover {
+		color: blue;
+	}
+	.alphakey3 {
+		font-family: Verdana, Arial, sans-serif;
+		padding: 2px;
+		margin:  4px 2px 4px 68px;
+		width: 55px;
+		height: 52px;
+		font-size: 36px;
+		color: white;
+		background-color: #777;
+		border-radius: 8px;
+	}
+	.alphakey3:hover {
+		color: blue;
+	}
+	#hideKeys {
+		margin: 10px 0px 0px 60px;
+		}
+	#spaceprompt {
+		text-align: left;
+		color: #555;
+		font-size: 20px;
+		font-family: Arial, Verdana, sans-serif;
+		padding: 0px;
+		margin: 10px 0px 0px 0px;
+	}
+	#verify {
+		text-align: center;
+		margin-top: 20px;
+		margin-left: 90px;
+	}
+	#prompt, #prompt2 {
+		text-align: left;
+		color: black;
+		font-size: 24px;
+		font-family: Arial, Verdana, sans-serif;
+		padding: 0px;
+		margin: 3px 0px 1px 30px;
+		}
+	#prompt2 { 
+		margin-left: 10px;
+	}
+	#letters {
+		text-align: left;
+		color: navy;
+		font-size: 30px;
+		font-family: Georgia, Verdana, Arial, sans-serif;
+		padding: 3px;
+		margin: 0px 0px 0px 90px;
+		border-radius: 5px;
+		}
+	#details {
+		color: #ffff66;
+		font-size: 24px;
+		font-family: Arial, Verdana, sans-serif;
+		text-align: left;
+		width: 99%;
+		border: none;
+		margin-left: 90px;
+		font-weight: bold;
+		}
+	#score {
+		color: navy;
+		font-size: 24px;
+		font-family: Arial, Verdana, sans-serif;
+		text-align: left;
+		width: 99%;
+		border: none;
+		margin-left: 90px;
+		margin-top: 12px;
+		}
+	a {
+		margin-left: 20px;
+		font-size: 20px;
+		}
+	.copyright {
+		color: #707070;
+		position: fixed;
+		bottom: 1%;
+		left: 200px;
+		font-size: 14px;
+	}
+	.copyright:hover {
+		color: #E0E0E0;
+		font-weight: bold;
+	}
+	#ltr, #count {
+		text-align: left;
+		color: blue;
+		font-size: 42px;
+		font-family: Georgia, "Times New Roman", Verdana, sans-serif;
+		padding: 1px;
+		margin: 0px 0px 0px 8px;
+		font-weight: bold;
+	}
+	#count {
+		font-family:  Arial, Verdana;
+		font-size: 28px;
+		opacity: 0.8;
+		color: navy;
+	}
+	@media only screen and (max-width: 600px) {
+	  .right {
+		float: none;
+		display: block;
+	  }
+	  .left {
+		float: none;
+		display: block;
+	  }
+	  .centered {
+		float: none;
+		display: block;
+	  }
+	  .copyright {
+		font-size: 8px;
+	  }
+}
+</style> 
+<script>
+<!-- HIDE FROM INCOMPATIBLE BROWSERS 
+var letters = [];  // 
+var audio = "";
+var sound = true;
+var fade = true;
+var msg = "";
+var compliments = ["Good job","Awesome","Amazing","Terrific","Exceptional","Genius","You Rock"];
+var cinx = 0;
+var last = 27;
+var showCount = 4;
+var best = 0;
+var score = 0;
+var milli = 200;
+var op = 1;
+var fadeStarted = false;
+// Alphabet with 4 most common vowels added
+var theLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZEAOI";
+var help = true;
+var eStr = "";
+
+function doPW() {
+	document.getElementById("hideKeys").disabled = true;
+	let str = document.getElementById("pw").value;
+	eStr = btoa(str);
+	if (eStr == "ZGVubzku") {
+		doHelp(); // closes help box
+		initialize(0);
+	}
+	else {
+		//document.getElementById("pw").value = "";
+		document.getElementById("details").innerHTML = "Invalid Password. Please re-enter.";
+		document.getElementById("pw").focus();
+	}
+}
+
+function initialize(src) {
+	if (src == 0) { // onload
+		let device = navigator.platform;
+		displayDetails("Device is " + device + ". Enter first letter and click Verify");
+		//  Add event listener to all for iphone, ipad
+		//  https://web.dev/articles/add-touch-to-your-site
+		if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
+			document.body.addEventListener('touchstart', function() {}, false);
+		}
+	}
+	else
+	if (src == 1) {  // Restart
+		displayDetails("Starting new game.");
+		document.getElementById("helptext").style.visibility = "hidden";
+		help = false;
+	}
+	cinx = 0;
+	score = 0;
+	showCount = 4;
+    letters = [];
+	document.getElementById("letters").value = " ";
+	document.getElementById("ltr").innerHTML = "_";
+	document.getElementById("count").innerHTML = "0";
+	//document.getElementById("verify").disabled = true;
+	document.getElementById("show").disabled = true;
+	document.getElementById("hideKeys").checked = false;
+	document.getElementById("hideKeys").disabled = false;
+	showScore();
+	if (eStr == "ZGVubzku")
+		setTimeout (getNext, 1500);
+}
+
+function buildMessage(str) {
+	msg = msg + str;
+}
+
+function displayDetails(str) {
+	// display the string in element 'details'
+	document.getElementById("details").style.opacity = 1;
+	document.getElementById("details").innerHTML = str;
+}
+
+function getRandomNumber() {
+	// return a random number 0-25 that was not used last time
+	let n = theLetters.length;  
+	do  {
+		n = Math.floor(Math.random() * (theLetters.length) ); // rand nbr 0 to end
+		}
+	while (n == last || theLetters[n] == theLetters[last] ); // if same as last, try again
+	if (last == 70 && n == 85) { // F was last, this is U 
+		// Keep it G rated, get a new random nbr representing A - T
+		n = Math.floor(Math.random() * 19); // A thru T
+		}
+	last = n;
+	return n;
+}
+
+function getNext() {
+	// Get the next random letter
+	let n = getRandomNumber(); // + 65;  // gives Ascii characters A(65) to Z(90)
+	let ch = theLetters[n]; //String.fromCharCode(n);
+	document.getElementById("ltr").style.opacity = 1; // make new letter visible
+	document.getElementById("ltr").innerHTML = ch.toUpperCase(); // + " (" + n + ")";
+	op = 1;
+	fadeStarted = false;
+	letters.push(ch);
+	document.getElementById("count").innerHTML = letters.length;
+	document.getElementById("verify").disabled = false;
+	document.getElementById("restart").disabled = false;
+	clearLetters(); 
+	milli += 50;
+	//displayDetails("Enter the letters and click Verify");
+	document.getElementById("letters").focus();
+}
+
+function fadeOutNext() {
+	// Fades out the Next Letter by modifying the opacity attribute
+	let t1 = "";
+	op -= 0.03;
+	document.getElementById("ltr").style.opacity = op; 
+	if (op > 0)  // fade via recursive call until done
+	    t1 = setTimeout(fadeOutNext, 40); // 2 seconds
+}
+
+function fadeOutDetails() {
+	// Fades out the details line by modifying the opacity attribute
+	let t2 = "";
+	op -= 0.03;
+	document.getElementById("details").style.opacity = op; 
+	if (op > 0)  // fade via recursive call until done
+	    t2 = setTimeout(fadeOutDetails, 30 * (score+1) ); //longer if more letters
+}
+
+function clearLetters() {
+	document.getElementById("letters").value = "";
+}
+
+function updateString(nbr) {
+	if (nbr == "0") {  // User pressed Backspace button 
+		if (document.getElementById("letters").value == "") {
+			//alert("Cannot Backspace any more");
+			return;
+			}
+		let st = document.getElementById("letters").value.slice(0, 	-1);
+		document.getElementById("letters").value = st;
+	}
+	else
+	if (nbr == "1") {  // user pressed Clear button
+		document.getElementById("letters").value = "";
+		document.getElementById("letters").innerHTML = "";
+		document.getElementById("letters").focus();
+	}
+	else {
+		document.getElementById("letters").value += nbr.toString();
+		document.getElementById("letters").focus();
+		doFade();
+	}
+}
+
+function verifyInput() {
+	// See if user entered the right letters in order
+	let error = false;
+	msg = "";
+	let i = 0;
+	let str = document.getElementById("letters").value;
+	str = str.toUpperCase();
+	document.getElementById("letters").value = str;
+	str.trim();
+	str = str.split(' ').join(''); // remove spaces
+	str = str.split(',').join(''); // remove commas
+	let len = letters.length;
+	// compare string to saved array
+	for (i = 0; i < len; i++) {
+		if (letters[i] != str.charAt(i).toUpperCase() ) {
+			error = true;
+			break;
+		}
+	}
+	document.getElementById("show").disabled = false;
+	if (error) {
+		msg = "Incorrect letter sequence, first error occurred at position " 
+			+ (i+1).toString();
+		document.getElementById("verify").disabled = false;
+		document.getElementById("letters").focus();	
+		if (sound) {
+			audio = new Audio("Doink.mp3"); 
+			audio.play();
+			}
+		}
+	else { // correct!
+		score++;
+		if (score > best) 
+			best = score;
+		if (score > 2) { 
+			if ( (score > 9) && (score & 10) == 5) {
+				tada();
+			}
+			else {
+				ding();
+			}
+		}
+		showScore();
+		switch (len) {
+			case (1): msg = "Correct, enter the first 2 letters and click Verify."; break;
+			case (2): msg = "Both are correct: " + letters; break;
+			default: msg = "All " + len + " letters are correct. Add the next letter to the sequence.";
+		}
+		document.getElementById("verify").disabled = true;
+		document.getElementById("letters").value = letters;
+		if (len > 7 && len % 2 == 0) {
+			addCompliment();
+			}
+		}
+	displayDetails(msg);
+	if (error == false) {
+		document.getElementById("ltr").style.opacity = 0;
+		let timer = setTimeout("getNext()", 1000); 
+		}
+}
+
+function showScore() {
+	document.getElementById("score").innerHTML = "Score = " + score +
+			", Best score = " + best;
+}
+
+function addCompliment() {
+	// cycle thru the compliments
+	buildMessage (compliments[cinx] + "!");
+	cinx = (++cinx % compliments.length);
+}
+
+function showThem(restart) {
+	// show the letters up to 4 times (like a hint or help)
+	if (showCount <= 0) {
+		displayDetails("You have used all your Show helps.");
+		return;
+	}
+	op = 1;
+	document.getElementById("details").style.opacity = 1; // make new letter visible
+	showCount--;
+	document.getElementById("show").title = "Click this to show the letters (" +
+		showCount + ")";
+	msg = "";
+	buildMessage("Correct = " + letters + ". ");
+	if (!restart)
+		buildMessage("You have " + showCount + " Shows left.");
+	else
+		buildMessage("Starting new game");
+	displayDetails(msg);
+	fadeOutDetails();
+	document.getElementById("letters").focus();	
+}
+
+function ding() {
+	if (sound) {
+		audio = new Audio("ding2.mp3"); 
+		audio.play();	
+	}
+}
+
+function tada() {
+	if (sound) {
+		if (cinx < 3)
+			audio = new Audio("applause.wav");
+		else
+			audio = new Audio("TaDaNice.mp3"); 
+		audio.play();	
+	}
+}
+
+function doSound() {
+	// Toggle the sound setting, change button to Sound On or Sound Off
+	if (sound) {
+		sound = false;
+		displayDetails("Sound is now off");
+		document.getElementById("sound").innerHTML = "Sound On&nbsp;";
+		document.getElementById("sound").title = "The Sound is Off, click to enable";
+	}
+	else {
+		sound = true;
+		displayDetails("Sound is now on");
+		document.getElementById("sound").innerHTML = "Sound Off";
+		document.getElementById("sound").title = "The Sound is On, click to disable";
+		}
+}
+
+function toggleFade() {
+	// Toggle the fade setting, change button to show On or Off
+	if (fade) {
+		fade = false;
+		document.getElementById("fade").innerHTML = "Fade Off";
+	}
+	else {
+		fade = true;
+		document.getElementById("fade").innerHTML = "Fade On";
+		}
+}
+
+function doFade() {
+	// start fading letter if it hasn't started and past 1st letter
+	if (fadeStarted == false) {
+		fadeStarted = true;
+		if (fade) {  //Fade button says On
+			if (letters.length > 1)  // past the first letter
+				fadeOutNext(); // Fade out the Next Letter
+		}
+	}
+}
+
+function doHelp() {
+	// Show or hide help, button is a Toggle
+	if (help) {  // Help is visible, hide it
+		help = false; // toggle boolean
+		document.getElementById("helptext").style.visibility = "hidden";
+		document.getElementById("letters").focus();
+	} 
+	else // False, Help is hidden, show it
+	if (!help)
+	{
+		help = true;
+		document.getElementById("helptext").style.visibility = "visible";
+		document.getElementById("letters").focus();
+	}
+	else
+		alert("Help not true or false?");
+}
+
+function hideTheKeys() {
+	// Hide the keypad if user checks the box
+	// This removes the space taken by the keys so helps small screens
+	if (document.getElementById("hideKeys").checked ) {
+		document.getElementById("hideKeys").style.display = "none";
+		let cusid_ele = document.getElementsByClassName('alphakey');
+		for (let i = 0; i < cusid_ele.length; ++i) {
+			let item = cusid_ele[i];  
+			item.style.display = "none";
+		}
+	}
+	document.getElementById("a").style.display = "none";
+	document.getElementById("z").style.display = "none";
+	document.getElementById("hideKeys").style.display = "none";
+	document.getElementById("spaceprompt").style.display = "none";
+	document.getElementById("keypad").style.display = "none";
+	document.getElementById("helptext").style.visibility = "hidden";
+	document.getElementById("prompt").style.marginLeft = "90px"; 
+	document.getElementById("prompt").style.marginBottom = "20px"; 
+	document.getElementById("letters").style.marginTop = "10px";
+	document.getElementById("letters").focus();
+}
+
+function doFocus() {
+	document.getElementById("verify").disabled = true;
+	document.getElementById("show").disabled = true;
+	document.getElementById("restart").disabled = true;
+	document.getElementById("pw").focus();
+}
+
+function showPW() {
+	document.getElementById("pw").type = "text";
+	setTimeout (hidePW, 2500);
+}
+
+function hidePW() {
+	document.getElementById("pw").type = "password";
+}
+
+function clearPW() {
+	document.getElementById("pw").value = "";
+	document.getElementById("pw").focus();
+}
+
+// STOP HIDING FROM INCOMPATIBLE BROWSERS -->
+</script>
+
+</head>
+<body onload="doFocus();">
+<noscript>Your browser does not support JavaScript</noscript>
+<h2>Memorize Letter Sequence</h2>
+
+<div id="helptext">
+	A new random letter will be shown after 'Next Letter', adding to a sequence.<br>
+    You must enter all the letters in the same order that they were shown.<br>
+	You may use the keypad displayed or the keyboard on your device.<br>
+	You may enter lowercase, spaces and commas from your keypad.<br>
+	Then click the Verify button. If wrong, enter them again in the correct order.<br>
+	You can click the Show button to see the correct sequence.<br>
+	You can permanently hide the keypad by clicking the check box.<br>
+	<br>
+	Enter Password: 
+	<input class="pass" id="pw" type="password" size="10" value="" 
+		onpaste="return false;" oncopy="return false"
+		title="Enter the password" > 
+	&nbsp;
+	<button class="pass" type="button" onclick="doPW();" 
+		title="See if the password is correct.">Validate PW</button>
+	&nbsp;
+	<button class="pass" type="button" onclick="showPW();" 
+		title="Show the password for a short time.">Show</button>
+		&nbsp;
+	<button class="pass" type="button" onclick="clearPW();" 
+		title="Clear the password.">Clear</button>	
+</div>
+
+<form name="digits" id="digits" action="/" >
+	<span id="prompt">Next Letter: </span>
+	<span id="ltr">_</span>
+	<span id="prompt2">Count: </span>
+	<span id="count">&nbsp;</span>
+	
+	<div id="keypad">
+		<!-- Row 1 -->	 
+		<input class = "alphakey" type="button" value=" Q " onclick="updateString('Q')" >
+		<input class = "alphakey" type="button" value=" W " onclick="updateString('W')" >
+		<input class = "alphakey" type="button" value=" E " onclick="updateString('E')" >
+		<input class = "alphakey" type="button" value=" R " onclick="updateString('R')" >
+		<input class = "alphakey" type="button" value=" T " onclick="updateString('T')" >
+		<input class = "alphakey" type="button" value=" Y " onclick="updateString('Y')" >
+		<input class = "alphakey" type="button" value=" U " onclick="updateString('U')" >
+		<input class = "alphakey" type="button" value=" I " onclick="updateString('I')" >
+		<input class = "alphakey" type="button" value=" O " onclick="updateString('O')" >
+		<input class = "alphakey" type="button" value=" P " onclick="updateString('P')" >
+		<br>
+		<!-- Row 2 -->	 
+		<input class = "alphakey2" id="a" type="button" value=" A " onclick="updateString('A')" >
+		<input class = "alphakey" type="button" value=" S " onclick="updateString('S')" >
+		<input class = "alphakey" type="button" value=" D " onclick="updateString('D')" >
+		<input class = "alphakey" type="button" value=" F " onclick="updateString('F')" >
+		<input class = "alphakey" type="button" value=" G " onclick="updateString('G')" >
+		<input class = "alphakey" type="button" value=" H " onclick="updateString('H')" >
+		<input class = "alphakey" type="button" value=" J " onclick="updateString('J')" >
+		<input class = "alphakey" type="button" value=" K " onclick="updateString('K')" >
+		<input class = "alphakey" type="button" value=" L " onclick="updateString('L')" >
+		<br>
+		<!-- Row 3 -->	
+		<input class = "alphakey3" id="z" type="button" value=" Z " onclick="updateString('Z')" >
+		<input class = "alphakey" type="button" value=" X " onclick="updateString('X')" >
+		<input class = "alphakey" type="button" value=" C " onclick="updateString('C')" >
+		<input class = "alphakey" type="button" value=" V " onclick="updateString('V')" >
+		<input class = "alphakey" type="button" value=" B " onclick="updateString('B')" >
+		<input class = "alphakey" type="button" value=" N " onclick="updateString('N')" >
+		<input class = "alphakey" type="button" value=" M " onclick="updateString('M')" >
+		<input class = "alphakey" type="button" title="Backspace" value="&larr;" onclick="updateString('0')" >
+		<!-- <input class = "alphakey" type="button"title="Clear" value="Cl" onclick="updateString('1')"> -->
+		<br>
+		&nbsp;
+		<input  type="checkbox" id="hideKeys" name="hideKeys" 
+				title="Removes the keypad" onclick="hideTheKeys()">
+		<span id="spaceprompt"> Hide Keypad Above</span>
+	</div>
+	<br>
+	<input  id="letters" type="text" size="27" value="" 
+		title="Enter letters in correct order"  
+		onkeypress="if(event.keyCode==13) return false;" 
+		onpaste="return false;" oncopy="return false" oncut="return false" ondrag="return false" 
+		ondrop="return false" onkeydown="doFade();" >
+	<br>	
+	<button class="inpt" id="verify" type="button" onclick="verifyInput();" 
+		title="See if you entered the letters correctly.">Verify</button>	  
+	&nbsp; &nbsp; 
+	<button class="inpt" id="show" type="button" onclick="showThem(false);" 
+		title="Show the letter sequence (up to 4 times).">Show</button>	
+	&nbsp; &nbsp;	
+	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
+			title="Start a new sequence">New Seq.</button> 
+	<!--
+	<button class="inpt" id="sound" type="button" value="Sound off" onclick="doSound();" 
+		title="Toggle the sounds.">Sound Off</button>
+	-->
+</form>
+
+<br>
+<div id="details" onpaste="return false;" oncopy="return false">&nbsp;</div>
+
+<div id="score">&nbsp;</div>
+
+<div class="copyright" id="copy">	
+Copyright &copy; 2024 Dennis Martin 
+</div>
+</body>
+</html>

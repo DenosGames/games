@@ -6,10 +6,13 @@
 <meta name="keywords" content="Memorize pawn pattern spatial recognition memory remember">
 <title>Pawns 6x6 B&W</title>
 <style>
-	html {
-		min-height: 100%;
+	html { height: 100%; }
+	* {
+	box-sizing: border-box;
 	}
     body {
+		width: 100%;
+		height: 100%;
 		text-align: left;
 		font-family:  Arial, Trebuchet, sans-serif;
 		font-size: 18px;
@@ -97,8 +100,8 @@
 		border-collapse: collapse;
 		}
 	td {
-		height: 70px;
-		width: 70px;
+		height: 80px;
+		width: 80px;
 		border: none;
 		}
 	#letters {
@@ -187,15 +190,14 @@ function doPW() {
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
 	document.getElementById("details").innerHTML = eStr;
-	if (eStr == "cHhw") {
+	if (eStr == "Y21hdGU=") {
 		score = sessionStorage.getItem("score");
 		score = score * 1.0;
-		colorIndex = sessionStorage.getItem("color");
+		colorIndex = 0; //sessionStorage.getItem("color");
 		document.getElementById("theColor").selectedIndex = colorIndex; 
 		document.getElementById("white").disabled = false;
 		document.getElementById("black").disabled = false;
 		document.getElementById("theColor").disabled = false;
-
 		doHelp(); // closes help box
 		newPattern();
 	}
@@ -227,7 +229,7 @@ function colorGrid() {
 	let id = "n";
 	for (let i = 0; i < MAX; i++) {
 		id = "n" + i;
-		//document.getElementById(id).innerHTML = "&nbsp;";
+		document.getElementById(id).innerHTML = "&nbsp;";
 		if (darkSquares.indexOf(i) >= 0) {
 			document.getElementById(id).style.backgroundColor = actualColors[colorIndex];
 			}

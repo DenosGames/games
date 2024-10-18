@@ -6,10 +6,13 @@
 <meta name="keywords" content="Memorize pawn pattern spatial recognition memory remember">
 <title>Memorize Pawns 4x4</title>
 <style>
-	html {
-		min-height: 100%;
+	html { height: 100%; }
+	* {
+	box-sizing: border-box;
 	}
     body {
+		width: 100%;
+		height: 100%;
 		text-align: left;
 		font-family:  Arial, Trebuchet, sans-serif;
 		font-size: 18px;
@@ -33,12 +36,11 @@
 		}
 	.inpt {
 		font-family:  Verdana, "Courier New", "Lucida Console";
-		font-size: 24px;
+		font-size: 22px;
 		font-weight: normal;
 		border-radius: 5px;
 		margin: 16px 13px 0px 0px;
-		padding: 2px 3px 2px 3px;
-		height: 40px;
+		padding: 3px 3px 4px 3px;
 		border: solid 1px #ffffcc;
 		}
 	form {
@@ -90,8 +92,8 @@
 		border-collapse: collapse;
 		}
 	td {
-		height: 70px;
-		width: 70px;
+		height: 80px;
+		width: 80px;
 		border: none;
 		}
 	#digits {
@@ -133,21 +135,19 @@
 <script>
 <!-- HIDE FROM INCOMPATIBLE BROWSERS 
 var squares = [];  // the randomly-picked colored squares
+var pawnColor = [];  // white (0) or black (1) pawn
 var answer = [];   // holds the pattern
 var audio = "";
 var msg = "";
 var score = 0.0;
-var colorsLite = "Lime"; 
 var milli = 1500;
-var helpVisible = false;
-var starting = false;
 var MAX = 16;   // 4x4 
 var pawns = 3;  // start with 3 pawns
 var count = 0;
 var colorIndex = 0;
 var colorNames = ["Green", "Blue", "Red", "Violet", "Brown"];
 var actualColors = ["MediumSeagreen", "RoyalBlue", "Red", "Violet", "Peru"];
-const NEXTLEVEL = 9;
+const NEXTLEVEL = 8;
 var help = true;
 var darkSquares = [1,3,4,6,9,11,12,14];
 
@@ -155,7 +155,7 @@ function doPW() {
 	let str = document.getElementById("pw").value;
 	eStr = btoa(str);
 	document.getElementById("details").innerHTML = eStr;
-	if (eStr == "TWFnbnVzNQ==") {
+	if (eStr == "Y21hdGU=") {
 		doHelp(); // closes help box
 		newPattern();
 	}
@@ -175,6 +175,7 @@ function newPattern() {
 	showScore();
 	count = 0;
 	squares = [];  // the squares in the generated pattern
+	pawnColor = []; 
 	answer = [];
 	colorGrid();
 	clearAllSquares();
@@ -192,7 +193,7 @@ function colorGrid() {
 			}
 		else 
 			{
-			document.getElementById(id).style.backgroundColor = "floralwhite";
+			document.getElementById(id).style.backgroundColor = "cornsilk";
 			}
 	}
 }
@@ -201,7 +202,8 @@ function goToNextLevel() {
 	// go to the 6x6 version passing score and color
 	sessionStorage.setItem("score", score);
 	sessionStorage.setItem("color", colorIndex);
-	window.location.href = "MemorizePawns6x6PW.html";
+	//window.location.href = "MemorizePawns6x6PW.html";
+	window.open("MemorizePawns6x6PW.html", '_blank').focus();
 }
 
 function buildMessage(str) {
@@ -256,15 +258,18 @@ function generatePattern() {
 		let n = getRandomNumber(MAX);
 		if (squares.indexOf(n) > -1)  // found n in array squares
 			i--;  // keep loop index from increasing so try again
-		else
+		else {
 			squares.push(n); // add n to array
+			let i = Math.round(Math.random() ); // 0 or 1
+			pawnColor.push(i); // store color of pawn
+			}
 	}
 }
 
 function showPawns() {
 	// Show the pattern by showing the pawns
 	for (let i = 0; i < squares.length; i++) {
-		showPawn(squares[i]);
+		showPawn(squares[i], i);
 	}
 	displayDetails("Remember pawns.", "");
 }
@@ -275,11 +280,17 @@ function clearSquare(n) {
 	document.getElementById(id).innerHTML = "&nbsp;";
 }
 
-function showPawn(n) {
-	// Show the pawn icon on square n
-	let id = "n" + n;
-	document.getElementById(id).style.color = "black"; // in case of error
-	document.getElementById(id).innerHTML = "&#9823"; // black pawn icon
+function showPawn(n,i) {
+	// Show the pawn icon on square n with color i
+	let id = "n" + n;  // create an id of that square
+	if (pawnColor[i] == 0) {
+		document.getElementById(id).style.color = "white"; // in case of error
+		document.getElementById(id).innerHTML = "&#9817;"; // white pawn icon
+	}
+	else {
+		document.getElementById(id).style.color = "black"; // in case of error
+		document.getElementById(id).innerHTML = "&#9823"; // black pawn icon
+	}
 }
 
 function errorSquare(n) {
@@ -316,8 +327,9 @@ function driver() {
 function doClick(n) {
 	// User clicked key n, see if correct
 	let msg2 = "";
-	if (squares.indexOf(n) >= 0) { // clicked square is in answer array, correct
-		// see if already clicked this good answer square
+	let i = squares.indexOf(n);
+	if (i >= 0) { // clicked square is in answer array, correct
+		// see if already clicked this correct square
 		if (answer.indexOf(n) > -1) { // already clicked this square
 			lightenSquare(n);
 			displayDetails("You already clicked this answer tile.", "");
@@ -326,13 +338,11 @@ function doClick(n) {
 		answer.push(n); 
 		count++;
 		score+= 100;
-		showPawn(n);
+		showPawn(n,i);
 		if (answer.length == squares.length) { // matched correct nbr
 			disableClicks();
 			ding();
 			let id = "n" + n;
-			//document.getElementById(id).innerHTML = "&#x2713;";  // check mark char
-			//showPawn(n);
 			pawns++;
 			msg = "Good job, You found them all. Bonus 100.";
 			if (pawns > NEXTLEVEL)

@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="author" content="Dennis Martin">
-<meta name="keywords" content="Memorize pawn pattern spatial recognition memory remember">
-<title>Memorize Pawns 8x8</title>
+<meta name="keywords" content="Memorize chess position spatial recognition memory pieces">
+<title>Memorize Pieces 8x8</title>
 <style>
-	html { height: 100%; }
+html { height: 100%; }
 	* {
 	box-sizing: border-box;
 	}
@@ -39,11 +39,14 @@
 		font-weight: normal;
 		border-radius: 5px;
 		margin: 0px 0px 0px 0px;
-		padding: 3px 3px 4px 3px;
+		padding: 4px 3px 4px 3px;
 		border: solid 1px #ffffcc;
 		}
+	#continue {
+		margin-left: 90px;
+		}
 	#theColor {
-		margin-left: 320px;
+		margin-left: 120px;
 		}
 	form {
 		padding: 1px 0px 0px 0px;
@@ -56,28 +59,27 @@
 		margin-top: 30px;
 		margin-left: 30px;
 	}
-	#details,
-	#details2 {
+	#details {
 		color: black;
 		font-size: 20px;
 		font-family: Verdana, sans-serif;
 		text-align: left;
 		border: none;
-		margin: 7px 0px 4px 65px;
+		margin: 3px 0px 4px 150px;
 		}
 	#score {
 		color: #00004d;;
-		font-size: 24px;
+		font-size: 20px;
 		font-family: Verdana, sans-serif;
 		text-align: left;
 		border: none;
-		margin-left: 30px;
+		margin-left: 150px;
 		}
 	.copyright {
 		color: #305050;
 		position: fixed;
 		bottom: 2px;
-		left: 240px;
+		left: 340px;
 		font-size: 13px;
 	}
 	.copyright:hover {
@@ -115,10 +117,19 @@
 	}
 	li {
 		padding: 0px 13px 46px 0px;
+		padding: none;
 		}
-	#digits {
-		margin-left: 30px;
-	}
+	.pieces {
+		list-style-type: none;
+		margin-top: 4px;
+		padding: 0px;
+		font-size: 40px;
+		float: left;
+		border: none;
+		}
+	.pieces li:hover {
+		background-color: white;
+		}
 	#n0, #n1, #n2, #n3, #n4, #n5, #n6, #n7,
 	#n8, #n9, #n10, #n11, #n12, #n13, #n14, #n15,
 	#n16, #n17, #n18, #n19, #n20, #n21, #n22, #n23,
@@ -128,8 +139,9 @@
 	#n48, #n49, #n50, #n51, #n52, #n53,	#n54, #n55,
 	#n56, #n57, #n58, #n59,	#n60, #n61, #n62, #n63
 		{
+		font-family: Arial;
 		background-color: white;
-		font-size: 52px;
+		font-size: 48px;
 		font-weight: bold;
 		padding: 0px;
 		text-align: center;
@@ -137,7 +149,7 @@
 		pointer-events: none;
 		border: none;
 		transition: background-color 400ms linear; 
-		text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 #000, 1px 1px 0 black;
+		/*text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 #000, 1px 1px 0 black;*/
 	}
 	#helptext { 
 		font-family: Arial, Tahoma, sans-serif; 
@@ -150,33 +162,38 @@
 		display:inline; 
 		z-index: 5;
 		visibility: visible;
-		opacity: 0.9;
+		opacity: 0.85;
 		position: absolute; 
 		text-align: left;
-		margin: 1px;
-		line-height: 1.3;
-		left: 70px;
+		line-height: 1.25;
+		left: 185px;
 		top: 30px;
 	}
 </style> 
 <script>
 <!-- HIDE FROM INCOMPATIBLE BROWSERS 
-var squares = [];  // the randomly-picked colored squares
-var answer = [];   // holds the pattern
+var squares = []; // array holding all 64 squares of the chessboard
+var answer = [];  // also 64 entries long; holds squares that user clicked
 var audio = "";
 var msg = "";
 var score = 0;
-var milli = 2400;
 var MAX = 64;   // 8x8 
-var pawns = 5;  // starting number of pawns
+var nbrPieces = 4;  // starting number of pieces
 var count = 0;
 var colorIndex = 0;
 var colorNames = ["Green", "Blue", "Red", "Violet", "Brown"];
-var actualColors = ["MediumSeagreen", "RoyalBlue", "Red", "Violet", "Peru"];
-const NEXTLEVEL = 16; // max of 16 pawns in chess game
+var actualColors = ["mediumseagreen", "RoyalBlue", "Red", "Violet", "Peru"];
+const NEXTLEVEL = 16; // max of 16 pieces in chess game
+var selectedPiece = 1; // white K
+var lastPiece = 1;
 var help = true;
 var darkSquares = 
-[1,3,5,7,8,10,12,14,17,19,21,23,24,26,28,30,33,35,37,39,40,42,44,46,49,51,53,55,56,58,60,62];
+  [1,3,5,7,8,10,12,14,17,19,21,23,24,26,28,30,33,35,37,39,40,42,44,46,49,51,53,55,56,58,60,62];
+var pieceNames = [" ", "W King","W Queen","W Rook","W Bishop","W Knight","W Pawn",
+			      "B King","B Queen","B Rook","B Bishop","B Knight","B Pawn"];
+var htmlCodes = [" ","&#9812;", "&#9813;", "&#9814;", "&#9815;", "&#9816;", "&#9817;",  // white
+				     "&#9818;", "&#9819;", "&#9820;", "&#9821;", "&#9822;", "&#9823;" ] // black
+var pieceCount = [0,1,1,0,0,0,0,0,0,0,0,0,0];
 
 function doPW() {
 	let str = document.getElementById("pw").value;
@@ -185,7 +202,7 @@ function doPW() {
 	if (eStr == "Y21hdGU=") {
 		score = sessionStorage.getItem("score");
 		score = score * 1.0;
-		colorIndex = sessionStorage.getItem("color");
+		colorIndex = 0;
 		document.getElementById("theColor").selectedIndex = colorIndex; 
 		doHelp(); // closes help box
 		newPattern();
@@ -199,25 +216,30 @@ function doPW() {
 
 function newPattern() {
 	// Start a new pattern
-	if (pawns > NEXTLEVEL) {
-		pawns = NEXTLEVEL; // Max of 32 chess pieces in game of chess
+	if (nbrPieces > NEXTLEVEL) {
+		nbrPieces = NEXTLEVEL; // Max of 32 chess pieces in game of chess
 	}
 	disableClicks();
 	showScore();
 	count = 0;
 	squares = [];  // the squares in the generated pattern
+	for (let i = 0; i < MAX; i++) {
+		squares[i] = 0;
+		answer[i] = 0;
+		}
 	answer = [];
-	colorGrid();
 	clearAllSquares();
+	colorGrid();
+	selectPiece(1); // select white King
 	driver();
 }
 
 function colorGrid() {
-	// alternate white and green cell colors like a chessboard
+	// Alternate white and dark cell colors like a chessboard
 	let id = "n";
 	for (let i = 0; i < MAX; i++) {
 		id = "n" + i;
-		//document.getElementById(id).innerHTML = "&nbsp;";
+		//document.getElementById(id).innerHTML = i;
 		if (darkSquares.indexOf(i) >= 0) {
 			document.getElementById(id).style.backgroundColor = actualColors[colorIndex];
 			}
@@ -234,20 +256,21 @@ function buildMessage(str) {
 
 function displayDetails(str, str2) {
 	// show the string passed on the details line
-	document.getElementById("details").innerHTML = str;
-	if (str2 != "") {
-		document.getElementById("details2").innerHTML = str2;
-	}
-	else
-		document.getElementById("details2").innerHTML = "&nbsp;";
+	document.getElementById("details").innerHTML = str + " " + str2;
 }
 
 function clearAllSquares() {
-	// clear all squares (no pawns showing)
+	// clear all squares (no pieces showing)
 	for (let i = 0; i < MAX; i++) {
 		clearSquare(i);
 	}
-	displayDetails("Click all " + pawns + " squares that had pawns.", "");
+	displayDetails("Click a piece on left and its position for all " + nbrPieces + " pieces.", "");
+}
+
+function clearSquare(n) {
+	// Clear the square' display content to blank
+	let id = "n" + n;
+	document.getElementById(id).innerHTML = "&nbsp;";
 }
 
 function enableClicks() {
@@ -268,116 +291,167 @@ function disableClicks() {
 	}
 }
 
+function placeWhiteKing() {
+	// place white king in bottom 4 rows
+	return getRandomNumberRange(32,63);
+}
+
+function placeBlackKing(upper) {
+	// place black king in upper 3-4 rows depending on W king
+	return getRandomNumberRange(0, upper);
+}
+
 function getRandomNumber(n) {
 	// return a new random number 0-n
 	n = Math.floor(Math.random() * n); 
 	return n;
 	}
 
+function getRandomNumberRange(min,max) {
+	// return a random number between min and max inclusive
+	return Math.floor( Math.random() * (max - min + 1) ) + min;
+}
+
 function generatePattern() {
-	// Generate and save random squares that make the pattern
-	for (let i = 0; i < pawns; i++) {
-		let n = getRandomNumber(MAX);
-		if (squares.indexOf(n) > -1)  // found n in array squares
-			i--;  // keep loop index from increasing so try again
+	// Generate and save random squares and pieces
+	clearPieceCounts();
+	// First place the two kings
+	let sq = placeWhiteKing();
+	squares[sq] = 1;
+	if (sq > 39) // white king in first 3 rows
+		sq = placeBlackKing(31); // black K can be in first 4 rows
+	else // white K is in 4th row
+		sq = placeBlackKing(23); // black K can be in first 3 rows
+	squares[sq] = 7; // black king
+	// First find an empty square for next pieces after first 2 Kings
+	pieceCount[1] = 1; // white K
+	pieceCount[2] = 1; // black K
+	for (let i = 2; i < nbrPieces; i++) {
+		let p = getRandomPiece();
+		if (p == 1 || p == 7) {  // a King, we already have those
+			i--; // undo for loop increment of i
+			continue;
+		}
+		if (p == 6 || p == 12) { // piece is a Pawn, limit range
+			while (true) { // find empty square 2nd - 7th rows for the pawn
+				sq = getRandomNumberRange(8,55);
+				if (squares[sq] == 0) { // found empty square
+					squares[sq] = p;
+					break; // out of while
+				}
+			} //while
+		} // pawn
 		else
-			squares.push(n); // add n to array
+		while (true) {
+			// non pawn
+			let sq = getRandomNumber(MAX); // 0 - 63
+			if (squares[sq] == 0) { // found empty square
+				squares[sq] = p;
+				break; // out of while
+			}
+		//alert("sq = " + sq + " piece = " + p);
+		}
+	} // end for
+	//alert(squares);
+}
+function clearPieceCounts() {
+	for (let i = 0; i < pieceCount.length; i++) {
+		pieceCount[i] = 0;
 	}
 }
 
-function showPawns() {
-	// Show the pattern by showing the pawns
-	for (let i = 0; i < squares.length; i++) {
-		showPawn(squares[i]);
+function getRandomPiece() {
+	// Get a random piece that has not been used
+	while (true) {
+		let p = getRandomNumberRange(3,12); 
+		pieceCount[p]++;
+		if (pieceCount[p] == 1)
+			return p;
 	}
-	displayDetails("Remember pawns.", "");
 }
 
-function clearSquare(n) {
-	// Clear the square to blank (no pawn)
-	let id = "n" + n;
-	document.getElementById(id).innerHTML = "&nbsp;";
+function showPosition() {
+	// Show the pattern by showing the pieces
+	for (let i = 0; i < MAX; i++) {
+		showPiece(i, squares[i]);
+	}
+	displayDetails("Click 'Continue' when you have memorized the position.", "");
 }
 
-function showPawn(n) {
+function showPiece(i, n) {
 	// Show the pawn icon on square n
-	let id = "n" + n;
-	document.getElementById(id).style.color = "black";
-	document.getElementById(id).innerHTML = "&#9823"; // black pawn icon
+	let id = "n" + i;
+	if (n > 63)
+		alert("n > 63 for square " + i);
+	document.getElementById(id).innerHTML = htmlCodes[n]; // black pawn icon
 }
 
 function errorSquare(n) {
 	// Show an X in the incorrectly clicked square
 	let id = "n" + n;
-	if (colorIndex == 2 && darkSquares.indexOf(n) >= 0 ) // red squares
-		document.getElementById(id).style.color = "yellow";
-	else
-		document.getElementById(id).style.color = "red";
-	document.getElementById(id).innerHTML = "&#10005;";  // X icon
+	document.getElementById(id).style.backgroundColor = "darkgray";
+	//document.getElementById(id).style.color = "black";
 }
-
 
 function showScore() {
 	document.getElementById("score").innerHTML = "Score: &nbsp;" + score;
 }
 
 function delayedDriver() {
-	// give user some time to memorize pawns 
+	// give user some time to memorize pieces 
 	clearAllSquares(0); 
 	enableClicks(); 
 	document.getElementById("restart").disabled = false;
+	document.getElementById("continue").disabled = true;
 }
 
 function driver() {
 	// Main driver 
 	disableClicks(); 
+	generatePattern(nbrPieces); 
+	showPosition();
 	document.getElementById("restart").disabled = true;
-	generatePattern(pawns); 
-	showPawns();
-	milli += 300;
-	setTimeout( function() {delayedDriver() },milli); 
+	document.getElementById("continue").disabled = false;
 }
 
 function doClick(n) {
 	// User clicked key n, see if correct
 	let msg2 = "";
-	if (squares.indexOf(n) >= 0) { // clicked square is in answer array, correct
+	if (squares[n] == selectedPiece) { // clicked square has the piece
 		// see if already clicked this good answer square
-		if (answer.indexOf(n) > -1) { // already clicked this square
-			lightenSquare(n);
-			displayDetails("You already clicked this answer tile.", "");
+		if (answer[n] > 0) { // already clicked this square
+			displayDetails("You already clicked this square.", "");
 			return;
 		}
-		answer.push(n); 
+		answer[n] = selectedPiece; 
 		count++;
 		score+= 100;
-		showPawn(n);
-		if (answer.length == squares.length) { // matched correct nbr
+		showPiece(n, squares[n]);
+		if (count == nbrPieces) { // matched correct nbr
 			disableClicks();
 			ding();
 			let id = "n" + n;
-			//document.getElementById(id).innerHTML = "&#x2713;";  // check mark char
-			//showPawn(n);
-			pawns++;
+			nbrPieces++;
 			msg = "Good job, You found them all. Bonus 100.";
-			if (pawns > NEXTLEVEL)
+			if (nbrPieces > NEXTLEVEL)
 				msg2 = "Click 'New Pattern' to go to the next level";
 			else
-				msg2 = "Click 'New Pattern' to do " + pawns + " pawns";
+				msg2 = "Click 'New Pattern' to do " + nbrPieces + " pieces";
 			score += 100;
 		}
 		else
-			msg = "Clicked " + count + " correctly out of " + squares.length;
+			msg = "Clicked " + pieceNames[selectedPiece] + " and have clicked " +
+				count + " correctly out of " + nbrPieces;
 	}
 	else // user clicked square not in pattern, Error
 	{	
 		disableClicks();
-		msg = "Error, now showing correct pawns."
-		msg2 = "Click 'New Pattern' to try " + pawns + " pawns again.";
-		errorSquare(n);
+		msg = "Error, now showing correct pieces."
+		msg2 = "Click 'New Pattern' to retry " + nbrPieces + " pieces again.";
 		audio = new Audio("Doink.mp3"); 
 		audio.play();
-		showPawns(n);
+		showPosition();
+		errorSquare(n);
 		score -= (100 * count);
 		score = Math.max(score, 0);
 	}
@@ -419,6 +493,7 @@ function changeColor(inx) {
 function doFocus() {
 	// focus on pw field
 	document.getElementById("restart").disabled = true;
+	document.getElementById("continue").disabled = true;
 	document.getElementById("pw").focus();
 }
 
@@ -431,22 +506,37 @@ function hidePW() {
 	document.getElementById("pw").type = "password";
 }
 
+function selectPiece(p) {
+	// store the selected piece
+	lastPiece = selectedPiece;
+	selectedPiece = p;
+	let id = "p" + p;
+	document.getElementById("details").innerHTML = "Selected pieces is " + pieceNames[p];
+	document.getElementById(id).style.backgroundColor = "white";
+	// un-highlight last piece if different
+	if (p != lastPiece) {
+		id = "p" + lastPiece;
+		document.getElementById(id).style.backgroundColor = "silver";
+	}
+}
 // STOP HIDING FROM INCOMPATIBLE BROWSERS -->
 </script>
 
 </head>
 <body onload="doFocus(); changeColor(99);">
 
-<h2>Memorize Pawns 8x8</h2>
+<h2>Memorize Chess Pieces 8x8</h2>
 
 <span id="helptext">
-	Welcome to Memorize Pawns, an exercise in spatial recognition.<br>
-	A chessboard with random chess pawns will be shown.<br>
-	The chess pawns will be hidden after a brief amount of time. <br>
-	&nbsp; &nbsp; <strong>You then must click all the squares that had pawns.</strong>.<br>
-	If correct, a new pattern with one more pawn will be shown.<br>
+	Welcome to Memorize Pieces, an exercise in spatial recognition.<br>
+	A chessboard with random chess pieces will be shown.<br>
+	The chess pieces will be hidden after a brief amount of time. <br>
+	&nbsp; &nbsp; <strong>You then must click all the squares that had pieces.</strong>.<br>
+	First click a white or black piece button to select a piece.<br>
+	Then click the square(s) that have that piece. <br><br>
+	If correct, a new pattern with one more piece will be shown.<br>
 	If you click a wrong square, the correct squares will be shown and<br>
-	a new pattern with the same number of pawns will be shown.<br>
+	a new pattern with the same number of pieces will be shown.<br>
 	<br>
 	Click New Pattern to generate a new pattern. <br>
 	Click the dropdown box to change the non-white square color.<br>
@@ -463,6 +553,23 @@ function hidePW() {
 		title="Show the password for a short time.">Show</button>	
 </span>
 
+<ul class="pieces">
+	<li id="p1" onclick="selectPiece(1)" title="White King">&#9812;</li>
+	<li id="p2" onclick="selectPiece(2)" title="White Queen">&#9813;</li>
+	<li id="p3" onclick="selectPiece(3)" title="White Rook">&#9814;</li>
+	<li id="p4" onclick="selectPiece(4)" title="White Bishop">&#9815;</li>
+	<li id="p5" onclick="selectPiece(5)" title="White Knight">&#9816;</li>
+	<li id="p6" onclick="selectPiece(6)" title="White Pawn">&#9817;</li>
+	
+</ul>
+<ul class="pieces">
+	<li id="p7" onclick="selectPiece(7)" title="Black King">&#9818;</li>
+	<li id="p8" onclick="selectPiece(8)" title="Black Queen">&#9819;</li>
+	<li id="p9" onclick="selectPiece(9)" title="Black Rook">&#9820;</li>
+	<li id="p10" onclick="selectPiece(10)" title="Black Bishop">&#9821;</li>
+	<li id="p11" onclick="selectPiece(11)" title="Black Knight">&#9822;</li>
+	<li id="p12" onclick="selectPiece(12)" title="Black Pawn">&#9823;</li>	
+</ul>
 <ul id="numbers">
 	<li>8</li>
 	<li>7</li>
@@ -570,10 +677,14 @@ function hidePW() {
   </tr>
  </table>
 
-<form name="digits" id="digits" action="/" >
+<form  action="/" >
 	<button class="inpt" id="restart" type="button" onclick="newPattern();"
-		title="Reset everything and start a new sequence of pawns">New Pattern</button> 
+		title="Reset everything and start a new sequence of pieces">New Pattern</button> 
 	&nbsp;
+	&nbsp;
+	<button class="inpt" id="continue" type="button" onclick="delayedDriver();"
+		title="Clear the board and begin clicking squares">Continue</button>
+		
 	<select id="theColor" class="inpt" 
 		title="Background color of the non-white squares (like a vinyl chessboard)" 
 			onchange="changeColor(this.selectedIndex)"> 
@@ -585,7 +696,6 @@ function hidePW() {
 	</select> 
 </form>
 <div id="details">&nbsp;</div>
-<div id="details2">&nbsp;</div>
 <div id="score">&nbsp;</div>
 
 <div class="copyright" id="copy">	
