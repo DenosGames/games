@@ -135,7 +135,6 @@
 <script>
 <!-- HIDE FROM INCOMPATIBLE BROWSERS 
 var squares = [];  // the randomly-picked colored squares
-var pawnColor = [];  // white (0) or black (1) pawn
 var answer = [];   // holds the pattern
 var audio = "";
 var msg = "";
@@ -175,7 +174,6 @@ function newPattern() {
 	showScore();
 	count = 0;
 	squares = [];  // the squares in the generated pattern
-	pawnColor = []; 
 	answer = [];
 	colorGrid();
 	clearAllSquares();
@@ -260,8 +258,6 @@ function generatePattern() {
 			i--;  // keep loop index from increasing so try again
 		else {
 			squares.push(n); // add n to array
-			let i = Math.round(Math.random() ); // 0 or 1
-			pawnColor.push(i); // store color of pawn
 			}
 	}
 }
@@ -283,14 +279,8 @@ function clearSquare(n) {
 function showPawn(n,i) {
 	// Show the pawn icon on square n with color i
 	let id = "n" + n;  // create an id of that square
-	if (pawnColor[i] == 0) {
-		document.getElementById(id).style.color = "white"; // in case of error
-		document.getElementById(id).innerHTML = "&#9817;"; // white pawn icon
-	}
-	else {
-		document.getElementById(id).style.color = "black"; // in case of error
-		document.getElementById(id).innerHTML = "&#9823"; // black pawn icon
-	}
+	document.getElementById(id).style.color = "black"; // in case of error
+	document.getElementById(id).innerHTML = "&#9823"; // black pawn icon
 }
 
 function errorSquare(n) {
@@ -318,7 +308,7 @@ function driver() {
 	// Main driver 
 	disableClicks(); 
 	document.getElementById("restart").disabled = true;
-	generatePattern(pawns); 
+	generatePattern(); 
 	showPawns();
 	milli += 150;
 	setTimeout( function() {delayedDriver() },milli); 
