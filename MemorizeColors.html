@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Dennis Martin">
+<meta name="keywords" content="Brain game memorize colors">
+<title>Memorize Colors</title>
+<style>
+	html {
+		min-height: 100%;
+	}
+    body {
+		text-align: left;
+		font-family: Tahoma, Arial, Trebuchet, sans-serif;
+		font-size: 18px;
+		background-color: #8FB686;
+		} 
+	h2 {
+		font-size: 34px;
+		text-shadow: 3px 4px #303010;
+		color: #F0F0F0;
+		text-align: left;
+		padding: 0px;
+		margin: 0px 0px 0px 210px;
+		}
+	p {
+		text-align: left;
+		margin: 2px;
+		}
+	div { 
+		text-align: center;
+		margin: 1px;
+		}
+	.inpt {
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: 28px;
+		font-weight: normal;
+		border-radius: 5px;
+		margin: 0px 2px 2px 0px;
+		padding: 2px 4px 1px 4px;
+		height: 42px;
+		border: solid 1px #ffffcc;
+		}
+	form {
+		padding: 5px 0px 0px 0px;
+		}
+	#begin {
+		text-align: center;
+		margin-top: 30px;
+		margin-left: 5%;
+	}
+	.prompt {
+		text-align: left;
+		color: #00004d;;
+		font-size: 24px;
+		font-family: Verdana, sans-serif;
+		padding: 0px;
+		margin: 3px 0px 4px 210px;
+		}
+	.prompt2 {
+		text-align: left;
+		color: #00004d;;
+		font-size: 24px;
+		font-family: Verdana, sans-serif;
+		padding: 0px 0px 0px 4px;
+		margin: 3px 0px 4px 4px;
+		}
+	#details {
+		color: yellow;
+		font-size: 24px;
+		font-family: Verdana, sans-serif;
+		text-align: left;
+		width: 99%;
+		border: none;
+		margin-left: 5%;
+		margin-bottom: 6px;
+		margin-top: 12px;
+		}
+	#score {
+		color: #00004d;;
+		font-size: 24px;
+		font-family: Verdana, sans-serif;
+		text-align: left;
+		width: 99%;
+		border: none;
+		margin-left: 210px;
+		}
+	.copyright {
+		color: #777;
+		position: fixed;
+		bottom: 1%;
+		left: 250px;
+		font-size: 13px;
+	}
+	.copyright:hover {
+		color: white;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	#count, #mistakes {
+		text-align: left;
+		color: #00004d;;
+		font-size: 24px;
+		font-family: Verdana, monospace, Courier, sans-serif;
+		padding: 1px;
+		margin: 0px;
+		font-weight: normal;
+	}
+	#square {
+		padding: 0px;
+		width: 344px;
+		border: 1px solid black;
+		border-radius: 6px;
+		margin-left: 180px;
+		background-color: black;
+		color: black;
+		}
+	.key {
+		font-family: "Courier New", monospace, sans-serif;
+		color: black;
+		font-weight: bold;
+		}
+	#n0, #n1, #n2, #n3, #n4, #n5, #n6, #n7, #n8 {
+		color: black;
+		background-color: black;
+		height: 108px;
+		font-size: 50px;
+		text-align: center;
+		vertical-align: middle;
+		padding: 0px;
+		pointer-events: none;
+	}
+	#helptext { 
+		font-family: Arial, Tahoma, sans-serif; 
+		font-size: 18px;  
+		color: black; 
+		background-color: lightcyan;
+		border: 2px outset #707070;
+		border-radius: 6px;
+		padding: 2px 4px 2px 4px;  
+		display:inline; 
+		z-index: 5;
+		visibility: hidden;
+		opacity: 0.95;
+		position: absolute; 
+		text-align: left;
+		margin: 1px;
+		line-height: 1.3;
+		left: 5%;
+		top: 74px;
+		width: 580px;
+	}
+	
+</style> 
+<script>
+<!-- HIDE FROM INCOMPATIBLE BROWSERS 
+var squares = [];  //  the generated colored squares
+var answers = [];
+var histOsc = [];
+var histCon = [];
+var audio = "";
+var msg = "";
+var compliments = ["Good job","Awesome","Amazing","Terrific","Exceptional","Genius","You Rock"];
+var cinx = 0; // compliment index
+var last = 10; // bigger than max possible
+var showCount = 3;
+var best = 0;
+var score = 0;
+var round = 0;
+var scale = [261.6, 293.7, 329.6, 349.2, 392.0, 440.0, 493.9, 523.3, 587.3];  // middle C scale + D
+var context, g, o;  // for tones
+var upDown = 0;
+var colorsDark = ["violet", "yellow", 	"#0080ff",    "green",   "#BBB", "red", "orange",     "Aqua",    "Sienna"];
+var colorsLite = ["#f6bcf6", "#ffffCC", "#66b3ff", "#00cc00", "#EEE", "#ff9999", "#ffc966", "#ccffff", "#d89374" ];
+var milli = 500;
+var mistakes = 0;
+var helpVisible = false;
+var introPlayed = false;
+
+function initialize(src) {
+	disableKeyClicks();
+   	cinx = 0;
+	score = 0;
+	showScore();
+	showCount = 3;  // the number of Shows
+	round = 0;
+	squares = [];
+	answers = [];
+	histOsc = [];
+	histCon = [];
+	mistakes = 0;
+	document.getElementById("mistakes").innerHTML = mistakes;
+	document.getElementById("count").innerHTML = "0";
+	document.getElementById("begin").disabled = true;
+	document.getElementById("show").disabled = true;
+	document.getElementById("cancel").disabled = false;
+	document.getElementById("restart").disabled = true;
+	document.getElementById("help").disabled = false;
+	for (let i = 0; i < 9; i++) { // color the squares
+		let id = "n" + i;
+		document.getElementById(id).style.backgroundColor = colorsDark[i];
+	}
+	// user interaction now required in Chrome to start autoplay
+	displayDetails("Close/Hide the Help box and enjoy the intro music.");
+	// only declare one audiocontext or Edge will max out at 6
+	if (src  == 1) {
+		context = "";
+		context = new AudioContext();
+	}
+	if (src == 0)
+		doHelp();
+	else 
+		randomIntro(0);
+	document.getElementById("begin").focus();	
+}
+
+function buildMessage(str) {
+	msg = msg + str;
+}
+
+function displayDetails(str) {
+	// show the string passed on the details line
+	document.getElementById("details").innerHTML = str;
+}
+
+function randomIntro(i) {
+	// show random colored squares, i is the counter
+	let n = getRandomNumber();
+	playNote(scale[n]);
+	lightenKey(n);
+	setTimeout( function() {stopNote(); darkenKey(n)}, 200);
+	if (i < 12) {
+		setTimeout( function() {randomIntro(++i)}, 200); 
+	}
+	else {
+		setTimeout( function() {enableKeyClicks(); enablePlay()}, 250);
+	}
+}
+
+function enablePlay() {
+	// Allow begin button to be clicked
+	document.getElementById("begin").disabled = false;
+	displayDetails("Click the Begin button, or press 'B' on your keyboard.");
+}
+
+function enableKeyClicks() {
+	// Allow squares to be clicked
+	let id = "";
+	for (let i = 0; i < 9; i++) {
+		id = "n" + i;
+		document.getElementById(id).style.pointerEvents = "auto";
+	}
+}
+
+function disableKeyClicks() {
+	// Disallow clicking of the squares
+	let id ;
+	for (let i = 0; i < 9; i++) {
+		id = "n" + i;
+		document.getElementById(id).style.pointerEvents = "none";
+	}
+}
+
+function getRandomNumber() {
+	// return a random number 0-8 that was not used last time
+	let n = 0; 
+	do  {
+		n = Math.floor(Math.random() * 9) ; // rand nbr 0 to 8
+		}
+		while (n == last); // if same as last, try again
+	last = n;
+	return n;
+}
+
+function getNext() {
+	// generate a new random number/key from 1 to 8
+	let n = getRandomNumber();  // gives  0 to 7
+	squares.push(n);
+	let freq = scale[n];
+	playNote(freq);
+	lightenKey(n);
+	let timer1 = setTimeout( function() {stopNote(); darkenKey(n); }, milli); 
+}
+
+function showPrevious(rnd) {
+	// show and play the previously generated squares
+	if (rnd < round) {
+		let freq = scale[squares[rnd]];
+		playNote(freq);
+		lightenKey(squares[rnd]);
+		let timer1 = setTimeout( function() {stopNote(); darkenKey(squares[rnd]); }, milli); 
+	}
+}
+
+function darkenKey(n) {
+	// return the square to its original color
+	let id = "n" + n;
+	document.getElementById(id).style.backgroundColor = colorsDark[n];
+	document.getElementById(id).style.color = "black";
+	document.getElementById(id).style.borderColor = "black";
+	document.getElementById(id).innerHTML = "&nbsp;";
+}
+
+function lightenKey(n) {
+	// make the square a little lighter for 1 second
+	let id = "n" + n;
+	document.getElementById(id).style.backgroundColor = colorsLite[n];
+	//document.getElementById(id).style.color = "#e0e0e0";
+	document.getElementById(id).style.borderColor = "#e0e0e0";
+	document.getElementById(id).innerHTML = "&#9834;"; // 8th note
+}
+
+function doRound(rnd) {
+	// Show the previously generated squares and one new one.
+	if (rnd < (round-1) ) {
+		showPrevious(rnd);
+		}
+	else {
+		getNext();
+	}
+	rnd++;
+	if (rnd < round) {
+		setTimeout( function() {doRound(rnd)}, milli);
+	}
+	else {
+		enableKeyClicks();
+		document.getElementById("cancel").disabled = false;
+		document.getElementById("restart").disabled = false;
+		}
+}
+
+function checkThem(rnd) {
+	// Compare users answers with squares that were generated
+	let error = false;
+	let timer1 = "";
+	msg = "";
+	let len = squares.length;
+	let i = 0;
+	for (i = 0; i < len; i++) {
+		if (squares[i] != answers[i] ) {
+			error = true;
+			break;
+		}
+	}
+	document.getElementById("show").disabled = false;
+	if (error) {
+		mistakes++;
+		document.getElementById("mistakes").innerHTML = mistakes;
+		document.getElementById("begin").disabled = true;
+		document.getElementById("cancel").disabled = false;
+		document.getElementById("help").disabled = false;
+		document.getElementById("show").disabled = false; 
+		msg = "Incorrect, error occurred at square " 
+			+ (i+1).toString() + ". Re-enter all of the squares."
+		answers = [];  // clear answers array so they start over
+		histOsc = [];
+		histCon = [];
+		displayDetails(msg);
+		audio = new Audio("Sounds/Doink.mp3"); 
+		audio.play();
+		document.getElementById("restart").disabled = false;
+	}
+	else {	// correct!
+		score++;
+		if (score > best) 
+			best = score;
+		showScore();
+		switch (len) {
+			case (1): msg = "Correct, wait for the next square/tone. "; break;
+			case (2): msg = "Both are correct, wait for the next square/tone."; break;
+			default: msg = "All " + len + " colors are correct; wait for the next square/tone.";
+		}
+		displayDetails(msg);
+		if (len > 7 && len % 4 == 0) {
+			tada();
+			addCompliment();
+			timer1 = setTimeout( function() {driver() }, 2500); //wait longer
+			}
+		else
+			timer1 = setTimeout( function() {driver() }, 2000); 
+	} // correct
+}
+	
+function showScore() {
+	document.getElementById("score").innerHTML = "Score: &nbsp;" + score +
+		" &nbsp; Best score: " + best;
+}
+
+function driver() {
+	// user clicked Begin button. Plays the new sequence.
+	disableKeyClicks(); 
+	displayDetails("Click the squares in the same order as they were just played.");
+	document.getElementById("begin").disabled = true;
+	document.getElementById("restart").disabled = true;
+	round++;
+	document.getElementById("count").innerHTML = round;
+	answers = [];
+	histOsc = [];
+	histCon = [];
+	doRound(0);
+}
+	
+function doClick(n) {
+	// user clicked key n, see if correct
+	if (answers.length >= squares.length) {
+		if (squares.length == 0)
+			alert("Click the Begin button to start");
+		else
+			alert("You have already clicked the correct number of keys. Wait for next square");
+		return;
+		}
+	disableKeyClicks();
+	let freq = scale[n];
+	playNote(freq);
+	lightenKey(n);
+	let id = "n" + n;
+	setTimeout(function(){stopNote(); darkenKey(n); enableKeyClicks()}, milli); 
+	answers.push(n);
+	msg = "";
+	for (let i = 0; i < answers.length; i++) {
+		buildMessage( "<span style='color: " + colorsDark[answers[i]] + "'>");
+		buildMessage("&#x25A0" + " " );
+		}
+	buildMessage("<span style='color: navy'>");
+	let toGo = squares.length - answers.length;
+	if (toGo > 0)
+		buildMessage(". Click " + toGo +
+				" more squares or click Cancel to re-click all squares from start.");
+	displayDetails(msg);
+	if (answers.length == squares.length) { // user has clicked all keys
+		setTimeout( function() {checkThem()}, milli);
+	}
+}
+
+function playNote(freq) {
+	// Play the frequency passed in using the Web Audio API. Stop it after 500 ms.
+	// Code courtesy of marcgg blog at: http://marcgg.com/blog/2016/11/01/javascript-audio/
+	//context = new AudioContext();  //can only have max of 6 in Edge
+	o = context.createOscillator();
+	g = context.createGain();
+	o.frequency.value = freq;
+	o.connect(g);
+	g.connect(context.destination);
+	o.start(0);
+	histOsc.push(o);
+	histCon.push(context);
+}
+
+function stopNote() {
+	// Stop the sound by changing the gain value.
+	// To eliminate timing holes, stop all sounds that have been started.
+	g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.04);
+	o.stop(context.currentTime + 0.01);
+}
+
+function addCompliment() {
+	// cycle thru the compliments
+	buildMessage (" " + compliments[cinx] + "!");	
+	cinx = (++cinx % 6);
+}
+
+function showThem() {
+	// show the colors in order (like a hint or help)
+	if (showCount <= 0) {
+		document.getElementById("details").innerHTML = "You have used all your Show helps.";
+		return;
+	}
+	showCount--;
+	msg = "Sequence = ";
+	for (let i = 0; i < squares.length; i++) {
+		buildMessage( "<span style='color: " + colorsDark[squares[i]].toString() + "'>");
+		buildMessage("&#x25A0" + " " );
+		}
+	buildMessage("<span style='color: black'>");
+	buildMessage(". You have " + showCount + " show(s) left.");
+	displayDetails(msg);
+	document.getElementById("details").style.color = "navy";
+	document.getElementById("begin").focus();	
+}
+
+function ding() {
+	audio = new Audio("Sounds/ding2.mp3"); 
+	audio.play();	
+}
+
+function tada() {
+	if (cinx < 3)
+		audio = new Audio("Sounds/applause.wav");
+	else
+		audio = new Audio("Sounds/TaDaNice.mp3"); 
+	audio.play();	
+}
+
+function cancelClicks() {
+	// cancel clicks so can start the round over
+	ding();
+	displayDetails("ReClick the squares starting with first square.");
+	answers = [];  // clear answer array
+	for (let i = histOsc.length-1; i >= 0; i--) {
+		if (histOsc[i] != "")
+			histOsc[i].stop(histCon[i].currentTime + 0.01);
+	}
+}
+
+function doKeyPress() {
+	// Allow user to press a key vs click a button
+	let char = event.which || event.key || event.keyCode;
+	if (char == 82 || char == 114)  // r or R
+		initialize(1);
+	else
+	if (char == 99 || char == 67)  // c or C
+		cancelClicks();
+	else
+	if (char == 104 || char == 72)  // h or H
+		doHelp();	
+	// only allow B if Begin enabled
+	if (document.getElementById("begin").disabled == false) { 
+		if (char == 66 || char == 98)  // b or B
+			driver();
+			return;
+	}
+	// only allow 'S' if Show button is enabled
+	if (document.getElementById("show").disabled == false) { 
+		if (char == 83 || char == 115)  // s or S
+			showThem();
+	}
+}
+
+function doHelp() {
+	let id = "helptext";
+	if (!helpVisible) {
+		if (document.getElementById(id)) {
+			document.getElementById(id).style.visibility = "visible";
+			document.getElementById("help").innerHTML = "Hide&nbsp; <strong>H</strong>elp"; 
+		}
+		helpVisible = true;
+	}
+	else {
+		if (round == 0)
+			context = new AudioContext();
+		let id = "helptext";
+		if (document.getElementById(id)) {
+			document.getElementById(id).style.visibility = "hidden";
+			document.getElementById("help").innerHTML = "Show <strong>H</strong>elp"; 
+		}
+		helpVisible = false;
+		if (!introPlayed) { // game has not started
+			randomIntro(0);
+			introPlayed = true;
+		}
+	}
+}
+
+// STOP HIDING FROM INCOMPATIBLE BROWSERS -->
+</script>
+
+</head>
+<body onload="initialize(0);">
+<noscript>Your browser does not support JavaScript</noscript>
+<h2>Memorize Colors</h2>
+
+<div id="helptext">
+	An increasing sequence of colored squares will flash and sound.<br>
+	&nbsp; &nbsp;<u>You must replay them  by clicking/tapping the squares in the same order.</u><br>
+	&nbsp; &nbsp;If correct, another color square will be added to the sequence.<br>
+	&nbsp; &nbsp;If wrong, re-click the keys in order until you get them right.<br>
+	Click Show to see the answer sequence (up to 3 times).<br>
+	Click Cancel to re-enter your answer from the beginning (also stops all sounds).<br>
+	Click Restart for a new sequence. <br>
+	Click Help to show or hide this help text.<br>
+</div>
+<br>
+
+<table class="keys" id="square">
+  <tr>
+	<td class="key" id="n0" onclick="doClick(0);" >&nbsp;</td>
+ 	<td class="key" id="n1" onclick="doClick(1);" >&nbsp;</td>
+	<td class="key" id="n2" onclick="doClick(2);" >&nbsp;</td>
+  </tr>
+  <tr >
+	<td class="key" id="n3" onclick="doClick(3);" >&nbsp;</td>
+	<td class="key" id="n4" onclick="doClick(4);" >&nbsp;</td>
+	<td class="key" id="n5" onclick="doClick(5);" >&nbsp;</td>
+  </tr>
+  <tr>
+	<td class="key" id="n6" onclick="doClick(6);" >&nbsp;</td>
+	<td class="key" id="n7" onclick="doClick(7);" >&nbsp;</td>
+	<td class="key" id="n8" onclick="doClick(8);" >&nbsp;</td>
+  </tr>
+</table>
+		
+<form name="digits" id="digits" action="/" >
+	<button class="inpt" id="begin" type="button" onclick="driver();" 
+		title="Begin the sequence by 'playing' the first square.">Begin</button>	  
+	&nbsp;&nbsp;
+	<button class="inpt" id="show" type="button" onclick="showThem();" 
+		title="Show the squares in correct order up to 4 times.">Show</button>	
+	&nbsp;&nbsp;
+	<button class="inpt" id="cancel" type="button" onclick="cancelClicks();"
+		title="Cancel all sounds and clicks so you can re-enter the sequence for this round.">
+		Cancel</button> 		
+	&nbsp;&nbsp;
+	<button class="inpt" id="restart" type="button" onclick="initialize(1);"
+		title="Reset everything and start a new sequence of squares">New Seq.</button> 
+	&nbsp;&nbsp;
+	<button class="inpt" id="help" type="button" onclick="doHelp();"
+		title="Show the HELP text">Show Help</button> 
+</form>
+	
+<div id="details">&nbsp;</div>
+
+<span id="score">&nbsp;</span> &nbsp;
+
+<br>
+<span class="prompt">Round: </span>
+<span id="count">&nbsp;</span>
+
+<span class="prompt2">&nbsp;Mistakes: &nbsp; </span>
+<span id="mistakes" 
+title="The number of mistake rounds (including multiple attempts at a given round).">&nbsp;</span>
+
+<div class="copyright" id="copy">	
+Copyright &copy; 2025 Dennis Martin
+</div>
+
+</body>
+</html>
