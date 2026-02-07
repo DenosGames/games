@@ -1,0 +1,679 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--Knight's Tour
+	Copyright 2016 by Dennis Martin -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
+<head>
+<meta http-equiv="content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="description" content="Dennis' implementation of knight's tour on a 6x6 chessboard." />
+<meta name="keywords" content="knight's tour,Knight,tour,puzzle,chess,chessboard,visit,once,Warnsdorf" />
+<title>Knights Tour 6x6</title>
+<style type="text/css">
+	body {
+		background-color: #404040;
+		font-family: Arial, Trebuchet, sans-serif;
+		font-size: 18px;
+		} 
+	h1 {
+		font-size: 28px;
+		padding: 6px 0px 0px 0px;
+		margin: 0px 0px 4px 2px;
+		float: left;
+		color: white;
+		text-shadow: 1px 2px #80f080;
+		}
+	p { text-align: left;
+		font-size: 15px;
+		margin: 2px;
+		}
+	div { text-align: center;
+		}
+	.inpt {
+		font-family: Verdana, Arial, sans-serif;
+		color: blue;
+		float: left;	
+		font-size: 18px;
+		width: 100px;
+		padding: 3px;
+		border-radius: 8px;
+		margin: 1px;
+		}
+	.copyright {
+		color: #909090;
+		position: fixed; 
+		bottom: 6%;
+		right: 1%;
+		font-size: 11px;
+	}
+	.copyright:hover {
+		color: white;
+		font-weight: bold;
+	}
+	#answer {
+		position: fixed;
+		bottom: 1%;
+		left: 20%;
+		color: yellow;
+		font-size: 16px;
+		}
+	#heading {
+		position: fixed;
+		top: 0%;
+		left: 15%;
+		color: yellow;
+		font-size: 18px;
+		}
+	a {
+		position: fixed;
+		bottom: 1%;
+		right: 1%;
+		font-size: 16px;
+		color: #3399ff;
+	}
+	a:hover {
+		text-decoration: none;
+	}
+	#a0, #a1, #a2, #a3, #a4, #a5, #a6, #a7, #a8, #a9, #a10,#a11,#a12,#a13,#a14,
+	#a15,#a16,#a17,#a18,#a19,#a20,#a21,#a22,#a23,#a24,#a25,#a26,#a27,#a28,#a29,
+	#a30,#a31,#a32,#a33,#a34,#a35,#a36,#a37,#a38,#a39,#a40,#a41,#a42,#a43,#a44,
+	#a45,#a46,#a47,#a48,#a49,#a50,#a51,#a52,#a53,#a54,#a55,#a56,#a57,#a58,#a59,
+	#a55,#a56,#a57,#a58,#a59,#a60,#a61,#a62,#a63,#a64,#a65,#a66,#a67,#a68,#a69,
+	#a70,#a71,#a72,#a73,#a74,#a75,#a76,#a77,#a78,#a79,#a80
+		{
+		position: fixed;
+		text-align: center;
+		vertical-align: baseline;
+		padding-top: 0px;
+		margin: 0px;
+		font-size: 40px;
+		font-family: Arial, Consolas, "Courier New", Monaco;
+		border: none;
+		}
+	#score {
+		position: fixed; 
+		bottom: 4%;
+		right: 42%;
+		font-size: 18px;
+		color: white;
+	}
+</style> 
+
+<script type="text/javascript">
+
+var BARHEIGHT = 50;	// will be calculated during init based on screen size
+var BARWIDTH = 50;	// will be calculated during init based on screen size
+var MAXROWS = 6;	// 6 x 6 chessboard
+var COLUMNS = 6;	
+var KNIGHT = "&#9822;"; 
+var MAXDELAY = 800; // Millisecs
+var MINDELAY = 100;
+var LIMIT = MAXROWS * COLUMNS;	
+var oldLimit = LIMIT;
+var dark = "darkseagreen";	// the 2 colors for the chess board
+var light = "whitesmoke";
+var dark2 = "#396039";
+var light2 = "#e6e6e6";
+var squares = [MAXROWS * COLUMNS]; // color of cell
+var clickMsg = "Click squares to move the Knight around the board visiting each square once";
+// The 8 possible moves that a Knight can make from the current square
+var moves = [ [-1,-2], [-1,2], [-2,-1], [-2,1], [2,1], [2,-1], [1,2], [1,-2] ];
+var knAt; // square the knight is currently at
+var prevPos; // previous knight position
+var count = 1;
+var highScore = 0;
+var board = [MAXROWS * COLUMNS];
+var showX = false;
+var t1, t2;
+var delay = MAXDELAY;
+var noPeek = false;
+var history = [MAXROWS * COLUMNS];
+var hisCount = 0;
+var fontsz = 40;
+
+function doMouseOver(num) {
+	// change color slightly on mouse over. num is the square number
+	var id = "a" + num;
+	if (squares[num] == 0) {
+		document.getElementById(id).style.backgroundColor = dark2;
+		squares[num] = 2;
+	}
+	else 
+	if (squares[num] == 1) {
+		document.getElementById(id).style.backgroundColor = light2;
+		squares[num] = 3;
+	}
+}
+
+function doMouseOut(num) {
+	// change background to original color
+	var id = "a" + num;
+	if (squares[num] == 2) {
+		document.getElementById(id).style.backgroundColor = dark;
+		squares[num] = 0;
+	}
+	else 
+	if (squares[num] == 3) { // 3
+		document.getElementById(id).style.backgroundColor = light;
+		squares[num] = 1;
+	}
+}
+
+function initialize() {
+	//Calculate size of squares based on window size
+	clearTimeout(t1);
+	clearTimeout(t2);
+	document.getElementById("container").style.backgroundColor = "#404040";
+	var windowWidth = window.innerWidth; // window width
+	var initHeight = window.innerHeight; // screen height
+	if (initHeight < 600) {
+		document.getElementById("heading").style.fontSize = "16px";
+		document.getElementById("score").style.fontSize = "16px";
+		var x = document.getElementsByClassName("inpt");
+		var i;
+		for (i = 0; i < x.length; i++) {
+			x[i].style.fontSize = "16px";
+		}
+	}
+	var width = windowWidth / (COLUMNS + 2);
+	var height = initHeight / (MAXROWS + 1.6 );
+	//alert ("w = " + width + ", H = " + height);
+	var temp = Math.min(width, height);
+	temp = Math.floor ( temp ); 
+	if (temp % 2 == 1) // temp is odd nbr
+		temp--; 
+	// put a max on cell size of 70 if screen size less 1280
+	if (temp > 96 && windowWidth < 1280)
+		temp = 96;
+	BARHEIGHT = temp;
+	BARWIDTH = BARHEIGHT;
+	// adjust status bars only on page load
+	if (height > width) 	// tall window,
+		temp = Math.ceil (BARWIDTH / 1.5);
+	else
+		temp = Math.ceil (BARWIDTH / 1.5);
+	if (temp < 16)
+		temp = 16;
+	fontsz = temp;
+	var id = "";
+	for (var i = 0; i < LIMIT; i++) {
+		id = "a" + (i).toString();
+		document.getElementById(id).style.fontSize = temp + "px";
+		board[i] = 0;
+	}
+	doColorGrid();
+	if (count > 1)
+		if (count > highScore)
+			highScore = count;
+	count = 1;
+	document.getElementById("heading").innerHTML = clickMsg;
+	showScore();
+	document.getElementById("restart").disabled = false; // allow restart button
+	noPeek = false;
+	hisCount = 0;
+} // init
+
+function doColorGrid() {
+	//Draw the chessboard with alternating colors; Place Knight at random square
+	var i = 0;
+	var id, elem = ""; 
+	// build grid
+	var bottom;
+	var square1 = light, square2 = dark;
+	var row = -1;
+	prevPos = -1;
+	// loop from 0 to max possible square creating squares
+	for (i = 0; i < LIMIT; i++) { 
+		bottom = 2 + BARHEIGHT + Math.floor(i / COLUMNS) * BARHEIGHT;
+		id = "a" + (i).toString();
+		elem = document.getElementById(id);
+		elem.style.width = BARWIDTH + "px";
+		elem.style.height = BARHEIGHT + "px";
+		elem.style.left = 170 + (i % COLUMNS) * BARWIDTH + "px"; // new row
+		elem.style.bottom = bottom + "px";	// set bottom position
+		// now give the square a color
+		if (MAXROWS % 2 == 0) {
+			if (i % COLUMNS == 0) {  // start of new row
+				row = row + 1;
+				if (row % 2 == 0) {
+					square1 = dark;
+					square2 = light;
+				}
+				else {
+					square1 = light;
+					square2 = dark;
+				}
+			}
+		}
+		if (i % 2 == 0) 
+			elem.style.backgroundColor = square1;
+		else 
+			elem.style.backgroundColor = square2;
+		switch (elem.style.backgroundColor ) {
+			case dark: squares[i] = 0; break;
+			case light: squares[i] = 1; break;
+			default: alert("should not happen"); squares[i] = 0;
+		}
+		elem.innerHTML = "&nbsp;"; // change to i for debug square num
+		elem.style.color = "black";
+	} // end for
+	randomPos(); // place knight somewhere
+}
+
+function doClick(num) {
+	var msg = "*";
+	// See if clicked square is reachable by one of the 8 knight moves
+	if (knightCanMoveHere(num)) {
+		// mark his previous square with sequential move number
+		document.getElementById("a" + knAt).style.color = "red";
+		document.getElementById("a" + knAt).style.fontSize = Math.floor(fontsz * 0.7) + "px";
+		document.getElementById("a" + knAt).innerHTML = "&nbsp;" + count;
+		// now place the knight on the screen
+		document.getElementById("a"+ num).style.fontSize = fontsz + "px";
+		document.getElementById("a"+ num).innerHTML = KNIGHT; // move knight here
+		document.getElementById("a"+ num).style.color = "black";
+		if (hisCount > 0)
+			document.getElementById("a" + history[hisCount-1]).style.color = "black";
+		prevPos = knAt;
+		history[hisCount] = knAt;
+		hisCount++;
+		knAt = num;  // save knight's new position
+		board[num] = count;
+		count++;
+		if (count >= LIMIT) {
+			msg = "The Knight's Tour has been successfully completed!";
+			document.getElementById("heading").innerHTML = msg;
+			alert (msg);
+		}
+		else 
+			document.getElementById("heading").innerHTML = "You moved to square " + num + ": " +
+				"&nbsp; Row " + Math.floor(knAt / MAXROWS + 1) + ", Column " + 
+				Math.floor(knAt % COLUMNS + 1);
+	} // cannot move here
+	else {
+		if (count < LIMIT) { //only show error if tour not finished
+			msg = "The Knight <em><u>Cannot</u></em> move to square " + num;
+			document.getElementById("heading").innerHTML = msg;
+		}
+	}
+	showScore();
+}
+
+function knightCanMoveHere(num) {
+	// Return true if the knight can move to the square 'num'
+	var i, j;
+	var knRow = Math.floor(knAt / MAXROWS);
+	var knCol = Math.floor(knAt % COLUMNS);
+	var clickRow = Math.floor(num / MAXROWS);
+	var clickCol = Math.floor(num % COLUMNS);
+	// Apply 8 possible moves to the clicked square and see if one matches Knight's position
+	for (i = 0; i < moves.length; i++) {  
+		var move = moves[i];  
+		if ( knRow == (clickRow + move[0]) && knCol == (clickCol + move[1]) 
+			&& board[num] == 0 )
+				return true;
+	} // for
+	return false;
+}
+
+function unDo() {
+	// Undo or cancel the last move
+	clearTimeout(t1);
+	if (count <= 1 || hisCount <= 0) {
+		alert ("No move to Undo");
+		return;		// can't undo if no moves made
+	}
+	board[knAt] = 0;  // mark current square available
+	document.getElementById("a" + knAt).innerHTML = "&nbsp;";  // clear current square
+	history[hisCount] = 0;  // clear current history location
+	hisCount--;
+	knAt = history[hisCount]; // prevPos;
+	document.getElementById("a"+ knAt).style.fontSize = fontsz + "px";
+	document.getElementById("a" + knAt).innerHTML = KNIGHT; // Place the knight here
+	if (hisCount > 0) { // make previous number red
+		var temp = history[hisCount-1];
+		document.getElementById("a" + temp).style.color = "red";
+	}
+	document.getElementById("a" + knAt).style.color = "black";
+	document.getElementById("heading").innerHTML = "You undid move " + count + 
+		" back to square " + knAt;
+	count--;
+	showScore();
+	noPeek = false;
+}
+
+function randomPos() {
+	// Randomly place the knight at a new square
+	knAt = Math.floor( (Math.random() * (LIMIT-1))); // pick random square
+	board[knAt] = 1;
+	history[0] = knAt;
+	document.getElementById("a" + knAt).innerHTML = KNIGHT;  // Place the knight here
+	document.getElementById("a" + knAt).style.color = "black";
+}
+
+function showScore() {
+	document.getElementById("score").innerHTML = "Score: " + count +
+		"&nbsp; &nbsp; Highscore: " + highScore;
+}
+
+function PcMove(who) {
+	//alert ("PC Move, who = " + who);
+	// Figure out next best move for the knight and make it
+	clearTimeout(t1);
+	var knRow = Math.floor(knAt / MAXROWS);
+	var knCol = Math.floor(knAt % COLUMNS);
+	var square = getMove(knRow, knCol);  // returns cell to move to
+	if (square < 0 && count < LIMIT) {
+		alert ("No more moves left");
+		return false;
+	}
+	doClick(square);
+	showScore();
+	if (who == 0)
+		noPeek = false;
+	return true;
+}
+var lowSquares = [-1,-1,-1,-1];
+var lowMoves = [9,9,9,9];
+
+function getMove(knRow, knCol) {
+	// Find all possible moves for knight at this row/column, and
+	// then repeat the process for each of those squares getting score
+	// Use lowest number of moves on 2nd move, known as Warnsdorff's Rule
+	var row = -1, col = -1, sq = -1;
+	var numMoves = 0;
+	var lowScore = 9;  // largest nbr knight moves is 8
+	var moveSquare = -1;
+	lowSquares = [-1,-1,-1,-1]; // re-init 2 low move arrays
+	lowMoves = [9,9,9,9];
+	for (var i = 0; i < moves.length; i++) { // apply all 8 possible moves
+		//var move = moves[i];  
+		row = knRow + moves[i][0];
+		col = knCol + moves[i][1]; 
+		if (row > (MAXROWS-1) || row < 0 || col > (COLUMNS-1) || col < 0) // off board
+			continue;
+		sq = row * MAXROWS + col;
+		if (board[sq] > 0) // already went there
+			continue;
+		if (count == LIMIT - 1)
+			return sq;
+		numMoves = getScoreForSquare(row, col); //instead of recursive call
+		if ( (numMoves <= lowScore) || (lowMoves[0] == 0 && numMoves < lowMoves[1]) ) { 
+			lowScore = numMoves;
+			moveSquare = sq;
+			saveLowest(sq,numMoves);
+		}
+	} // for
+	if (lowMoves[0] == 0) {
+		//alert("low moves = 0, array = " + lowMoves);
+		if (count == (LIMIT-1)) // only one more move to complete
+			return lowSquares[0];
+		if (lowMoves[1] > 0 && lowMoves[1] < 9) {
+			//alert("return low[1]");
+			return lowSquares[1]; // don't move into deadend
+		}
+	}
+	// see if any ties for lowest forward moves
+	if (lowMoves[0] != lowMoves[1])
+		return lowSquares[0];
+	else {
+		var sinx = getLowest(); // first 2 low scores are the same, break tie
+		return lowSquares[sinx];
+	}
+}
+
+function getLowest() {
+	// Tie breaker to Warnsdorff's rule: choose square farthest from center.
+	var howMany = 2; // how many tied low scores
+	if (lowMoves[1] == lowMoves[2] && lowMoves[1] != 9) {
+		//alert ("3-way tie for low score " + lowMoves + "; " + lowSquares);
+		howMany = 3;
+		if (lowMoves[2] == lowMoves[3] && lowMoves[2] != 9) {  // assumes 1 = 2
+			//alert ("4-way tie for low score " + lowMoves + "; " + lowSquares);
+			howMany = 4; 
+		} 
+	}
+	var rings = 2;
+	switch (MAXROWS) {
+		case 10: case 9:
+			rings = 4; break;
+		case 8: case 7:
+			rings = 3; break;
+		case 6:	case 5: 
+			rings = 2; break;
+		default:
+			rings = 2;
+	}
+	// check if move is in the outermost ring, then next inner ring, etc.
+	for (var k = 0; k <= rings; k++) {
+		for (var i = 0; i < howMany; i++) {
+			var knRow = Math.floor(lowSquares[i] / MAXROWS);
+			var knCol = Math.floor(lowSquares[i] % COLUMNS);
+			// first see if in any outer ring of board
+			if (knRow == k || knRow == (MAXROWS-k) || knCol == k || knCol == (COLUMNS-k) )
+				return i;
+		}
+	}
+	return 0;
+}
+
+function saveLowest(sq, nbrMoves) {
+	// save up to 4 lowest moves. slot 0->1, 1->2, new-> 0
+	for (var i = (lowMoves.length - 1); i > 0; i--) {
+		lowMoves[i] = lowMoves[i-1];
+		lowSquares[i] = lowSquares[i-1];
+	}
+	lowMoves[0] = nbrMoves;
+	lowSquares[0] = sq;
+}
+
+function getScoreForSquare(knRow, knCol) {
+	// see how many squares a knight here could move to
+	var row = -1, col = -1, sq;
+	var numMoves = 0;
+	for (i = 0; i < moves.length; i++) {  
+		var move = moves[i];  
+		row = knRow + move[0];
+		col = knCol + move[1]; 
+		if (row > (MAXROWS-1) || row < 0 || col > (COLUMNS-1) || col < 0)
+			continue;
+		sq = row * MAXROWS + col;
+		if (board[sq] > 0) // already went there
+			continue;
+		// have found an empty square to move to
+		numMoves++;
+	} // for
+	return numMoves;
+}
+
+function AutoComplete() {
+	clearTimeout(t1);
+	noPeek = true;  
+	if (!PcMove(1) || count >= LIMIT) { // no more moves
+		noPeek = false;
+		return;
+	}
+	// recursively call with delay to keep moving knight
+	t1 = setTimeout(function(){AutoComplete()}, delay);  // keep moving with delay
+}
+
+function Peek() {
+	// Show where the knight can move (X) then hide after n seconds
+	if (noPeek) // don't allow during autoplay
+		return;
+	clearTimeout(t2);
+	var knRow = Math.floor(knAt / MAXROWS);
+	var knCol = Math.floor(knAt % COLUMNS);
+	var score = getScoreForSquare( knRow, knCol);
+	showHide();  // show X's
+	document.getElementById("heading").innerHTML = "There are " + score + " possible moves";
+}
+
+function showHide() {
+	// Show where knight can move, or hide the Xs
+	var id, i;
+	if (showX) {
+		showX = false;
+		for (i = 0; i < LIMIT; i++) {
+			id = "a" + i;
+			if (knightCanMoveHere(i) || (document.getElementById(id).innerHTML == "&nbsp;X") ) {
+				document.getElementById(id).innerHTML = "&nbsp;";
+				document.getElementById(id).style.color = "black";
+			}
+		}
+	}
+	else {
+		showX = true;
+		for (i = 0; i < LIMIT; i++) {
+			id = "a" + i;
+			if (knightCanMoveHere(i) ) {
+				var row = Math.floor(i / MAXROWS);
+				var col = Math.floor(i % COLUMNS);
+				var score = getScoreForSquare(row, col);
+				document.getElementById(id).innerHTML = "&nbsp;X";
+				document.getElementById(id).style.color = "blue";
+			}
+		}
+		t2 = setTimeout(function(){showHide()}, 1700); 
+	}
+}
+
+function speedUp() {
+	delay -= 100;
+	if (delay < MINDELAY)
+		delay = MAXDELAY;
+	document.getElementById("heading").innerHTML = "Delay is now " + delay + " Milliseconds";
+	document.getElementById("speed").innerHTML = delay + "ms";
+}
+
+</script>
+
+</head>
+<body onload="initialize();"  onkeypress="	KeyPressed(event);">
+<h1>Knight's<br /> Tour 6x6</h1>
+
+<div id="heading"> </div>
+<div id="heading2"> </div>
+
+<form id="knighted" action="">
+	<br /> <br /> <br /> <br /> 
+	<button class="inpt" id="restart" value="Restart" type="button"
+		title="Start the tour over with Knight at new random position"
+		onclick="initialize();">Restart</button>
+	<br /> <br /> <br /> 
+	<button class="inpt" id="undo" value="unDo" type="button"
+		title="Cancel the last move"
+		onclick="unDo();">Un-Do</button>
+	<br /> <br /> <br />
+	<button class="inpt" id="move" value="move" type="button"
+		title="Let the computer make the next move"
+		onclick="PcMove('0');">PC Move</button>
+	<br /> <br /> <br />
+	<button class="inpt" id="auto" value="auto" type="button"
+		title="Let the computer Auto-complete the rest of the tour"
+		onclick="AutoComplete();">Auto</button>
+	<br /> <br /> <br />
+	<button class="inpt" id="speed" value="speed" type="button"
+		title="The speed of Auto-complete in milliseconds. Click to go faster."
+		onclick="speedUp();">Speed</button>
+	<br /> <br /> <br />
+	<button class="inpt" id="peek" value="peek" type="button"
+		title="See how many moves possible from current position"
+		onclick="Peek();">Peek</button>
+</form>
+<!-- generate the following with generate.html file. Then copy/paste it here  -->
+<div id="container">
+<span id='a0' onmouseover = 'doMouseOver(0);' onclick='doClick(0);' onmouseout='doMouseOut(0);'> </span>
+<span id='a1' onmouseover = 'doMouseOver(1);' onclick='doClick(1);' onmouseout='doMouseOut(1);'> </span>
+<span id='a2' onmouseover = 'doMouseOver(2);' onclick='doClick(2);' onmouseout='doMouseOut(2);'> </span>
+<span id='a3' onmouseover = 'doMouseOver(3);' onclick='doClick(3);' onmouseout='doMouseOut(3);'> </span>
+<span id='a4' onmouseover = 'doMouseOver(4);' onclick='doClick(4);' onmouseout='doMouseOut(4);'> </span>
+<span id='a5' onmouseover = 'doMouseOver(5);' onclick='doClick(5);' onmouseout='doMouseOut(5);'> </span>
+<span id='a6' onmouseover = 'doMouseOver(6);' onclick='doClick(6);' onmouseout='doMouseOut(6);'> </span>
+<span id='a7' onmouseover = 'doMouseOver(7);' onclick='doClick(7);' onmouseout='doMouseOut(7);'> </span>
+<span id='a8' onmouseover = 'doMouseOver(8);' onclick='doClick(8);' onmouseout='doMouseOut(8);'> </span>
+<span id='a9' onmouseover = 'doMouseOver(9);' onclick='doClick(9);' onmouseout='doMouseOut(9);'> </span>
+<span id='a10' onmouseover = 'doMouseOver(10);' onclick='doClick(10);' onmouseout='doMouseOut(10);'> </span>
+<span id='a11' onmouseover = 'doMouseOver(11);' onclick='doClick(11);' onmouseout='doMouseOut(11);'> </span>
+<span id='a12' onmouseover = 'doMouseOver(12);' onclick='doClick(12);' onmouseout='doMouseOut(12);'> </span>
+<span id='a13' onmouseover = 'doMouseOver(13);' onclick='doClick(13);' onmouseout='doMouseOut(13);'> </span>
+<span id='a14' onmouseover = 'doMouseOver(14);' onclick='doClick(14);' onmouseout='doMouseOut(14);'> </span>
+<span id='a15' onmouseover = 'doMouseOver(15);' onclick='doClick(15);' onmouseout='doMouseOut(15);'> </span>
+<span id='a16' onmouseover = 'doMouseOver(16);' onclick='doClick(16);' onmouseout='doMouseOut(16);'> </span>
+<span id='a17' onmouseover = 'doMouseOver(17);' onclick='doClick(17);' onmouseout='doMouseOut(17);'> </span>
+<span id='a18' onmouseover = 'doMouseOver(18);' onclick='doClick(18);' onmouseout='doMouseOut(18);'> </span>
+<span id='a19' onmouseover = 'doMouseOver(19);' onclick='doClick(19);' onmouseout='doMouseOut(19);'> </span>
+<span id='a20' onmouseover = 'doMouseOver(20);' onclick='doClick(20);' onmouseout='doMouseOut(20);'> </span>
+<span id='a21' onmouseover = 'doMouseOver(21);' onclick='doClick(21);' onmouseout='doMouseOut(21);'> </span>
+<span id='a22' onmouseover = 'doMouseOver(22);' onclick='doClick(22);' onmouseout='doMouseOut(22);'> </span>
+<span id='a23' onmouseover = 'doMouseOver(23);' onclick='doClick(23);' onmouseout='doMouseOut(23);'> </span>
+<span id='a24' onmouseover = 'doMouseOver(24);' onclick='doClick(24);' onmouseout='doMouseOut(24);'> </span>
+<span id='a25' onmouseover = 'doMouseOver(25);' onclick='doClick(25);' onmouseout='doMouseOut(25);'> </span>
+<span id='a26' onmouseover = 'doMouseOver(26);' onclick='doClick(26);' onmouseout='doMouseOut(26);'> </span>
+<span id='a27' onmouseover = 'doMouseOver(27);' onclick='doClick(27);' onmouseout='doMouseOut(27);'> </span>
+<span id='a28' onmouseover = 'doMouseOver(28);' onclick='doClick(28);' onmouseout='doMouseOut(28);'> </span>
+<span id='a29' onmouseover = 'doMouseOver(29);' onclick='doClick(29);' onmouseout='doMouseOut(29);'> </span>
+<span id='a30' onmouseover = 'doMouseOver(30);' onclick='doClick(30);' onmouseout='doMouseOut(30);'> </span>
+<span id='a31' onmouseover = 'doMouseOver(31);' onclick='doClick(31);' onmouseout='doMouseOut(31);'> </span>
+<span id='a32' onmouseover = 'doMouseOver(32);' onclick='doClick(32);' onmouseout='doMouseOut(32);'> </span>
+<span id='a33' onmouseover = 'doMouseOver(33);' onclick='doClick(33);' onmouseout='doMouseOut(33);'> </span>
+<span id='a34' onmouseover = 'doMouseOver(34);' onclick='doClick(34);' onmouseout='doMouseOut(34);'> </span>
+<span id='a35' onmouseover = 'doMouseOver(35);' onclick='doClick(35);' onmouseout='doMouseOut(35);'> </span>
+<span id='a36' onmouseover = 'doMouseOver(36);' onclick='doClick(36);' onmouseout='doMouseOut(36);'> </span>
+<span id='a37' onmouseover = 'doMouseOver(37);' onclick='doClick(37);' onmouseout='doMouseOut(37);'> </span>
+<span id='a38' onmouseover = 'doMouseOver(38);' onclick='doClick(38);' onmouseout='doMouseOut(38);'> </span>
+<span id='a39' onmouseover = 'doMouseOver(39);' onclick='doClick(39);' onmouseout='doMouseOut(39);'> </span>
+<span id='a40' onmouseover = 'doMouseOver(40);' onclick='doClick(40);' onmouseout='doMouseOut(40);'> </span>
+<span id='a41' onmouseover = 'doMouseOver(41);' onclick='doClick(41);' onmouseout='doMouseOut(41);'> </span>
+<span id='a42' onmouseover = 'doMouseOver(42);' onclick='doClick(42);' onmouseout='doMouseOut(42);'> </span>
+<span id='a43' onmouseover = 'doMouseOver(43);' onclick='doClick(43);' onmouseout='doMouseOut(43);'> </span>
+<span id='a44' onmouseover = 'doMouseOver(44);' onclick='doClick(44);' onmouseout='doMouseOut(44);'> </span>
+<span id='a45' onmouseover = 'doMouseOver(45);' onclick='doClick(45);' onmouseout='doMouseOut(45);'> </span>
+<span id='a46' onmouseover = 'doMouseOver(46);' onclick='doClick(46);' onmouseout='doMouseOut(46);'> </span>
+<span id='a47' onmouseover = 'doMouseOver(47);' onclick='doClick(47);' onmouseout='doMouseOut(47);'> </span>
+<span id='a48' onmouseover = 'doMouseOver(48);' onclick='doClick(48);' onmouseout='doMouseOut(48);'> </span>
+<span id='a49' onmouseover = 'doMouseOver(49);' onclick='doClick(49);' onmouseout='doMouseOut(49);'> </span>
+<span id='a50' onmouseover = 'doMouseOver(50);' onclick='doClick(50);' onmouseout='doMouseOut(50);'> </span>
+<span id='a51' onmouseover = 'doMouseOver(51);' onclick='doClick(51);' onmouseout='doMouseOut(51);'> </span>
+<span id='a52' onmouseover = 'doMouseOver(52);' onclick='doClick(52);' onmouseout='doMouseOut(52);'> </span>
+<span id='a53' onmouseover = 'doMouseOver(53);' onclick='doClick(53);' onmouseout='doMouseOut(53);'> </span>
+<span id='a54' onmouseover = 'doMouseOver(54);' onclick='doClick(54);' onmouseout='doMouseOut(54);'> </span>
+<span id='a55' onmouseover = 'doMouseOver(55);' onclick='doClick(55);' onmouseout='doMouseOut(55);'> </span>
+<span id='a56' onmouseover = 'doMouseOver(56);' onclick='doClick(56);' onmouseout='doMouseOut(56);'> </span>
+<span id='a57' onmouseover = 'doMouseOver(57);' onclick='doClick(57);' onmouseout='doMouseOut(57);'> </span>
+<span id='a58' onmouseover = 'doMouseOver(58);' onclick='doClick(58);' onmouseout='doMouseOut(58);'> </span>
+<span id='a59' onmouseover = 'doMouseOver(59);' onclick='doClick(59);' onmouseout='doMouseOut(59);'> </span>
+<span id='a60' onmouseover = 'doMouseOver(60);' onclick='doClick(60);' onmouseout='doMouseOut(60);'> </span>
+<span id='a61' onmouseover = 'doMouseOver(61);' onclick='doClick(61);' onmouseout='doMouseOut(61);'> </span>
+<span id='a62' onmouseover = 'doMouseOver(62);' onclick='doClick(62);' onmouseout='doMouseOut(62);'> </span>
+<span id='a63' onmouseover = 'doMouseOver(63);' onclick='doClick(63);' onmouseout='doMouseOut(63);'> </span>
+<!-- below for 9x9 board -->
+<span id='a64' onmouseover = 'doMouseOver(64);' onclick='doClick(64);' onmouseout='doMouseOut(64);'> </span>
+<span id='a65' onmouseover = 'doMouseOver(65);' onclick='doClick(65);' onmouseout='doMouseOut(65);'> </span>
+<span id='a66' onmouseover = 'doMouseOver(66);' onclick='doClick(66);' onmouseout='doMouseOut(66);'> </span>
+<span id='a67' onmouseover = 'doMouseOver(67);' onclick='doClick(67);' onmouseout='doMouseOut(67);'> </span>
+<span id='a68' onmouseover = 'doMouseOver(68);' onclick='doClick(68);' onmouseout='doMouseOut(68);'> </span>
+<span id='a69' onmouseover = 'doMouseOver(69);' onclick='doClick(69);' onmouseout='doMouseOut(69);'> </span>
+<span id='a70' onmouseover = 'doMouseOver(70);' onclick='doClick(70);' onmouseout='doMouseOut(70);'> </span>
+<span id='a71' onmouseover = 'doMouseOver(71);' onclick='doClick(71);' onmouseout='doMouseOut(71);'> </span>
+<span id='a72' onmouseover = 'doMouseOver(72);' onclick='doClick(72);' onmouseout='doMouseOut(72);'> </span>
+<span id='a73' onmouseover = 'doMouseOver(73);' onclick='doClick(73);' onmouseout='doMouseOut(73);'> </span>
+<span id='a74' onmouseover = 'doMouseOver(74);' onclick='doClick(74);' onmouseout='doMouseOut(74);'> </span>
+<span id='a75' onmouseover = 'doMouseOver(75);' onclick='doClick(75);' onmouseout='doMouseOut(75);'> </span>
+<span id='a76' onmouseover = 'doMouseOver(76);' onclick='doClick(76);' onmouseout='doMouseOut(76);'> </span>
+<span id='a77' onmouseover = 'doMouseOver(77);' onclick='doClick(77);' onmouseout='doMouseOut(77);'> </span>
+<span id='a78' onmouseover = 'doMouseOver(78);' onclick='doClick(78);' onmouseout='doMouseOut(78);'> </span>
+<span id='a79' onmouseover = 'doMouseOver(79);' onclick='doClick(79);' onmouseout='doMouseOut(79);'> </span>
+<span id='a80' onmouseover = 'doMouseOver(80);' onclick='doClick(80);' onmouseout='doMouseOut(80);'> </span>
+<span id='a81' onmouseover = 'doMouseOver(81);' onclick='doClick(81);' onmouseout='doMouseOut(81);'> </span>
+
+</div>
+
+<div class="copyright">	
+Copyright &copy; 2026 </br /> Dennis Martin 
+</div>
+<a href="https://www.youtube.com/watch?v=ab_dY3dZFHM" 
+	target = "_blank" 
+	title="Youtube video about Knights Tour (Numberphile)">Youtube video on Tour</a> 
+<div id="score">Score: 0</div>
+</body>
+</html>
