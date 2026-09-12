@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="author" content="Dennis Martin">
+<meta name="keywords" content="Memorize pawn pattern spatial recognition memory remember">
+<title>Multiplication</title>
+<style>
+    body {
+		text-align: center;
+		background-color: #aaccaa;
+		font-family: Verdana, Trebuchet, Arial, sans-serif;
+		padding: 0px;
+		margin: 0px;
+		} 
+	h2 {
+		text-align: left;
+		margin: 10px 0px 10px 300px;
+		color: navy;
+		}		
+	button {
+		font-size: 24px;
+		border-radius: 4px;
+		padding: 0px 2px 4px 2px;
+	}
+	#digits {	
+		margin: 0px 0px 0px 375px;
+		border: none;
+		text-align: left;
+	}
+	.copyright {
+		position: fixed;
+		bottom: 14px;
+		right: 50%;
+		font-size: 12px;
+	}
+	#answer {
+		color: maroon;
+		font-size: 18px;
+		margin-left: 55px;
+		text-align: left;
+		line-height: 24px;
+		}
+	#details {
+		color: navy;
+		font-size: 18px;
+		margin-left: 55px;
+		text-align: left;
+		line-height: 25px;
+		}
+	#container {
+		background-color: white;
+		border: solid 2px #909090;
+		margin-left: 50px;
+		margin-right: 65px;
+		padding-left: 3px;
+		padding-right: 3px;
+		width: 790px;
+		}
+	p { 
+		text-align: center;
+		font-size: 18px;
+		margin: 3px;
+		}
+</style> 
+<script>
+<!-- HIDE FROM INCOMPATIBLE BROWSERS -->
+// a few 'constants'
+var TIMES = " &times; ";
+var EQUAL = " = ";
+var COMMA = ", ";
+
+function findDigits() {
+	// Find digits A,B,C,D and E such that ABCDE x A = EEEEEE
+	// Construct 5 nested loops going thru all digits (first digit non-zero)
+	// Also avoid duplicate digits to eliminate those cases
+	var result = 0;
+	var count = 0;  // not required but to keep track of progress in case of 'hang'
+	var a = 1, b = 0, c = 0, d = 0, e = 0;
+	loopA:
+	for ( a = 1; a < 10; a++) {  // first digit cannot be zero
+		for ( b = 0; b < 10; b++) { 
+			if (b == a)
+				continue; // cannot equal first digit, skip this case
+			for ( c = 0; c < 10; c++) { 
+				if (c == a || c == b)
+					continue; // cannot equal previous digits, skip this case
+				for ( d = 0; d < 10; d++) { 
+					if (d == c || d == b || d == a)
+						continue; // cannot equal previous digits, skip this case
+					for ( e = 0; e < 10; e++) { 
+						if (e == d || e == c || e == b || e == a) 
+							continue; // cannot equal previous digits, skip this case
+						count++;
+						result = checkMult(a,b,c,d,e);
+						if (result > 0) {
+							document.getElementById("answer").innerHTML = "The digits are: " +
+								a + COMMA + b + COMMA + c + COMMA + d + COMMA + e ;
+							break loopA; // get all the way out
+						}
+						if (count % 1000 == 0)  // keep track of how code is progressing
+							document.getElementById("details").innerHTML += "Count is " + count +
+							", Letters are: " + a + COMMA + b + COMMA + c + COMMA + d + COMMA + e +
+							"<br>";
+					}
+				}
+			}
+		}
+	}
+	if (result == 0)
+		document.getElementById("answer").innerHTML = "The answer was not found";
+	else {
+		var mult = a*10000 + b*1000 + c*100 + d*10 + e;
+		document.getElementById("details").innerHTML += "Count is " + count +
+			", Answer is " + mult + " &times; " + a + EQUAL + result;
+		document.getElementById("answer").innerHTML += 
+			"; since " + mult + " &times; " + a + EQUAL + result;
+		}
+}
+
+function checkMult(a,b,c,d,e) {
+	var multiplier = a*10000 + b*1000 + c*100 + d*10 + e;
+	var result = e*100000 + e*10000 + e*1000 + e*100 + e*10 + e;
+	if ( multiplier * a == result)
+		return result;
+	else
+		return 0;
+}
+
+function clearIt() {
+	document.getElementById("answer").value = "";
+	document.getElementById("details").value = "";
+}
+
+// STOP HIDING FROM INCOMPATIBLE BROWSERS -->
+</script>
+
+</head>
+
+<body onload="clearIt();">
+<h1>Multiplication Problem</h1>
+<div id="container">
+<p>
+&nbsp;ABCDE<br>
+<u> &times; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+A </u> <br>
+
+EEEEEE
+<br><br>
+Each letter above represents a different single digit.
+The five-digit number ABCDE is multiplied by digit A to give the six-digit number EEEEEE.
+
+Find digits A, B, C, D and E.
+Solve this problem using a bit of logic based on the multiplication properties of digits.
+</p>
+
+</div>
+<br><br>
+<form name="digits" id="digits" action="/" >
+	<button id="calc" type="button" onclick="findDigits();" 
+		title="Calculate triangle perimeter and area" >&nbsp;Find Digits&nbsp;</button>  
+</form>
+<br>
+<div id="answer"></div>
+<br>
+<div id="details"></div>
+<div class="copyright" id="copy">	
+Copyright &copy; 2022 Dennis Martin<br>
+</div>
+</body>
+</html>

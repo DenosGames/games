@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Multiplication 2</title>
+<style>
+    body {
+		text-align: center;
+		background-color: #aaccaa;
+		font-family: Verdana, Trebuchet, Arial, sans-serif;
+		padding: 0px;
+		margin: 0px;
+		} 
+	h2 {
+		text-align: left;
+		margin: 10px 0px 10px 300px;
+		color: navy;
+		}		
+	button {
+		font-size: 24px;
+		border-radius: 4px;
+		padding: 0px 2px 4px 2px;
+	}
+	#digits {	
+		margin: 0px 0px 0px 55px;
+		border: none;
+		text-align: left;
+	}
+	#enter {
+		font-size: 21px;
+		padding: 0px;
+		margin: 0px;
+		text-align: left;
+	}
+	#number {
+		font-size: 24px;
+		padding-right: 1px;
+		margin: 0px;
+		text-align: right;
+	}
+	.copyright {
+		position: fixed;
+		bottom: 14px;
+		left: 28%;
+		font-size: 12px;
+	}
+	#answer {
+		color: maroon;
+		font-size: 18px;
+		margin-left: 55px;
+		text-align: left;
+		line-height: 24px;
+		}
+	#details {
+		color: navy;
+		font-size: 18px;
+		margin-left: 55px;
+		text-align: left;
+		line-height: 25px;
+		}
+	#container {
+		background-color: white;
+		border: solid 2px #909090;
+		margin-left: 50px;
+		margin-right: 65px;
+		padding-left: 3px;
+		padding-right: 3px;
+		width: 750px;
+		}
+	p { 
+		text-align: left;
+		font-size: 18px;
+		margin: 3px;
+		}
+	#letters {
+		text-align: center;
+	}
+</style> 
+<script>
+<!-- HIDE FROM INCOMPATIBLE BROWSERS -->
+// a few 'constants'
+var TIMES = " &times; ";
+var EQUAL = " = ";
+var COMMA = ",";
+var attempts = 0;
+var answer = 0;
+var count = 0;
+var e2 = 0;
+var d2 = 0; 
+var c2 = 0; 
+var b2 = 0; 
+var a2 = 0; 
+		
+function findDigits(show) {
+	// Find digits A,B,C,D and E such that ABCDE x A = EEEEEE
+	// Construct 5 nested loops going thru all digits (first digit non-zero)
+	// Also avoid duplicate digits to eliminate those cases
+	var result = 0;
+	//var count = 0;  
+	var number = 0;
+	var a = 1, b = 0, c = 0, d = 0, e = 0;
+	loopA:
+	for ( a = 1; a < 10; a++) {  // first digit cannot be zero
+		for ( b = 0; b < 10; b++) { 
+			if (b == a)
+				continue; // cannot equal first digit, skip this case
+			for ( c = 0; c < 10; c++) { 
+				if (c == a || c == b)
+					continue; // cannot equal previous digits, skip this case
+				for ( d = 0; d < 10; d++) { 
+					if (d == c || d == b || d == a)
+						continue; // cannot equal previous digits, skip this case
+					for ( e = 0; e < 10; e++) { 
+						if (e == d || e == c || e == b || e == a) 
+							continue; // cannot equal previous digits, skip this case
+						count++;
+						result = checkMult(a,b,c,d,e);
+						if (result > 0) {
+							break loopA; // get all the way out
+						}
+					}
+				}
+			}
+		}
+	}
+	if (result == 0)
+		document.getElementById("answer").innerHTML = "The answer could not be found?!";
+	else {
+		number = a*10000 + b*1000 + c*100 + d*10 + e;
+		if (show) {
+			document.getElementById("details").innerHTML += "Computer tried " + count +
+				" different permutations and finally found " +
+				number + " &times; " + a + EQUAL + result + ".";
+			}
+		}
+	return (number);
+}
+
+function checkMult(a,b,c,d,e) {
+	var multiplier = a*10000 + b*1000 + c*100 + d*10 + e;
+	var result = e*100000 + e*10000 + e*1000 + e*100 + e*10 + e;
+	if ( (multiplier * a) == result)  // found answer
+		return result;
+	else
+		return 0;
+}
+
+
+function isBadNum(num) {
+	// validate input is a number and within range
+	if (isNaN(num) || num <= 0 || num > 999999) {
+		return true;
+	}
+	return false;
+}
+
+function checkInput() {
+	// check input digits abcde
+	var num = document.getElementById("number").value; // get number from user 
+	if ( isBadNum(num) ) {
+		document.getElementById("answer").innerHTML = "Invalid number: " + num;
+		document.getElementById("number").value = "";
+		document.getElementById("number").focus();
+		return;
+	}
+	if (num < 10000) {
+		document.getElementById("answer").innerHTML = "Invalid 5-digit number (less than 10000): " + num;
+		document.getElementById("number").value = "";
+		document.getElementById("number").focus();
+		return;
+	}
+	// Next get user's digits from input nbr via div and mod
+	var e = num % 10;  
+	var d = Math.floor(num / 10) % 10; 
+	var c = Math.floor(num/ 100) % 10; 
+	var b = Math.floor(num / 1000) % 10; 
+	var a = Math.floor(num / 10000) % 10; 
+	// Check for duplicates
+	if (a == b || a == c || a == d || a == e || b == c || b == d || b == e || c == d || c == e || d == e) {
+		document.getElementById("answer").innerHTML = "Duplicate digits in number " + num;
+		document.getElementById("number").value = "";
+		document.getElementById("number").focus();
+		return;
+		}
+	attempts++;
+	var product = a * num;
+	// see if user input correct answer
+	if (num == answer) {
+		document.getElementById("answer").innerHTML = "You found the answer " + answer + " in "
+			+ attempts + " attempts!";
+		document.getElementById("details").innerHTML = "Computer tried " + count +
+				" different permutations and finally found " +
+				num + " &times; " + a + EQUAL + product + ".";
+		document.getElementById("calc").disabled = true;
+		document.getElementById("number").disabled = true;
+		document.getElementById("show").disabled = true;
+		return;
+		}
+	else { // wrong
+		document.getElementById("answer").innerHTML = "The answer " + num +
+			" is <u>not</u> correct. " + num + TIMES + a + EQUAL + product;
+		var correct = 0;
+		var msg = "";
+		if (a == a2) {
+			correct++;
+			msg = a;
+			}
+		else
+			msg = "x";
+		if (b == b2) {
+			correct++;
+			msg += COMMA + b;
+			}
+		else
+			msg += ",x";
+		if (c == c2) {
+			correct++;
+			msg += COMMA + c;
+			}
+		else
+			msg += ",x";
+		if (d == d2) {
+			correct++;
+			msg += COMMA + d;
+			}
+		else
+			msg += ",x";
+		if (e == e2) {
+			correct++;
+			msg += COMMA + e;
+			}
+		else
+			msg += ",x";
+		document.getElementById("details").innerHTML = "You got " + correct + 
+			" correct digit(s) in correct position" ;
+		if (correct > 0)
+			document.getElementById("details").innerHTML += " (" + msg + ").";
+		else
+			document.getElementById("details").innerHTML += ".";
+		}
+	document.getElementById("number").value = "";
+	document.getElementById("number").focus();
+}
+
+function showAnswer() {
+	// Show the answer but only after so-many attempts
+	if (attempts < 12) {
+		document.getElementById("answer").innerHTML = "You haven't tried hard enough. Try another number.";
+		document.getElementById("number").focus();
+		return;
+	}
+	var firstDigit = Math.floor(answer / 10000) % 10; 
+	var product = answer * firstDigit;
+	var a = Math.floor(answer / 10000) % 10;
+	document.getElementById("answer").innerHTML = "The 5-digit number is " + answer + ".";
+	document.getElementById("details").innerHTML = "Computer tried " + count +
+				" different permutations and finally found " +
+				answer + " &times; " + a + EQUAL + product + ".";
+	document.getElementById("calc").disabled = true;
+	document.getElementById("number").disabled = true;
+	document.getElementById("show").disabled = true;
+}
+
+function init() {
+	answer = findDigits(false); 
+	//alert("answer = " + answer);
+	e2 = answer % 10;   
+	d2 = Math.floor(answer / 10) % 10; 
+	c2 = Math.floor(answer/ 100) % 10; 
+	b2 = Math.floor(answer / 1000) % 10; 
+	a2 = Math.floor(answer / 10000) % 10; 
+	document.getElementById("answer").value = "";
+	document.getElementById("details").value = "";
+	document.getElementById("number").value = "";
+	document.getElementById("number").focus();
+}
+
+// STOP HIDING FROM INCOMPATIBLE BROWSERS -->
+</script>
+
+</head>
+<body onload="init();">
+<h1>Multiplication Problem</h1>
+<div id="container">
+<p id="letters">
+&nbsp;ABCDE<br>
+<u> &times; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+A </u> <br>
+EEEEEE
+</p>
+<p>
+<br>
+Each letter in the above multiplication represents a different digit (like 24680).<br>
+The five-digit number ABCDE is multiplied by A to give six-digit number EEEEEE.
+<br>
+Find digits A, B, C, D and E using the multiplication properties of digits.
+</p>
+
+</div>
+<br><br>
+<form name="digits" id="digits" action="/" >
+	<span id="enter">Enter 5-Digit Number:</span>
+	<input type="text" name="number" id="number" size="5" maxlength="5"
+		title="Enter the 5-digit number"> 
+	&nbsp;&nbsp; &nbsp; &nbsp;
+	<button id="calc" type="button" onclick="checkInput();" 
+		title="Calculate triangle perimeter and area" > Verify My Digits </button> 
+	&nbsp;&nbsp; &nbsp; &nbsp;
+	<button id="show" type="button" onclick="showAnswer();" 
+		title="Show the answer" > Show Answer </button>  
+</form>
+<br>
+<div id="answer"></div>
+<br>
+<div id="details"></div>
+<div class="copyright" id="copy">	
+Copyright &copy; 2022 Dennis Martin<br>
+</div>
+</body>
+</html>
