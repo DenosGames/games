@@ -18,11 +18,11 @@
 		}		
 	button {
 		font-size: 24px;
-		border-radius: 4px;
+		border-radius: 5px;
 		padding: 0px 2px 4px 2px;
 	}
 	#digits {	
-		margin: 0px 0px 0px 55px;
+		margin: 0px 10px 0px 55px;
 		border: none;
 		text-align: left;
 	}
@@ -61,11 +61,12 @@
 	#container {
 		background-color: white;
 		border: solid 2px #909090;
+		border-radius: 6px;
 		margin-left: 50px;
 		margin-right: 65px;
 		padding-left: 3px;
 		padding-right: 3px;
-		width: 750px;
+		width: 752px;
 		}
 	p { 
 		text-align: left;
@@ -148,7 +149,7 @@ function checkMult(a,b,c,d,e) {
 
 function isBadNum(num) {
 	// validate input is a number and within range
-	if (isNaN(num) || num <= 0 || num > 999999) {
+	if (isNaN(num) || num <= 0 || num > 99999) {
 		return true;
 	}
 	return false;
@@ -302,12 +303,12 @@ Find digits A, B, C, D and E using the multiplication properties of digits.
 	<span id="enter">Enter 5-Digit Number:</span>
 	<input type="text" name="number" id="number" size="5" maxlength="5"
 		title="Enter the 5-digit number"> 
-	&nbsp;&nbsp; &nbsp; &nbsp;
+	&nbsp;&nbsp; &nbsp; 
 	<button id="calc" type="button" onclick="checkInput();" 
-		title="Calculate triangle perimeter and area" > Verify My Digits </button> 
-	&nbsp;&nbsp; &nbsp; &nbsp;
+		title="Calculate triangle perimeter and area" >&nbsp;Verify My Digits&nbsp;</button> 
+	&nbsp;&nbsp; &nbsp;
 	<button id="show" type="button" onclick="showAnswer();" 
-		title="Show the answer" > Show Answer </button>  
+		title="Show the answer" >&nbsp;Show Answer&nbsp;</button>  
 </form>
 <br>
 <div id="answer"></div>
